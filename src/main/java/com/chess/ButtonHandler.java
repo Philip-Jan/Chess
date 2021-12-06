@@ -18,18 +18,18 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        switch (ButtonHandler.this.ChessPiece) {
+        switch (ChessPiece) {
             case "WK":
                 break;
             case "WD":
                 break;
             case "WT":
                 break;
-            case "WP":
+            case "WP": //Paard
                 break;
             case "WL":
                 break;
-            case "Wp":
+            case "Wp": //pion
                 break;
             case "ZK":
                 break;
