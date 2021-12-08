@@ -36,4 +36,7 @@ public class Board {
     public String[][] getBoard() {
         return board;
     }
+    public void makeMove(int[] startSquare,int[] endSquare){
+
+    }
 }
