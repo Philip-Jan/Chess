@@ -8,9 +8,8 @@
 
 130 Als gebruker wil ik stukken kunnen slaan, zodat ik kan schaken
 
-140 Als gebruiker wil ik dat de stukken op hun startpositie beginnen, zodat ik kan schaken
+140 Als gebruiker wil ik dat de stukken op hun startpositie beginnen, zodat ik kan schaken.
 
-150 Als gebruiker wil ik een menu zien voor de start van het spel, zodat ik de juiste instellingen kan aangeven voor het spel start.
 
 200 Als gebruiker wil ik stukken alleen op een legale manier kunnen verplaatsen, zodat ik regelementair kan schaken.
 
@@ -24,6 +23,8 @@
 
 240 Als gebruiker wil ik remise kunnen claimen bij 3 maal herhaling, zodat ik regelementair kan schaken.
 241 Als geruiker wil ik remise kunnen claimen bij 50 zetten zonder slaan of pion zet, zodat ik regelementair kan schaken.
+
+250 Als gebruiker wil ik een menu zien voor de start van het spel, zodat ik de juiste instellingen kan aangeven voor het spel start.
 
 
 300 Als gebruiker wil ik zien welke legale zetten een stuk heeft als ik die selecteer, zodat ik gebruiksvriendelijk kan schaken.
