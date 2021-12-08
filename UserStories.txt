@@ -10,6 +10,7 @@
 
 140 Als gebruiker wil ik dat de stukken op hun startpositie beginnen, zodat ik kan schaken
 
+150 Als gebruiker wil ik een menu zien voor de start van het spel, zodat ik de juiste instellingen kan aangeven voor het spel start.
 
 200 Als gebruiker wil ik stukken alleen op een legale manier kunnen verplaatsen, zodat ik regelementair kan schaken.
 
