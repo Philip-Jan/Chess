@@ -3,7 +3,7 @@ package com.chess;
 public class Board {
 
     Board () {
-        setBeginPosition();
+        makeBoard();
     }
 
     private final String[][] board = new String[8][8];
@@ -32,6 +32,10 @@ public class Board {
         board[7][6] = "BP";
         board[7][7] = "BT";
 
+    }
+
+    private void makeBoard() {
+        setBeginPosition();
     }
 
     public String[][] getBoard() {
