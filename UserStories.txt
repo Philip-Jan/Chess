@@ -33,5 +33,20 @@
 
 330 Als gebruiker wil ik met een klok kunnen spelen, zodat ik gebruiksvriendelijk kan schaken.
 331 Als gebruiker wil ik de klok-starttijd kunnen instellen, zodat ik gebruiksvriendelijk kan schaken.
-332 Als gebruiker wil ik verliezen als mijn op is, zodat ik regelementair kan schaken.
-333 Als gebruiker wil ik remise hebben als mijn tijd op is, maar mijn tegenstander heeft niet voldoende materiaal, zodat ik regelementair kan schaken.
+332 Als gebruiker wil ik klok-increment kunnen instellen, zodat ik gebruiksvriendelijk kan schaken.
+333 Als gebruiker wil ik verliezen als mijn op is, zodat ik regelementair kan schaken.
+334 Als gebruiker wil ik remise hebben als mijn tijd op is, maar mijn tegenstander heeft niet voldoende materiaal, zodat ik regelementair kan schaken.
+
+
+400 Als gebruiker wil ik dat er een schaakcomputer is, zodat ik tegen de computer kan schaken.
+
+410 Als gebruiker wil ik dat de computer legale zetten doet, zodat ik tegen de computer kan schaken.
+
+420 Als gebruiker wil ik dat de computer goede zetten doet, zodat de computer weerstand biedt.
+421 Als gebruiker wil ik dat de computer mat zet als dat kan, zodat de computer weerstand biedt. 
+422 Als gebruiker wil ik dat de computer zijn eigen mat voorkomt als dat kan, zodat de computer weerstand biedt.
+423 Als gebruiker wil ik dat de computer materiaal wint dat kan, zodat de computer weerstand biedt.
+424 Als gebruiker wil ik dat de computer materiaalverlies voorkomt als dat kan, zodat de computer weerstand biedt.
+425 Als gebruiker wil ik dat de computer stukken op goede velden zet, zodat de computer weerstand biedt.
+
+430 Als gebruiker wil ik dat de sterkte van de computer instelbaar is, zodat de computer de juiste weerstand biedt.
