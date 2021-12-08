@@ -65,9 +65,7 @@ public class Main extends Application {
     private Button createStartButton(Stage primaryStage) {
         Button Start = new Button("Start");
         Start.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        Start.setOnAction(e -> {
-            Game.startGame(primaryStage);
-        });
+        Start.setOnAction(e -> new Game(primaryStage));
         setButtonData(Start);
         return Start;
     }

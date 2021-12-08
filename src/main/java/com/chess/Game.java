@@ -15,6 +15,10 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Game {
+
+    Game(Stage stage) {
+        startGame(stage);
+    }
     public void startGame(Stage stage) {
 
         GridPane grid = createGrid();
