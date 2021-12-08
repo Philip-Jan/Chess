@@ -79,17 +79,11 @@ public class Game {
 
     private Button createButton(int number) {
         Button button = new Button();
-        if (number % 2 == 0 && (number/8) % 2 == 0) {
+        if ((number + number/8) % 2 == 0) {
             button.setStyle("-fx-background-color: #ffe9c5");
         }
-        else if (number % 2 == 0 && (number/8) % 2 == 1) {
+        else if ((number + number/8) % 2 == 1) {
             button.setStyle("-fx-background-color: #d08c47");
-        }
-        else if (number % 2 == 1 && (number/8) % 2 == 0) {
-            button.setStyle("-fx-background-color: #d08c47");
-        }
-        else if (number % 2 == 1 && (number/8) % 2 == 1) {
-            button.setStyle("-fx-background-color: #ffe9c5");
         }
         setButtonData(button);
         return button;
