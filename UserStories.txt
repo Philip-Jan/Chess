@@ -1,0 +1,54 @@
+<Prioriteit> Als <rol> wil ik <eis>, zodat <reden voor eis>
+
+100 Als gebruiker wil ik het bord kunnen zien, zodat ik kan schaken.
+
+110 Als gebruiker wil ik stukken kunnen zien, zodat ik kan schaken.
+
+120 Als gebruiker wil ik stukken kunnen verplaatsen, zodat ik kan schaken.
+
+130 Als gebruker wil ik stukken kunnen slaan, zodat ik kan schaken
+
+140 Als gebruiker wil ik dat de stukken op hun startpositie beginnen, zodat ik kan schaken.
+
+
+200 Als gebruiker wil ik stukken alleen op een legale manier kunnen verplaatsen, zodat ik regelementair kan schaken.
+
+210 Als gebruiker wil ik wil ik worden geinformeerd als de stelling mat is, zodat ik regelementair kan schaken.
+211 Als gebruiker wil ik wil ik worden geinformeerd als de stelling pat is, zodat ik regelementair kan schaken.
+
+220 Als gebruiker wil ik een remise aanbod kunnen doen, zodat ik regelementair kan schaken.
+221 Als gebruiker wil ik op een remise aanbod kunnen reageren, zodat ik regelementair kan schaken.
+
+230 Als gebruiker wil ik kunnen opgeven, zodat ik regelementair kan schaken.
+
+240 Als gebruiker wil ik remise kunnen claimen bij 3 maal herhaling, zodat ik regelementair kan schaken.
+241 Als geruiker wil ik remise kunnen claimen bij 50 zetten zonder slaan of pion zet, zodat ik regelementair kan schaken.
+
+250 Als gebruiker wil ik een menu zien voor de start van het spel, zodat ik de juiste instellingen kan aangeven voor het spel start.
+
+
+300 Als gebruiker wil ik zien welke legale zetten een stuk heeft als ik die selecteer, zodat ik gebruiksvriendelijk kan schaken.
+
+310 Als gebruiker wil ik worden geinformeerd als ik schaak sta, zodat ik gebruiksvriendelijk kan schaken.
+
+320 Als gebruiker wil ik een specifieke stelling kunnen opzetten, zodat ik gebruiksvriendelijk kan schaken.
+
+330 Als gebruiker wil ik met een klok kunnen spelen, zodat ik gebruiksvriendelijk kan schaken.
+331 Als gebruiker wil ik de klok-starttijd kunnen instellen, zodat ik gebruiksvriendelijk kan schaken.
+332 Als gebruiker wil ik klok-increment kunnen instellen, zodat ik gebruiksvriendelijk kan schaken.
+333 Als gebruiker wil ik verliezen als mijn op is, zodat ik regelementair kan schaken.
+334 Als gebruiker wil ik remise hebben als mijn tijd op is, maar mijn tegenstander heeft niet voldoende materiaal, zodat ik regelementair kan schaken.
+
+
+400 Als gebruiker wil ik dat er een schaakcomputer is, zodat ik tegen de computer kan schaken.
+
+410 Als gebruiker wil ik dat de computer legale zetten doet, zodat ik tegen de computer kan schaken.
+
+420 Als gebruiker wil ik dat de computer goede zetten doet, zodat de computer weerstand biedt.
+421 Als gebruiker wil ik dat de computer mat zet als dat kan, zodat de computer weerstand biedt. 
+422 Als gebruiker wil ik dat de computer zijn eigen mat voorkomt als dat kan, zodat de computer weerstand biedt.
+423 Als gebruiker wil ik dat de computer materiaal wint dat kan, zodat de computer weerstand biedt.
+424 Als gebruiker wil ik dat de computer materiaalverlies voorkomt als dat kan, zodat de computer weerstand biedt.
+425 Als gebruiker wil ik dat de computer stukken op goede velden zet, zodat de computer weerstand biedt.
+
+430 Als gebruiker wil ik dat de sterkte van de computer instelbaar is, zodat de computer de juiste weerstand biedt.
