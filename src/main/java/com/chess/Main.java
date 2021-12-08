@@ -100,7 +100,7 @@ public class Main extends Application {
     }
 
     private void setButtonData(Button button) {
-        button.setMinSize(80,50);
+        button.setMinSize(50,50);
         button.setMaxSize(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
         GridPane.setFillHeight(button, true);
         GridPane.setFillWidth(button, true);
