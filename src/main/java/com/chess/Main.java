@@ -39,8 +39,16 @@ public class Main extends Application {
         Button Exit = new Button("Exit");
         Exit.setOnAction(e -> Platform.exit());
         Button White = new Button("White");
+        White.setOnAction(e -> {
+
+        });
         Button Black = new Button("Black");
+        Black.setOnAction(e -> {
+
+        });
         bar.getButtons().addAll(White, Black, NewGame, Exit);
+        ButtonBar.setButtonData(White, ButtonBar.ButtonData.LEFT);
+        ButtonBar.setButtonData(Black, ButtonBar.ButtonData.LEFT);
 
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
