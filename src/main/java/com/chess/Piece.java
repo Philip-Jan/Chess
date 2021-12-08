@@ -1,6 +1,15 @@
 package com.chess;
 
 public class Piece {
+
+    Piece(String pieceType){
+        switch (pieceType){
+            case "WRook":
+                makeWRook();
+                break;
+            default:
+        }
+    }
     String name;
     String color;
     int[][] movePattern;

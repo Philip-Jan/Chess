@@ -1,42 +1,36 @@
 package com.chess;
 
 public class Board {
-    private final String[][] board = new String[8][8];
 
-    private void setBeginPosition() {
-        for (int i=0; i < 8; i++){
-            board[1][i] = "Wp";
-            board[6][i] = "Bp";
+    Square[] Squares = new Square[64];
+    Board() {
+        initBoard();
+        //setBeginPosition();
+    }
+    
+
+    private void initBoard(){
+        for (int i = 0; i<64; i++){
+            Squares[i] = new Square();
+            Squares[i].position = i;
+            if ((i/8 + i)%2 == 1) {
+                Squares[i].colour = "W";
+            }else {
+                Squares[i].colour = "B";
         }
 
-        board[0][0] = "WT";
-        board[0][1] = "WP";
-        board[0][2] = "WB";
-        board[0][3] = "WK";
-        board[0][4] = "WD";
-        board[0][5] = "WB";
-        board[0][6] = "WP";
-        board[0][7] = "WT";
-
-        board[7][0] = "BT";
-        board[7][1] = "BP";
-        board[7][2] = "BB";
-        board[7][3] = "BK";
-        board[7][4] = "BD";
-        board[7][5] = "BB";
-        board[7][6] = "BP";
-        board[7][7] = "BT";
-
+            
+        }
     }
 
-    private void makeBoard() {
-        setBeginPosition();
+    public void setBeginPosition() {
+        Squares[0].squarePiece = new Piece("WRook");
     }
 
-    public String[][] getBoard() {
-        return board;
+    public String getBoardSquare(int position) {
+        return Squares[position].squarePiece.name;
     }
-    public void makeMove(int[] startSquare,int[] endSquare){
+    public void makeMove(int startSquare,int endSquare){
 
     }
 }
