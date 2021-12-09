@@ -3,19 +3,20 @@ package com.chess;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
     private final int number;
-    private final Button button;
     private String ChessPiece;
-    ButtonHandler(int number, Button button) {
+
+    ButtonHandler(int number) {
         this.number = number;
-        this.button = button;
-        this.ChessPiece = "";
     }
 
     @Override
     public void handle(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        button.getGraphic();
         switch (ChessPiece) {
             case "WK":
                 break;
