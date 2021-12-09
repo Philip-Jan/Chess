@@ -19,6 +19,7 @@ public class Game {
     Game(Stage stage) {
         startGame(stage);
     }
+
     public void startGame(Stage stage) {
 
         GridPane grid = createGrid();
@@ -73,7 +74,7 @@ public class Game {
 
     private Button createNumberButton(int number) {
         Button button = createButton(number);
-        button.setOnAction(new ButtonHandler(number, button));
+        button.setOnAction(new ButtonHandler(number));
         return button;
     }
 
@@ -106,4 +107,5 @@ public class Game {
         grid.setPadding(new Insets(10));
         return grid;
     }
+
 }
