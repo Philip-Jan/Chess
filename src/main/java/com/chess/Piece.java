@@ -4,28 +4,41 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
-import java.util.Objects;
 
 public class Piece {
 
-    Piece(String pieceType){
+    Piece(String maybePieceType){
+
+        String pieceType = "";
+
+        String[] pieceType1 = new String[]{
+                "WR", "BR", "WN", "BN", "WB", "BB", "WD", "BD", "WK", "BK", "WP", "BP"
+        };
+        for (String value : pieceType1) {
+            if (maybePieceType.equals(value)) {
+                pieceType = maybePieceType;
+                break;
+            }
+        }
+
         switch (pieceType) {
-            case "WRook" -> makeWRook();
-            case "BRook" -> makeBRook();
-            case "WKnight" -> makeWKnight();
-            case "BKnight" -> makeBKnight();
-            case "WBishop" -> makeWBishop();
-            case "BBishop" -> makeBBishop();
-            case "WQueen" -> makeWQueen();
-            case "BQueen" -> makeBQueen();
-            case "WKing" -> makeWKing();
-            case "BKing" -> makeBKing();
-            case "WPawn" -> makeWPawn();
-            case "BPawn" -> makeBPawn();
+            case "WR" -> makeWRook();
+            case "BR" -> makeBRook();
+            case "WN" -> makeWKnight();
+            case "BN" -> makeBKnight();
+            case "WB" -> makeWBishop();
+            case "BB" -> makeBBishop();
+            case "WD" -> makeWQueen();
+            case "BD" -> makeBQueen();
+            case "WK" -> makeWKing();
+            case "BK" -> makeBKing();
+            case "WP" -> makeWPawn();
+            case "BP" -> makeBPawn();
             default -> {
             }
         }
     }
+
     String name = "";
     boolean isWhite;
     int[] movePattern;
