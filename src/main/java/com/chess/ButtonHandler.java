@@ -6,10 +6,12 @@ import javafx.scene.control.Button;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
     private final int number;
-    private String ChessPiece;
+    private final Board board;
+    private char ChessPiece;
 
-    ButtonHandler(int number) {
+    ButtonHandler(int number, Board board) {
         this.number = number;
+        this.board = board;
     }
 
     @Override
@@ -17,29 +19,29 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
         Button button = (Button) event.getSource();
         button.getGraphic();
         switch (ChessPiece) {
-            case "WK":
+            case 'K':
                 break;
-            case "WD":
+            case 'Q':
                 break;
-            case "WT":
+            case 'R':
                 break;
-            case "WP": //Paard
+            case 'N': //Paard
                 break;
-            case "WL":
+            case 'B':
                 break;
-            case "Wp": //pion
+            case 'P': //pion
                 break;
-            case "ZK":
+            case 'k':
                 break;
-            case "ZD":
+            case 'q':
                 break;
-            case "ZT":
+            case 'r':
                 break;
-            case "ZP":
+            case 'n':
                 break;
-            case "ZL":
+            case 'b':
                 break;
-            case "Zp":
+            case 'p':
                 break;
             default:
         }

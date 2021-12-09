@@ -20,6 +20,8 @@ public class Game {
         startGame(stage);
     }
 
+    Board board = new Board();
+
     public void startGame(Stage stage) {
 
         GridPane grid = createGrid();
@@ -29,6 +31,7 @@ public class Game {
             int row = i / 8;
             int col = i % 8;
             grid.add(button, col, row);
+            button.setGraphic(board.getBoardSquare(i).getImgViewPiece());
         }
 
         ButtonBar bar = new ButtonBar();
@@ -74,7 +77,7 @@ public class Game {
 
     private Button createNumberButton(int number) {
         Button button = createButton(number);
-        button.setOnAction(new ButtonHandler(number));
+        button.setOnAction(new ButtonHandler(number, board));
         return button;
     }
 

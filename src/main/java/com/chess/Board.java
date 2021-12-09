@@ -7,7 +7,7 @@ public class Board {
     Square[] Squares = new Square[64];
     Board() {
         initBoard();
-        //setBeginPosition();
+        setBeginPosition();
     }
     
 
