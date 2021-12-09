@@ -96,6 +96,8 @@ public class Main {
     public static void main(String[] args) {
         Board myBoard = new Board();
         myBoard.setBeginPosition();
-        System.out.println(myBoard.getBoardSquare(0));
+        //System.out.println(myBoard.getBoardSquare(0));
+        //myBoard.printFullBoard();
+        myBoard.printSquareBoard();
     }
 }

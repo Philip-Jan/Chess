@@ -20,7 +20,7 @@ public class Piece {
             }
         }
     }
-    String name;
+    String name = "";
     boolean isWhite;
     int[] movePattern;
     int[] specialMoves = {}; //Castling, pawn captures, double pawn move
