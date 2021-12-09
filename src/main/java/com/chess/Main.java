@@ -1,5 +1,5 @@
 package com.chess;
-/*
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -89,15 +89,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-}*/
-public class Main {
-
-    public static void main(String[] args) {
-        Board myBoard = new Board();
-        myBoard.setBeginPosition();
-        //System.out.println(myBoard.getBoardSquare(0));
-        //myBoard.printFullBoard();
-        myBoard.printSquareBoard();
     }
 }
