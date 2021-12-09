@@ -3,152 +3,147 @@ package com.chess;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.File;
+import java.util.Objects;
 
 public class Piece {
 
-    Piece(String maybePieceType){
-
-        String pieceType = "";
-
-        String[] pieceType1 = new String[]{
-                "WR", "BR", "WN", "BN", "WB", "BB", "WD", "BD", "WK", "BK", "WP", "BP"
-        };
-        for (String value : pieceType1) {
-            if (maybePieceType.equals(value)) {
-                pieceType = maybePieceType;
-                break;
-            }
-        }
-
+    Piece(char pieceType){
         switch (pieceType) {
-            case "WR" -> makeWRook();
-            case "BR" -> makeBRook();
-            case "WN" -> makeWKnight();
-            case "BN" -> makeBKnight();
-            case "WB" -> makeWBishop();
-            case "BB" -> makeBBishop();
-            case "WD" -> makeWQueen();
-            case "BD" -> makeBQueen();
-            case "WK" -> makeWKing();
-            case "BK" -> makeBKing();
-            case "WP" -> makeWPawn();
-            case "BP" -> makeBPawn();
+            case 'R' -> makeWRook();
+            case 'r' -> makeBRook();
+            case 'N' -> makeWKnight();
+            case 'n' -> makeBKnight();
+            case 'B' -> makeWBishop();
+            case 'b' -> makeBBishop();
+            case 'Q' -> makeWQueen();
+            case 'q' -> makeBQueen();
+            case 'K' -> makeWKing();
+            case 'k' -> makeBKing();
+            case 'P' -> makeWPawn();
+            case 'p' -> makeBPawn();
             default -> {
             }
         }
     }
-
-    String name = "";
+    char name = Character.MIN_VALUE;
     boolean isWhite;
     int[] movePattern;
     int[] specialMoves = {}; //Castling, pawn captures, double pawn move
     boolean moveRecursion;
-    Image imgPiece;
-    ImageView imgViewPiece;
+//    Image imgPiece = new Image(Objects.requireNonNull(
+//            getClass().getResourceAsStream("/src/main/Images/BR.gif")));
+//    ImageView imgViewPiece;
 
     private void makeWRook(){
-        name = "WR";
+        name = 'R';
         isWhite = true;
         movePattern = new int[] {-1,8,1,-8};
         moveRecursion = true;
-        imgPiece = new Image(new File("Images\\WR.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\WR.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeBRook(){
-        name = "BR";
+        name = 'r';
         isWhite = false;
         movePattern = new int[] {-1,8,1,-8};
         moveRecursion = true;
-        imgPiece = new Image(new File("Images\\BR.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\BR.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeWKnight(){
-        name = "WN";
+        name = 'N';
         isWhite = true;
         movePattern = new int[] {6,15,17,10,-6,-10,-17,-15,-10};
         moveRecursion = false;
-        imgPiece = new Image(new File("Images\\WN.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\WN.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeBKnight() {
-        name = "BN";
+        name = 'n';
         isWhite = false;
         movePattern = new int[]{-6, 15, 17, 10, -6, -10, -17, -15, -10};
         moveRecursion = false;
-        imgPiece = new Image(new File("Images\\BN.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\BN.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeWBishop(){
-        name = "WB";
+        name = 'B';
         isWhite = true;
         movePattern = new int[]{7, 9, -7, -9};
         moveRecursion = true;
-        imgPiece = new Image(new File("Images\\WB.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\WB.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeBBishop(){
-        name = "BB";
+        name = 'b';
         isWhite = false;
         movePattern = new int[]{7, 9, -7, -9};
         moveRecursion = true;
-        imgPiece = new Image(new File("Images\\BB.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\BB.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeWQueen(){
-        name = "WQ";
+        name = 'Q';
         isWhite = true;
         movePattern = new int[]{-1,7,8,9,1,-7,-8,-9};
         moveRecursion = true;
-        imgPiece = new Image(new File("Images\\WQ.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\WQ.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeBQueen(){
-        name = "BQ";
+        name = 'q';
         isWhite = false;
         movePattern = new int[]{-1,7,8,9,1,-7,-8,-9};
         moveRecursion = true;
-        imgPiece = new Image(new File("Images\\BQ.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\BQ.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeWKing(){
-        name = "WK";
+        name = 'K';
         isWhite = true;
         movePattern = new int[]{-1,7,8,9,1,-7,-8,-9};
         specialMoves = new int[]{-2,2};
         moveRecursion = false;
-        imgPiece = new Image(new File("Images\\WK.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\WK.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeBKing(){
-        name = "BK";
+        name = 'k';
         isWhite = false;
         movePattern = new int[]{-1,7,8,9,1,-7,-8,-9};
         specialMoves = new int[]{-2,2};
         moveRecursion = false;
-        imgPiece = new Image(new File("Images\\BK.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\BK.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeWPawn(){
-        name = "Wp";
+        name = 'P';
         isWhite = true;
         movePattern = new int[]{8};
         specialMoves = new int[]{16,7,9};
         moveRecursion = false;
-        imgPiece = new Image(new File("Images\\WP.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\WP.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
     private void makeBPawn(){
-        name = "Bp";
+        name = 'p';
         isWhite = false;
         movePattern = new int[]{-8};
         specialMoves = new int[]{-16,-7,-9};
-        imgPiece = new Image(new File("Images\\BP.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
-    }
-
-    public ImageView getImgViewPiece() {
-        return imgViewPiece;
+//        imgPiece = new Image(Objects.requireNonNull(
+//                getClass().getResourceAsStream("Images\\BP.gif")));
+//        imgViewPiece = new ImageView(imgPiece);
     }
 
 }
