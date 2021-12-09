@@ -34,13 +34,23 @@ public class Main extends Application {
         });
         Button Start = createStartButton(primaryStage);
         Button Exit = createExitButton();
+        Button Options = new Button();
+        Button Difficulty = new Button();
 
         grid.add(White, 0,0);
         grid.add(Black, 1,0);
-        grid.add(Start,0,1);
-        grid.add(Exit, 1,1);
+        grid.add(Options,0,1);
+        grid.add(Difficulty,1,1);
+        grid.add(Start,0,2);
+        grid.add(Exit, 1,2);
         setButtonData(White);
+        White.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         setButtonData(Black);
+        Black.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        setButtonData(Options);
+        Options.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        setButtonData(Difficulty);
+        Difficulty.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
 
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
