@@ -30,8 +30,8 @@ public class Game {
             Button button = createNumberButton(i);
             int row = i / 8;
             int col = i % 8;
+            button.setGraphic(board.getBoardSquare(i).imgViewPiece);
             grid.add(button, col, row);
-            button.setGraphic(board.getBoardSquare(i).getImgViewPiece());
         }
 
         ButtonBar bar = new ButtonBar();

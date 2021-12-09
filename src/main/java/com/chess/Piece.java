@@ -147,8 +147,4 @@ public class Piece {
         imgViewPiece = new ImageView(imgPiece);
     }
 
-    public ImageView getImgViewPiece() {
-        return imgViewPiece;
-    }
-
 }

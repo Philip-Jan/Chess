@@ -1,5 +1,7 @@
 package com.chess;
 
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -55,6 +57,7 @@ public class Board {
     public Piece getBoardSquare(int position) {//Returns the piece name that occupies the selected square
         return Squares[position].squarePiece;
     }
+
     public void printFullBoard(){//Prints the location and piece name of every non-empty square on the board
         for (int i = 0; i < 64; i++)
             if (Squares[i].squarePiece.name != Character.MIN_VALUE) {
