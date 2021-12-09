@@ -1,4 +1,7 @@
 package com.chess;
+
+import java.util.ArrayList;
+
 /*
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -93,15 +96,25 @@ public class Main extends Application {
 }*/
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//This main is purely for debug purposes
         Board myBoard = new Board();
         myBoard.setBeginPosition();
         //System.out.println(myBoard.getBoardSquare(0));
-        myBoard.printFullBoard();
+        //myBoard.printFullBoard();
         myBoard.printSquareBoard();
+        System.out.println("\n");
         myBoard.makeMove(6,21);
         myBoard.printSquareBoard();
+        System.out.println("\n");
         myBoard.makeMove(62,45);
         myBoard.printSquareBoard();
+        ArrayList<Integer> moves = myBoard.validMovesPosition(1);
+        for (Integer move : moves) {
+            System.out.println(move);
+        }
+        moves = myBoard.validMovesPosition(57);
+        for (Integer move : moves) {
+            System.out.println(move);
+        }
     }
 }
