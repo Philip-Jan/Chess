@@ -97,7 +97,11 @@ public class Main {
         Board myBoard = new Board();
         myBoard.setBeginPosition();
         //System.out.println(myBoard.getBoardSquare(0));
-        //myBoard.printFullBoard();
+        myBoard.printFullBoard();
+        myBoard.printSquareBoard();
+        myBoard.makeMove(6,21);
+        myBoard.printSquareBoard();
+        myBoard.makeMove(62,45);
         myBoard.printSquareBoard();
     }
 }

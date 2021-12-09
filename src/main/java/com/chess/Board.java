@@ -25,53 +25,54 @@ public class Board {
 
     public void setBeginPosition() {
         //White pieces
-        Squares[0].squarePiece = new Piece("WRook");
-        Squares[1].squarePiece = new Piece("WKnight");
-        Squares[2].squarePiece = new Piece("WBishop");
-        Squares[3].squarePiece = new Piece("WQueen");
-        Squares[4].squarePiece = new Piece("WKing");
-        Squares[5].squarePiece = new Piece("WBishop");
-        Squares[6].squarePiece = new Piece("WKnight");
-        Squares[7].squarePiece = new Piece("WRook");
+        Squares[0].squarePiece = new Piece('R');
+        Squares[1].squarePiece = new Piece('N');
+        Squares[2].squarePiece = new Piece('B');
+        Squares[3].squarePiece = new Piece('Q');
+        Squares[4].squarePiece = new Piece('K');
+        Squares[5].squarePiece = new Piece('B');
+        Squares[6].squarePiece = new Piece('N');
+        Squares[7].squarePiece = new Piece('R');
         for (int i =8; i < 16; i++){
-            Squares[i].squarePiece = new Piece("WPawn");
+            Squares[i].squarePiece = new Piece('P');
         }
         //Black pieces
         for (int i =48; i < 56; i++){
-            Squares[i].squarePiece = new Piece("BPawn");
+            Squares[i].squarePiece = new Piece('p');
         }
-        Squares[56].squarePiece = new Piece("BRook");
-        Squares[57].squarePiece = new Piece("BKnight");
-        Squares[58].squarePiece = new Piece("BBishop");
-        Squares[59].squarePiece = new Piece("BQueen");
-        Squares[60].squarePiece = new Piece("BKing");
-        Squares[61].squarePiece = new Piece("BBishop");
-        Squares[62].squarePiece = new Piece("BKnight");
-        Squares[63].squarePiece = new Piece("BRook");
+        Squares[56].squarePiece = new Piece('r');
+        Squares[57].squarePiece = new Piece('n');
+        Squares[58].squarePiece = new Piece('b');
+        Squares[59].squarePiece = new Piece('q');
+        Squares[60].squarePiece = new Piece('k');
+        Squares[61].squarePiece = new Piece('b');
+        Squares[62].squarePiece = new Piece('n');
+        Squares[63].squarePiece = new Piece('r');
     }
 
-    public String getBoardSquare(int position) {
+    public char getBoardSquare(int position) {
         return Squares[position].squarePiece.name;
     }
     public void printFullBoard(){
         for (int i = 0; i < 64; i++)
-            if (!Squares[i].squarePiece.name.equals("")) {
-                System.out.println(i + " " + Squares[i].squarePiece.name);
+            if (Squares[i].squarePiece.name != Character.MIN_VALUE) {
+                System.out.println(Squares[i].position + " " + Squares[i].squarePiece.name);
             }
     }
     public void printSquareBoard(){
         for (int i = 0; i<8;i++){
             for (int j = 0; j<8;j++){
-                if (Squares[(7-i)*8+j].squarePiece.name.equals("")) {
+                if (Squares[(7-i)*8+j].squarePiece.name == Character.MIN_VALUE) {
                     System.out.print("~\t");
                 }else {
                     System.out.print(Squares[(7-i)*8+j].squarePiece.name + "\t");
                 }
             }
-            System.out.println("");
+            System.out.print("\n");
         }
     }
     public void makeMove(int startSquare,int endSquare){
-
+        Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
+        Squares[startSquare].squarePiece = new Piece(Character.MIN_VALUE);
     }
 }
