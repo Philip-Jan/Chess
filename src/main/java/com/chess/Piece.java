@@ -7,6 +7,16 @@ import java.io.File;
 
 public class Piece {
 
+    Piece() {}
+
+    char name = Character.MIN_VALUE;
+    char color = Character.MIN_VALUE;
+    int[][] movePattern;//{Change in columns, change in rows}
+    int[] specialMoves = {}; //Castling, pawn captures, double pawn move
+    boolean moveRecursion;
+    Image imgPiece;
+    ImageView imgViewPiece;
+
     Piece(char maybePieceType){
 
         char pieceType = ' ';
@@ -34,117 +44,94 @@ public class Piece {
             case 'k' -> makeBKing();
             case 'P' -> makeWPawn();
             case 'p' -> makeBPawn();
-            default -> {
-            }
+            default -> {}
         }
     }
 
-    char name = Character.MIN_VALUE;
-    char color = Character.MIN_VALUE;
-    int[][] movePattern;//{Change in columns, change in rows}
-    int[] specialMoves = {}; //Castling, pawn captures, double pawn move
-    boolean moveRecursion;
-    Image imgPiece;
-    ImageView imgViewPiece;
-
     private void makeWRook(){
-        name = 'R';
-        color = 'W';
-        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
-        moveRecursion = true;
-        imgPiece = new Image(new File("Images\\WR.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Rook R = new Rook();
+        R.name = 'R';
+        R.color = 'W';
+        R.imgPiece = new Image(new File("Images\\WR.gif").toURI().toString());
+        R.imgViewPiece = new ImageView(R.imgPiece);
     }
     private void makeBRook(){
-        name = 'r';
-        color = 'B';
-        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
-        moveRecursion = true;
-        imgPiece = new Image(new File("Images\\BR.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Rook r = new Rook();
+        r.name = 'r';
+        r.color = 'B';
+        r.imgPiece = new Image(new File("Images\\BR.gif").toURI().toString());
+        r.imgViewPiece = new ImageView(r.imgPiece);
     }
     private void makeWKnight(){
-        name = 'N';
-        color = 'W';
-        movePattern = new int[][] {{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1}};
-        moveRecursion = false;
-        imgPiece = new Image(new File("Images\\WN.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Knight N = new Knight();
+        N.name = 'N';
+        N.color = 'W';
+        N.imgPiece = new Image(new File("Images\\WN.gif").toURI().toString());
+        N.imgViewPiece = new ImageView(N.imgPiece);
     }
     private void makeBKnight() {
-        name = 'n';
-        color = 'B';
-        movePattern = new int[][] {{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1}};
-        moveRecursion = false;
-        imgPiece = new Image(new File("Images\\BN.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Knight n = new Knight();
+        n.name = 'n';
+        n.color = 'B';
+        n.imgPiece = new Image(new File("Images\\BN.gif").toURI().toString());
+        n.imgViewPiece = new ImageView(n.imgPiece);
     }
     private void makeWBishop(){
-        name = 'B';
-        color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1}};
-        moveRecursion = true;
-        imgPiece = new Image(new File("Images\\WB.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Bishop B = new Bishop();
+        B.name = 'B';
+        B.color = 'W';
+        B.imgPiece = new Image(new File("Images\\WB.gif").toURI().toString());
+        B.imgViewPiece = new ImageView(B.imgPiece);
     }
     private void makeBBishop(){
-        name = 'b';
-        color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1}};
-        moveRecursion = true;
-        imgPiece = new Image(new File("Images\\BB.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Bishop b = new Bishop();
+        b.name = 'b';
+        b.color = 'B';
+        b.imgPiece = new Image(new File("Images\\BB.gif").toURI().toString());
+        b.imgViewPiece = new ImageView(b.imgPiece);
     }
     private void makeWQueen(){
-        name = 'Q';
-        color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
-        moveRecursion = true;
-        imgPiece = new Image(new File("Images\\WQ.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Queen Q = new Queen();
+        Q.name = 'Q';
+        Q.color = 'W';
+        Q.imgPiece = new Image(new File("Images\\WQ.gif").toURI().toString());
+        Q.imgViewPiece = new ImageView(Q.imgPiece);
     }
     private void makeBQueen(){
-        name = 'q';
-        color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
-        moveRecursion = true;
-        imgPiece = new Image(new File("Images\\BQ.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Queen q = new Queen();
+        q.name = 'q';
+        q.color = 'B';
+        q.imgPiece = new Image(new File("Images\\BQ.gif").toURI().toString());
+        q.imgViewPiece = new ImageView(q.imgPiece);
     }
     private void makeWKing(){
-        name = 'K';
-        color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
-        specialMoves = new int[]{-2,2};
-        moveRecursion = false;
-        imgPiece = new Image(new File("Images\\WK.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        King K = new King();
+        K.name = 'K';
+        K.color = 'W';
+        K.imgPiece = new Image(new File("Images\\WK.gif").toURI().toString());
+        K.imgViewPiece = new ImageView(K.imgPiece);
     }
     private void makeBKing(){
-        name = 'k';
-        color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
-        specialMoves = new int[]{-2,2};
-        moveRecursion = false;
-        imgPiece = new Image(new File("Images\\BK.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        King k = new King();
+        k.name = 'k';
+        k.color = 'B';
+        k.imgPiece = new Image(new File("Images\\BK.gif").toURI().toString());
+        k.imgViewPiece = new ImageView(k.imgPiece);
     }
     private void makeWPawn(){
-        name = 'P';
-        color = 'W';
-        movePattern = new int[][]{{0,1}};
-        specialMoves = new int[]{16,7,9};
-        moveRecursion = false;
-        imgPiece = new Image(new File("Images\\WP.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Pawn P = new Pawn();
+        P.name = 'P';
+        P.color = 'W';
+        P.imgPiece = new Image(new File("Images\\WP.gif").toURI().toString());
+        P.imgViewPiece = new ImageView(P.imgPiece);
     }
     private void makeBPawn(){
-        name = 'p';
-        color = 'B';
-        movePattern = new int[][]{{0,-1}};
-        specialMoves = new int[]{-16,-7,-9};
-        imgPiece = new Image(new File("Images\\BP.gif").toURI().toString());
-        imgViewPiece = new ImageView(imgPiece);
+        Pawn p = new Pawn();
+        p.name = 'p';
+        p.color = 'W';
+        p.imgPiece = new Image(new File("Images\\BP.gif").toURI().toString());
+        p.imgViewPiece = new ImageView(p.imgPiece);
     }
 
+    protected void Moves() {}
 }
