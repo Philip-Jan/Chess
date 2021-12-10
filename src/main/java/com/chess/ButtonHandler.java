@@ -2,7 +2,6 @@ package com.chess;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
     private final int number;
@@ -16,8 +15,7 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        Button button = (Button) event.getSource();
-        button.getGraphic();
+        this.ChessPiece = board.getBoardSquare(number).name;
         switch (ChessPiece) {
             case 'K':
                 break;

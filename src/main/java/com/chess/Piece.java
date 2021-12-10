@@ -7,8 +7,6 @@ import java.io.File;
 
 public class Piece {
 
-    Piece() {}
-
     char name = Character.MIN_VALUE;
     char color = Character.MIN_VALUE;
     int[][] movePattern;//{Change in columns, change in rows}
@@ -49,89 +47,163 @@ public class Piece {
     }
 
     private void makeWRook(){
-        Rook R = new Rook();
-        R.name = 'R';
-        R.color = 'W';
-        R.imgPiece = new Image(new File("Images\\WR.gif").toURI().toString());
-        R.imgViewPiece = new ImageView(R.imgPiece);
+        name = 'R';
+        color = 'W';
+        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
+        moveRecursion = true;
+        String str = new File("src\\main\\Images\\WR.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeBRook(){
-        Rook r = new Rook();
-        r.name = 'r';
-        r.color = 'B';
-        r.imgPiece = new Image(new File("Images\\BR.gif").toURI().toString());
-        r.imgViewPiece = new ImageView(r.imgPiece);
+        name = 'r';
+        color = 'B';
+        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
+        moveRecursion = true;
+        String str = new File("src\\main\\Images\\BR.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeWKnight(){
-        Knight N = new Knight();
-        N.name = 'N';
-        N.color = 'W';
-        N.imgPiece = new Image(new File("Images\\WN.gif").toURI().toString());
-        N.imgViewPiece = new ImageView(N.imgPiece);
+        name = 'N';
+        color = 'W';
+        movePattern = new int[][] {{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1}};
+        moveRecursion = false;
+        String str = new File("src\\main\\Images\\WN.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeBKnight() {
-        Knight n = new Knight();
-        n.name = 'n';
-        n.color = 'B';
-        n.imgPiece = new Image(new File("Images\\BN.gif").toURI().toString());
-        n.imgViewPiece = new ImageView(n.imgPiece);
+        name = 'n';
+        color = 'B';
+        movePattern = new int[][] {{-2,1},{-1,2},{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1}};
+        moveRecursion = false;
+        String str = new File("src\\main\\Images\\BN.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeWBishop(){
-        Bishop B = new Bishop();
-        B.name = 'B';
-        B.color = 'W';
-        B.imgPiece = new Image(new File("Images\\WB.gif").toURI().toString());
-        B.imgViewPiece = new ImageView(B.imgPiece);
+        name = 'B';
+        color = 'W';
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1}};
+        moveRecursion = true;
+        String str = new File("src\\main\\Images\\WB.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeBBishop(){
-        Bishop b = new Bishop();
-        b.name = 'b';
-        b.color = 'B';
-        b.imgPiece = new Image(new File("Images\\BB.gif").toURI().toString());
-        b.imgViewPiece = new ImageView(b.imgPiece);
+        name = 'b';
+        color = 'B';
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1}};
+        moveRecursion = true;
+        String str = new File("src\\main\\Images\\BB.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeWQueen(){
-        Queen Q = new Queen();
-        Q.name = 'Q';
-        Q.color = 'W';
-        Q.imgPiece = new Image(new File("Images\\WQ.gif").toURI().toString());
-        Q.imgViewPiece = new ImageView(Q.imgPiece);
+        name = 'Q';
+        color = 'W';
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        moveRecursion = true;
+        String str = new File("src\\main\\Images\\WQ.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeBQueen(){
-        Queen q = new Queen();
-        q.name = 'q';
-        q.color = 'B';
-        q.imgPiece = new Image(new File("Images\\BQ.gif").toURI().toString());
-        q.imgViewPiece = new ImageView(q.imgPiece);
+        name = 'q';
+        color = 'B';
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        moveRecursion = true;
+        String str = new File("src\\main\\Images\\BQ.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeWKing(){
-        King K = new King();
-        K.name = 'K';
-        K.color = 'W';
-        K.imgPiece = new Image(new File("Images\\WK.gif").toURI().toString());
-        K.imgViewPiece = new ImageView(K.imgPiece);
+        name = 'K';
+        color = 'W';
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        specialMoves = new int[]{-2,2};
+        moveRecursion = false;
+        String str = new File("src\\main\\Images\\WK.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeBKing(){
-        King k = new King();
-        k.name = 'k';
-        k.color = 'B';
-        k.imgPiece = new Image(new File("Images\\BK.gif").toURI().toString());
-        k.imgViewPiece = new ImageView(k.imgPiece);
+        name = 'k';
+        color = 'B';
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        specialMoves = new int[]{-2,2};
+        moveRecursion = false;
+        String str = new File("src\\main\\Images\\BK.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeWPawn(){
-        Pawn P = new Pawn();
-        P.name = 'P';
-        P.color = 'W';
-        P.imgPiece = new Image(new File("Images\\WP.gif").toURI().toString());
-        P.imgViewPiece = new ImageView(P.imgPiece);
+        name = 'P';
+        color = 'W';
+        movePattern = new int[][]{{0,1}};
+        specialMoves = new int[]{16,7,9};
+        moveRecursion = false;
+        String str = new File("src\\main\\Images\\WP.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
     private void makeBPawn(){
-        Pawn p = new Pawn();
-        p.name = 'p';
-        p.color = 'W';
-        p.imgPiece = new Image(new File("Images\\BP.gif").toURI().toString());
-        p.imgViewPiece = new ImageView(p.imgPiece);
+        name = 'p';
+        color = 'W';
+        movePattern = new int[][]{{0,1}};
+        specialMoves = new int[]{16,7,9};
+        moveRecursion = false;
+        String str = new File("src\\main\\Images\\BP.gif").toURI().toString();
+        String string = str.substring(6);
+        imgPiece = new Image(string);
+        imgViewPiece = new ImageView(imgPiece);
+        imgViewPiece.setFitWidth(50);
+        imgViewPiece.setFitHeight(50);
+        imgViewPiece.setPreserveRatio(true);
     }
-
-    protected void Moves() {}
 }
