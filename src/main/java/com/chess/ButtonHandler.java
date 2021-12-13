@@ -8,15 +8,15 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
     private final Board board;
     private char ChessPiece;
 
-    ButtonHandler(int number, Board board) {
+    ButtonHandler(int number, char ChessPiece, Board board) {
         this.number = number;
         this.board = board;
+        this.ChessPiece = ChessPiece;
     }
 
     @Override
     public void handle(ActionEvent event) {
-        this.ChessPiece = board.getBoardSquare(number).name;
-        switch (ChessPiece) {
+        switch (this.ChessPiece) {
             case 'K':
                 break;
             case 'Q':

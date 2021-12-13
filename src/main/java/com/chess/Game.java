@@ -21,6 +21,7 @@ public class Game {
     }
 
     Board board = new Board();
+    private char ChessPiece;
 
     public void startGame(Stage stage) {
 
@@ -77,7 +78,13 @@ public class Game {
 
     private Button createNumberButton(int number) {
         Button button = createButton(number);
-        button.setOnAction(new ButtonHandler(number, board));
+        if (this.ChessPiece != ' ') {
+            button.setOnAction(new ButtonHandler(number, this.ChessPiece, board));
+            this.ChessPiece = ' ';
+        }
+        else {
+            button.setOnAction(e -> this.ChessPiece = board.getBoardSquare(number).name);
+        }
         return button;
     }
 
