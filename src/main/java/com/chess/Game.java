@@ -16,23 +16,39 @@ import javafx.stage.Stage;
 
 public class Game {
 
-    Game(Stage stage) {
+    Game(Stage stage, boolean isWhite) {
+        this.isWhite = isWhite;
         startGame(stage);
     }
 
+    private final boolean isWhite;
     Board board = new Board();
+    private int BoardSquare;
     private Piece ChessPiece;
 
     public void startGame(Stage stage) {
 
         GridPane grid = createGrid();
 
-        for (int i=0; i<64; i++) {
-            Button button = createNumberButton(i);
-            int row = i / 8;
-            int col = i % 8;
-            button.setGraphic(board.getBoardSquare(i).imgViewPiece);
-            grid.add(button, col, row);
+        if (isWhite) {
+
+            for (int i = 0; i < 64; i++) {
+                Button button = createNumberButton(i);
+                int row = (63-i) / 8;
+                int col = i % 8;
+                button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                grid.add(button, col, row);
+            }
+        }
+        else {
+
+            for (int i = 0; i < 64; i++) {
+                Button button = createNumberButton(i);
+                int row = i / 8;
+                int col = (63-i) % 8;
+                button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                grid.add(button, col, row);
+            }
         }
 
         ButtonBar bar = new ButtonBar();
@@ -79,23 +95,26 @@ public class Game {
     private Button createNumberButton(int number) {
         Button button = createButton(number);
         if (this.ChessPiece != null) {
-            button.setOnAction(new ButtonHandler(number, this.ChessPiece.name, board));
+            button.setOnAction(new ButtonHandler(number, this.BoardSquare, this.ChessPiece, board));
             button.setGraphic(this.ChessPiece.imgViewPiece);
             this.ChessPiece = null;
         }
         else {
-            button.setOnAction(e -> this.ChessPiece = board.getBoardSquare(number));
-
+            button.setOnAction(e -> {
+                this.BoardSquare = board.getPosition(number);
+                this.ChessPiece = board.getBoardSquare(number);
+            });
+            board.validMovesPosition(number);
         }
         return button;
     }
 
     private Button createButton(int number) {
         Button button = new Button();
-        if ((number + number/8) % 2 == 0) {
+        if ((number + number/8) % 2 == 1) {
             button.setStyle("-fx-background-color: #ffe9c5");
         }
-        else if ((number + number/8) % 2 == 1) {
+        else {
             button.setStyle("-fx-background-color: #d08c47");
         }
         setButtonData(button);

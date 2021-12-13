@@ -56,6 +56,8 @@ public class Board {
         return Squares[position].squarePiece;
     }
 
+    public int getPosition(int position) { return position; }
+
     public void printFullBoard(){//Prints the location and piece name of every non-empty square on the board
         for (int i = 0; i < 64; i++)
             if (Squares[i].squarePiece.name != Character.MIN_VALUE) {

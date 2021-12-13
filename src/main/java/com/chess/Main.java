@@ -20,18 +20,16 @@ public class Main extends Application {
         ChoosePlayer(stage);
     }
 
+    private boolean isWhite;
+
     private void ChoosePlayer(Stage primaryStage) {
 
         GridPane grid = createGrid();
 
         Button White = new Button("White");
-        White.setOnAction(e -> {
-
-        });
+        White.setOnAction(e -> isWhite = true);
         Button Black = new Button("Black");
-        Black.setOnAction(e -> {
-
-        });
+        Black.setOnAction(e -> isWhite = false);
         Button Start = createStartButton(primaryStage);
         Button Exit = createExitButton();
         Button Options = OptionsButton();
@@ -75,7 +73,7 @@ public class Main extends Application {
     private Button createStartButton(Stage primaryStage) {
         Button Start = new Button("Start");
         Start.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        Start.setOnAction(e -> new Game(primaryStage));
+        Start.setOnAction(e -> new Game(primaryStage, isWhite));
         setButtonData(Start);
         return Start;
     }
