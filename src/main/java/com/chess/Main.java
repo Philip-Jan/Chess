@@ -34,8 +34,8 @@ public class Main extends Application {
         });
         Button Start = createStartButton(primaryStage);
         Button Exit = createExitButton();
-        Button Options = new Button();
-        Button Difficulty = new Button();
+        Button Options = OptionsButton();
+        Button Difficulty = DifficultyButton();
 
         grid.add(White, 0,0);
         grid.add(Black, 1,0);
@@ -86,6 +86,16 @@ public class Main extends Application {
         Exit.setOnAction(e -> Platform.exit());
         setButtonData(Exit);
         return Exit;
+    }
+
+    private Button OptionsButton() {
+        Button Opt = new Button();
+        return Opt;
+    }
+
+    private Button DifficultyButton() {
+        Button Dif = new Button();
+        return Dif;
     }
 
     private GridPane createGrid() {
