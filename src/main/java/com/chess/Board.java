@@ -82,13 +82,31 @@ public class Board {
     public ArrayList<Integer> validMovesPosition(int position){//Give the legal moves the piece on the specified position can make.
         ArrayList<Integer> validMoves = new ArrayList<>();
         Piece piece = Squares[position].squarePiece;
-        for (int[] move : piece.movePattern
-             ) {
-            if (move[0]+ Squares[position].getColumn() >= 0 && move[0]+ Squares[position].getColumn() <= 7 &&
-                    move[1]+ Squares[position].getRow() >= 0 && move[1]+ Squares[position].getRow() <= 7) { //Is on the board
-                int targetPosition = position+move[0]+move[1]*8;
-                if (piece.color != Squares[targetPosition].squarePiece.color){ // Is not a piece of the same color
-                    validMoves.add(targetPosition);
+        if (piece.moveRecursion == false) {//short range pieces Knight, King and pawn.
+            for (int[] move : piece.movePattern) {
+                if (move[0] + Squares[position].getColumn() >= 0 && move[0] + Squares[position].getColumn() <= 7 &&
+                        move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) { //Is on the board
+                    int targetPosition = position + move[0] + move[1] * 8;
+                    if (piece.color != Squares[targetPosition].squarePiece.color) { // Is not a piece of the same color
+                        validMoves.add(targetPosition);
+                    }
+                }
+            }
+        }else {//Long range pieces Queen, Rook and Bishop
+            for (int[] move : piece.movePattern) {
+                int temp_position = position;
+                while (move[0] + Squares[temp_position].getColumn() >= 0 &&
+                        move[0] + Squares[temp_position].getColumn() <= 7 &&
+                        move[1] + Squares[temp_position].getRow() >= 0 &&
+                        move[1] + Squares[temp_position].getRow() <= 7){
+                    temp_position = temp_position + move[0] + move[1] * 8;
+                    if (piece.color != Squares[temp_position].squarePiece.color) { // Is not a piece of the same color
+                        validMoves.add(temp_position);
+                    }
+                    if (Squares[temp_position].squarePiece.name != Character.MIN_VALUE){ //If there is a piece on the
+                        // position, you can't continue in that direction
+                        break;
+                    }
                 }
             }
         }
