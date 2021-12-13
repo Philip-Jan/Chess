@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 public class ButtonHandler implements EventHandler<ActionEvent> {
     private final int number;
     private final Board board;
-    private char ChessPiece;
+    private final char ChessPiece;
 
     ButtonHandler(int number, char ChessPiece, Board board) {
         this.number = number;
