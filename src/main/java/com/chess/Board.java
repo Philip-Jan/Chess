@@ -82,7 +82,7 @@ public class Board {
     public ArrayList<Integer> validMovesPosition(int position){//Give the legal moves the piece on the specified position can make.
         ArrayList<Integer> validMoves = new ArrayList<>();
         Piece piece = Squares[position].squarePiece;
-        if (piece.moveRecursion == false) {//short range pieces Knight, King and pawn.
+        if (!piece.moveRecursion) {//short range pieces Knight, King and pawn.
             for (int[] move : piece.movePattern) {
                 if (move[0] + Squares[position].getColumn() >= 0 && move[0] + Squares[position].getColumn() <= 7 &&
                         move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) { //Is on the board
@@ -115,14 +115,14 @@ public class Board {
 
     public ArrayList<ArrayList<Integer>> getAllMoves(char color){// Returns all legal moves a player can make.
         // The first element in each list is the starting position of a piece, the other elements are where it can go.
-        ArrayList<ArrayList<Integer>> allValidMoves = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> allValidMoves = new ArrayList<>();
         int pieceNumber = 0;
         for (Square square : Squares){
             if (square.squarePiece.color == color && validMovesPosition(square.position).size() > 0){
                 ArrayList<Integer> validMoves = new ArrayList<>();
                 validMoves.add(square.position);
                 validMoves.addAll(validMovesPosition(square.position));
-                allValidMoves.add(new ArrayList<Integer>());
+                allValidMoves.add(new ArrayList<>());
                 allValidMoves.get(pieceNumber).addAll(validMoves);
                 pieceNumber++;
             }
