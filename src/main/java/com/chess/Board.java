@@ -129,4 +129,28 @@ public class Board {
         }
         return allValidMoves;
     }
+
+    public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
+        char targetPiece;
+        int targetSquare = -1;
+        boolean check = false;
+        if (checker == 'W') {
+            targetPiece = 'k';
+        }else {
+            targetPiece = 'K';
+        }
+        for (Square square : Squares){
+            if (square.squarePiece.name == targetPiece){
+                targetSquare = square.position;
+                break;
+            }
+        }
+        for (ArrayList<Integer> move : getAllMoves(checker)){
+            if (move.contains(targetSquare)){
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
 }
