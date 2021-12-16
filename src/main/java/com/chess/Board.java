@@ -62,6 +62,7 @@ public class Board {
                 System.out.println(Squares[i].position + " " + Squares[i].squarePiece.name);
             }
     }
+
     public void printSquareBoard(){//Prints the entire board in an 8 by 8 square
         for (int i = 0; i<8;i++) {
             for (int j = 0; j < 8; j++) {
@@ -74,11 +75,13 @@ public class Board {
             System.out.print("\n");
         }
     }
+
     public void makeMove(int startSquare,int endSquare){//Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = new Piece(Character.MIN_VALUE);
     }
+
     public ArrayList<Integer> validMovesPosition(int position){//Give the legal moves the piece on the specified position can make.
         ArrayList<Integer> validMoves = new ArrayList<>();
         Piece piece = Squares[position].squarePiece;
@@ -152,5 +155,40 @@ public class Board {
             }
         }
         return check;
+    }
+
+    public boolean isMate(char mater){//Returns if the mater is mating the opponent.
+        if (!isCheck(mater)){//No check means no mate
+            return false;
+        }
+//        Board tempBoard = new Board();
+//        tempBoard = this.clone();
+//        tempBoard.makeMove(8,16);
+//        System.out.println("Temp board:");
+//        tempBoard.printSquareBoard();
+//        System.out.println("Board:");
+//        this.printSquareBoard();
+        boolean mate = true;
+        char opponent;
+        if (mater == 'B'){
+            opponent = 'W';
+        }else {
+            opponent = 'B';
+        }
+        for (ArrayList<Integer> move : getAllMoves(opponent)){
+            for (int i = 1; i < move.size();i++){
+                if (!(Squares[move.get(i)].squarePiece.name == 'K' ||
+                        Squares[move.get(i)].squarePiece.name == 'k')) { //not a king
+                    Piece tempPiece = Squares[move.get(i)].squarePiece; //temporarily moves a piece from the end move position to safety
+                    makeMove(move.get(0), move.get(i)); //moves the piece
+                    if(!isCheck(mater)){
+                        mate = false;
+                    }
+                    makeMove(move.get(i),move.get(0));
+                   Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
+                }
+            }
+        }
+        return mate;
     }
 }

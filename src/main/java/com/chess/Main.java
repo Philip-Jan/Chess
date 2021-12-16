@@ -104,16 +104,20 @@ public class Main extends Application {
             board.setBeginPosition();
             board.printSquareBoard();
             System.out.println(board.getAllMoves('B'));
-            System.out.println(board.isCheck('W'));
-            System.out.println(board.isCheck('B'));
-            board.makeMove(3,51);
+            board.makeMove(3,53);
             board.printSquareBoard();
+            System.out.println("Qf7+");
             System.out.println(board.isCheck('W'));
             System.out.println(board.isCheck('B'));
-            board.makeMove(60,5);
+            System.out.println("White is mating: " + board.isMate('W'));
+            System.out.println("Black is mating: " + board.isMate('B'));
+            board.makeMove(5,44);
             board.printSquareBoard();
-            System.out.println(board.isCheck('W'));
-            System.out.println(board.isCheck('B'));
+            System.out.println("Be6#");
+            System.out.println("White is mating: " + board.isMate('W'));
+            System.out.println("Black is mating: " + board.isMate('B'));
+
+
         }else {
             launch(args);
         }
