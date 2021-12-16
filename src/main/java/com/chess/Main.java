@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -21,6 +22,8 @@ public class Main extends Application {
     }
 
     private boolean isWhite;
+    private int fieldColor;
+    private ChoiceBox<String> Options;
 
     private void ChoosePlayer(Stage primaryStage) {
 
@@ -32,7 +35,7 @@ public class Main extends Application {
         Black.setOnAction(e -> isWhite = false);
         Button Start = createStartButton(primaryStage);
         Button Exit = createExitButton();
-        Button Options = OptionsButton();
+        this.Options = OptionsButton();
         Button Difficulty = DifficultyButton();
 
         grid.add(White, 0,0);
@@ -45,15 +48,11 @@ public class Main extends Application {
         White.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         setButtonData(Black);
         Black.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
-        setButtonData(Options);
-        Options.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         setButtonData(Difficulty);
         Difficulty.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
-
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
         root.setCenter(grid);
-
         Scene scene = new Scene(root, 800, 800);
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
@@ -73,7 +72,10 @@ public class Main extends Application {
     private Button createStartButton(Stage primaryStage) {
         Button Start = new Button("Start");
         Start.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        Start.setOnAction(e -> new Game(primaryStage, isWhite, fieldColor));
+        Start.setOnAction(e -> {
+            this.fieldColor = setFieldColor();
+            new Game(primaryStage, isWhite, fieldColor);
+        });
         setButtonData(Start);
         return Start;
     }
@@ -86,8 +88,17 @@ public class Main extends Application {
         return Exit;
     }
 
-    private Button OptionsButton() {
-        Button Opt = new Button();
+    private ChoiceBox<String> OptionsButton() {
+        ChoiceBox<String> Opt = new ChoiceBox<>();
+        Opt.setValue("Default");
+        Opt.getItems().add("Default");
+        Opt.getItems().add("Green");
+        Opt.getItems().add("Purple");
+        Opt.getItems().add("Pink");
+        Opt.getItems().add("Turquoise");
+        Opt.getItems().add("Blue");
+        Opt.getItems().add("Grey");
+        Opt.getItems().add("Black");
         return Opt;
     }
 
@@ -105,8 +116,23 @@ public class Main extends Application {
         return grid;
     }
 
+    private int setFieldColor() {
+        String value = this.Options.getValue();
+        switch (value) {
+            case "Default" -> fieldColor = 0;
+            case "Green" -> fieldColor = 1;
+            case "Purple" -> fieldColor = 2;
+            case "Pink" -> fieldColor = 3;
+            case "Turquoise" -> fieldColor = 4;
+            case "Blue" -> fieldColor = 5;
+            case "Grey" -> fieldColor = 6;
+            case "Black" -> fieldColor = 7;
+        }
+        return fieldColor;
+    }
+
     public static void main(String[] args) {
-        boolean debugMode = true;
+        boolean debugMode = false;
         if (debugMode){
             Board board = new Board();
             board.setBeginPosition();

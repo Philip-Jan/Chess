@@ -4,10 +4,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -16,7 +13,9 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
+import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
 import static javafx.scene.control.Alert.AlertType.INFORMATION;
 
 public class Game {
@@ -62,8 +61,8 @@ public class Game {
         ButtonBar bar = new ButtonBar();
 
         Button NewGame = new Button("New Game");
-        NewGame.setTooltip(new Tooltip("Behoudt niet de huidige instellingen"));
         NewGame.setOnAction(e -> {
+            Alert alert = new Alert(CONFIRMATION);
 
         });
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -71,16 +70,28 @@ public class Game {
 
         Button OfferDraw = new Button("Offer Draw");
         OfferDraw.setOnAction(e -> {
-            Alert text = new Alert(INFORMATION, "A draw");
-            text.show();
+            Alert alert = new Alert(INFORMATION, "A draw");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
         });
         OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setButtonData(OfferDraw);
 
         Button OfferWin = new Button("Offer Win");
         OfferWin.setOnAction(e -> {
-            Alert text = new Alert(INFORMATION, "You have lost.");
-            text.show();
+            Alert alert = new Alert(INFORMATION, "You have lost.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
         });
         OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setButtonData(OfferWin);
@@ -113,14 +124,32 @@ public class Game {
     private Button createNumberButton(int number) {
         Button button = createButton();
         buttonAction(button, number);
-        if (validMoves.contains(number)) {
+        if (validMoves != null && validMoves.contains(number)) {
             button.setStyle("Yellow");
         }
         else if ((number + number/8) % 2 == 1) {
-            button.setStyle("-fx-background-color: #ffe9c5");
+            switch (fieldColor) {
+                case 0 -> button.setStyle("-fx-background-color: #ffe9c5");
+                case 1 -> button.setStyle("-fx-background-color: #6f8f72");
+                case 2 -> button.setStyle("-fx-background-color: #6f73d2");
+                case 3 -> button.setStyle("-fx-background-color: #706677");
+                case 4 -> button.setStyle("-fx-background-color: #70a2a3");
+                case 5 -> button.setStyle("-fx-background-color: #03357c");
+                case 6 -> button.setStyle("-fx-background-color: #b3b3b3");
+                case 7 -> button.setStyle("-fx-background-color: #1e1e1e");
+            }
         }
         else {
-            button.setStyle("-fx-background-color: #d08c47");
+            switch (fieldColor) {
+                case 0 -> button.setStyle("-fx-background-color: #d08c47");
+                case 1 -> button.setStyle("-fx-background-color: #adbd8f");
+                case 2 -> button.setStyle("-fx-background-color: #9dacff");
+                case 3 -> button.setStyle("-fx-background-color: #ccb7ae");
+                case 4 -> button.setStyle("-fx-background-color: #b1e4b8");
+                case 5 -> button.setStyle("-fx-background-color: #bee4f9");
+                case 6 -> button.setStyle("-fx-background-color: #e6e6e6");
+                case 7 -> button.setStyle("-fx-background-color: #e9e0db");
+            }
         }
         return button;
     }
