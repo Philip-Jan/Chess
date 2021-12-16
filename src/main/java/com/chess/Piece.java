@@ -49,7 +49,7 @@ public class Piece {
     private void makeWRook(){
         name = 'R';
         color = 'W';
-        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][] {{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         String str = new File("src\\main\\Images\\WR.gif").toURI().toString();
         String string = str.substring(6);
@@ -62,7 +62,7 @@ public class Piece {
     private void makeBRook(){
         name = 'r';
         color = 'B';
-        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][] {{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         String str = new File("src\\main\\Images\\BR.gif").toURI().toString();
         String string = str.substring(6);
@@ -127,7 +127,7 @@ public class Piece {
     private void makeWQueen(){
         name = 'Q';
         color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         String str = new File("src\\main\\Images\\WQ.gif").toURI().toString();
         String string = str.substring(6);
@@ -140,7 +140,7 @@ public class Piece {
     private void makeBQueen(){
         name = 'q';
         color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         String str = new File("src\\main\\Images\\BQ.gif").toURI().toString();
         String string = str.substring(6);
@@ -153,7 +153,7 @@ public class Piece {
     private void makeWKing(){
         name = 'K';
         color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         specialMoves = new int[][]{{-2,0},{2,0}};
         moveRecursion = false;
         String str = new File("src\\main\\Images\\WK.gif").toURI().toString();
@@ -167,7 +167,7 @@ public class Piece {
     private void makeBKing(){
         name = 'k';
         color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         specialMoves = new int[][]{{-2,0},{2,0}};
         moveRecursion = false;
         String str = new File("src\\main\\Images\\BK.gif").toURI().toString();

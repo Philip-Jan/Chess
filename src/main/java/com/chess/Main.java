@@ -123,6 +123,7 @@ public class Main extends Application {
             System.out.println("Nc3,Rd1#");
             System.out.println("White is mating: " + board.isMate('W'));
             System.out.println("Black is mating: " + board.isMate('B'));
+            System.out.println("White's possible moves:" + board.getAllMoves('W'));
         }
         launch(args);
 
