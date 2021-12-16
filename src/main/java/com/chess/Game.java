@@ -34,11 +34,13 @@ public class Game {
     }
 
     private ArrayList<Integer> validMoves;
-    Board board = new Board(this.pieceImg);
     private int BoardSquare;
+    Board board;
     private Piece ChessPiece;
 
     public void startGame(Stage stage) {
+
+        board = new Board(this.pieceImg);
 
         GridPane grid = createGrid();
 

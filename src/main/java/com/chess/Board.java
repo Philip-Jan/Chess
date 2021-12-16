@@ -19,6 +19,7 @@ public class Board {
     }
 
     private void initBoard(){//Makes the board out of an array of squares
+
         for (int i = 0; i<64; i++){
             Squares[i] = new Square(this.pieceImg);
             Squares[i].position = i;
