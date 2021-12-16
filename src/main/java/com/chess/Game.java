@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Tooltip;
@@ -15,6 +16,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+
+import static javafx.scene.control.Alert.AlertType.INFORMATION;
 
 public class Game {
 
@@ -58,24 +61,34 @@ public class Game {
 
         ButtonBar bar = new ButtonBar();
 
-        Button NewGame1 = new Button("New Game");
-        NewGame1.setTooltip(new Tooltip("Behoudt niet de huidige instellingen"));
-        NewGame1.setOnAction(e -> {
+        Button NewGame = new Button("New Game");
+        NewGame.setTooltip(new Tooltip("Behoudt niet de huidige instellingen"));
+        NewGame.setOnAction(e -> {
 
         });
-        NewGame1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(NewGame1);
-        Button NewGame2 = new Button("New Game");
-        NewGame2.setTooltip(new Tooltip("Behoudt de huidige instellingen"));
-        NewGame2.setOnAction(e -> {
+        NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setButtonData(NewGame);
 
+        Button OfferDraw = new Button("Offer Draw");
+        OfferDraw.setOnAction(e -> {
+            Alert text = new Alert(INFORMATION, "A draw");
+            text.show();
         });
-        NewGame2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(NewGame2);
+        OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setButtonData(OfferDraw);
+
+        Button OfferWin = new Button("Offer Win");
+        OfferWin.setOnAction(e -> {
+            Alert text = new Alert(INFORMATION, "You have lost.");
+            text.show();
+        });
+        OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setButtonData(OfferWin);
         Button Exit = createExitButton();
-        bar.getButtons().addAll(NewGame1, NewGame2, Exit);
-        ButtonBar.setButtonData(NewGame1, ButtonBar.ButtonData.LEFT);
-        ButtonBar.setButtonData(NewGame2, ButtonBar.ButtonData.LEFT);
+        bar.getButtons().addAll(NewGame, OfferDraw, OfferWin, Exit);
+        ButtonBar.setButtonData(NewGame, ButtonBar.ButtonData.LEFT);
+        ButtonBar.setButtonData(OfferDraw, ButtonBar.ButtonData.LEFT);
+        ButtonBar.setButtonData(OfferWin, ButtonBar.ButtonData.LEFT);
 
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
