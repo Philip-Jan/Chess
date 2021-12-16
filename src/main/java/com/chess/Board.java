@@ -131,16 +131,16 @@ public class Board {
     }
 
     public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
-        char targetPiece;
+        Piece enemyKing = new Piece(' ');
         int targetSquare = -1;
         boolean check = false;
         if (checker == 'W') {
-            targetPiece = 'k';
+            enemyKing.name = 'k';
         }else {
-            targetPiece = 'K';
+            enemyKing.name = 'K';
         }
         for (Square square : Squares){
-            if (square.squarePiece.name == targetPiece){
+            if (square.squarePiece.name == enemyKing.name){
                 targetSquare = square.position;
                 break;
             }
