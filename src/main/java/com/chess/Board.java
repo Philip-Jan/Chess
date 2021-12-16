@@ -161,14 +161,6 @@ public class Board {
         if (!isCheck(mater)){//No check means no mate
             return false;
         }
-//        Board tempBoard = new Board();
-//        tempBoard = this.clone();
-//        tempBoard.makeMove(8,16);
-//        System.out.println("Temp board:");
-//        tempBoard.printSquareBoard();
-//        System.out.println("Board:");
-//        this.printSquareBoard();
-        boolean mate = true;
         char opponent;
         if (mater == 'B'){
             opponent = 'W';
@@ -182,13 +174,15 @@ public class Board {
                     Piece tempPiece = Squares[move.get(i)].squarePiece; //temporarily moves a piece from the end move position to safety
                     makeMove(move.get(0), move.get(i)); //moves the piece
                     if(!isCheck(mater)){
-                        mate = false;
+                        makeMove(move.get(i),move.get(0));
+                        Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
+                        return false;
                     }
                     makeMove(move.get(i),move.get(0));
                    Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
                 }
             }
         }
-        return mate;
+        return true;
     }
 }

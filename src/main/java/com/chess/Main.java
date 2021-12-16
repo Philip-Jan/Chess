@@ -103,12 +103,12 @@ public class Main extends Application {
             Board board = new Board();
             board.setBeginPosition();
             board.printSquareBoard();
-            System.out.println(board.getAllMoves('B'));
+            System.out.println("Blacks possible moves:" + board.getAllMoves('B'));
             board.makeMove(3,53);
             board.printSquareBoard();
             System.out.println("Qf7+");
-            System.out.println(board.isCheck('W'));
-            System.out.println(board.isCheck('B'));
+            System.out.println("White checks: " + board.isCheck('W'));
+            System.out.println("Black checks: " + board.isCheck('B'));
             System.out.println("White is mating: " + board.isMate('W'));
             System.out.println("Black is mating: " + board.isMate('B'));
             board.makeMove(5,44);
@@ -116,6 +116,13 @@ public class Main extends Application {
             System.out.println("Be6#");
             System.out.println("White is mating: " + board.isMate('W'));
             System.out.println("Black is mating: " + board.isMate('B'));
+            board.makeMove(56,3);
+            board.makeMove(57,18);
+            board.printSquareBoard();
+            System.out.println("Nc3,Rd1#");
+            System.out.println("White is mating: " + board.isMate('W'));
+            System.out.println("Black is mating: " + board.isMate('B'));
+
 
 
         }else {
