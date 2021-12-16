@@ -4,16 +4,23 @@ import java.util.ArrayList;
 
 public class Board {
 
+    private int pieceImg;
     Square[] Squares = new Square[64];
+
     Board() {
         initBoard();
         setBeginPosition();
     }
-    
+
+    Board(int pieceImg) {
+        this.pieceImg = pieceImg;
+        initBoard();
+        setBeginPosition();
+    }
 
     private void initBoard(){//Makes the board out of an array of squares
         for (int i = 0; i<64; i++){
-            Squares[i] = new Square();
+            Squares[i] = new Square(this.pieceImg);
             Squares[i].position = i;
             if ((i/8 + i)%2 == 1) {
                 Squares[i].colour = 'W';
@@ -27,29 +34,29 @@ public class Board {
 
     public void setBeginPosition() {//Sets the board to the starting position
         //White pieces
-        Squares[0].squarePiece = new Piece('R');
-        Squares[1].squarePiece = new Piece('N');
-        Squares[2].squarePiece = new Piece('B');
-        Squares[3].squarePiece = new Piece('Q');
-        Squares[4].squarePiece = new Piece('K');
-        Squares[5].squarePiece = new Piece('B');
-        Squares[6].squarePiece = new Piece('N');
-        Squares[7].squarePiece = new Piece('R');
+        Squares[0].squarePiece = new Piece('R', this.pieceImg);
+        Squares[1].squarePiece = new Piece('N', this.pieceImg);
+        Squares[2].squarePiece = new Piece('B', this.pieceImg);
+        Squares[3].squarePiece = new Piece('Q', this.pieceImg);
+        Squares[4].squarePiece = new Piece('K', this.pieceImg);
+        Squares[5].squarePiece = new Piece('B', this.pieceImg);
+        Squares[6].squarePiece = new Piece('N', this.pieceImg);
+        Squares[7].squarePiece = new Piece('R', this.pieceImg);
         for (int i =8; i < 16; i++){
-            Squares[i].squarePiece = new Piece('P');
+            Squares[i].squarePiece = new Piece('P', this.pieceImg);
         }
         //Black pieces
         for (int i =48; i < 56; i++){
-            Squares[i].squarePiece = new Piece('p');
+            Squares[i].squarePiece = new Piece('p', this.pieceImg);
         }
-        Squares[56].squarePiece = new Piece('r');
-        Squares[57].squarePiece = new Piece('n');
-        Squares[58].squarePiece = new Piece('b');
-        Squares[59].squarePiece = new Piece('q');
-        Squares[60].squarePiece = new Piece('k');
-        Squares[61].squarePiece = new Piece('b');
-        Squares[62].squarePiece = new Piece('n');
-        Squares[63].squarePiece = new Piece('r');
+        Squares[56].squarePiece = new Piece('r', this.pieceImg);
+        Squares[57].squarePiece = new Piece('n', this.pieceImg);
+        Squares[58].squarePiece = new Piece('b', this.pieceImg);
+        Squares[59].squarePiece = new Piece('q', this.pieceImg);
+        Squares[60].squarePiece = new Piece('k', this.pieceImg);
+        Squares[61].squarePiece = new Piece('b', this.pieceImg);
+        Squares[62].squarePiece = new Piece('n', this.pieceImg);
+        Squares[63].squarePiece = new Piece('r', this.pieceImg);
     }
 
     public Piece getBoardSquare(int position) {//Returns the piece name that occupies the selected square
@@ -79,7 +86,7 @@ public class Board {
     public void makeMove(int startSquare,int endSquare){//Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
-        Squares[startSquare].squarePiece = new Piece(Character.MIN_VALUE);
+        Squares[startSquare].squarePiece = new Piece(Character.MIN_VALUE, this.pieceImg);
     }
     public ArrayList<Integer> validMovesPosition(int position){//Give the legal moves the piece on the specified position can make.
         ArrayList<Integer> validMoves = new ArrayList<>();
@@ -133,7 +140,7 @@ public class Board {
     }
 
     public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
-        Piece enemyKing = new Piece(' ');
+        Piece enemyKing = new Piece(' ', this.pieceImg);
         int targetSquare = -1;
         boolean check = false;
         if (checker == 'W') {

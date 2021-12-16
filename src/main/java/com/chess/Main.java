@@ -23,7 +23,9 @@ public class Main extends Application {
 
     private boolean isWhite;
     private int fieldColor;
-    private ChoiceBox<String> Options;
+    private int pieceImg;
+    private ChoiceBox<String> OptBackgroundColor;
+    private ChoiceBox<String> OptPieceImages;
 
     private void ChoosePlayer(Stage primaryStage) {
 
@@ -33,26 +35,29 @@ public class Main extends Application {
         White.setOnAction(e -> isWhite = true);
         Button Black = new Button("Black");
         Black.setOnAction(e -> isWhite = false);
+
         Button Start = createStartButton(primaryStage);
         Button Exit = createExitButton();
-        this.Options = OptionsButton();
-        Button Difficulty = DifficultyButton();
+
+        this.OptBackgroundColor = OptionsButton();
+        this.OptPieceImages = ImageButton();
 
         grid.add(White, 0,0);
         grid.add(Black, 1,0);
-        grid.add(Options,0,1);
-        grid.add(Difficulty,1,1);
+        grid.add(OptBackgroundColor,0,1);
+        grid.add(OptPieceImages,1,1);
         grid.add(Start,0,2);
         grid.add(Exit, 1,2);
+
         setButtonData(White);
         White.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         setButtonData(Black);
         Black.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
-        setButtonData(Difficulty);
-        Difficulty.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
         root.setCenter(grid);
+
         Scene scene = new Scene(root, 800, 800);
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
@@ -74,7 +79,8 @@ public class Main extends Application {
         Start.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         Start.setOnAction(e -> {
             this.fieldColor = setFieldColor();
-            new Game(primaryStage, isWhite, fieldColor);
+            this.pieceImg = setImages();
+            new Game(primaryStage, isWhite, fieldColor, pieceImg);
         });
         setButtonData(Start);
         return Start;
@@ -102,9 +108,16 @@ public class Main extends Application {
         return Opt;
     }
 
-    private Button DifficultyButton() {
-        Button Dif = new Button();
-        return Dif;
+    private ChoiceBox<String> ImageButton() {
+        ChoiceBox<String> Img = new ChoiceBox<>();
+        Img.setValue("Cardinal");
+        Img.getItems().add("Cardinal");
+        Img.getItems().add("Chessnut");
+        Img.getItems().add("Dubrovny");
+        Img.getItems().add("Fresca");
+        Img.getItems().add("Horsey");
+        Img.getItems().add("Kosal");
+        return Img;
     }
 
     private GridPane createGrid() {
@@ -116,8 +129,21 @@ public class Main extends Application {
         return grid;
     }
 
+    private int setImages() {
+        String value = this.OptPieceImages.getValue();
+        switch (value) {
+            case "Cardinal" -> pieceImg = 0;
+            case "Chessnut" -> pieceImg = 1;
+            case "Dubrovny" -> pieceImg = 2;
+            case "Fresca" -> pieceImg = 3;
+            case "Horsey" -> pieceImg = 4;
+            case "Kosal" -> pieceImg = 5;
+        }
+        return pieceImg;
+    }
+
     private int setFieldColor() {
-        String value = this.Options.getValue();
+        String value = this.OptBackgroundColor.getValue();
         switch (value) {
             case "Default" -> fieldColor = 0;
             case "Green" -> fieldColor = 1;

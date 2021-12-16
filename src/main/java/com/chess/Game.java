@@ -4,7 +4,10 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -15,21 +18,23 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
 import static javafx.scene.control.Alert.AlertType.INFORMATION;
 
 public class Game {
 
-    Game(Stage stage, boolean isWhite, int fieldColor) {
+    private final boolean isWhite;
+    private final int fieldColor;
+    private int pieceImg;
+
+    Game(Stage stage, boolean isWhite, int fieldColor, int pieceImg) {
         this.isWhite = isWhite;
         this.fieldColor = fieldColor;
+        this.pieceImg = pieceImg;
         startGame(stage);
     }
 
-    private final boolean isWhite;
-    private final int fieldColor;
     private ArrayList<Integer> validMoves;
-    Board board = new Board();
+    Board board = new Board(this.pieceImg);
     private int BoardSquare;
     private Piece ChessPiece;
 
@@ -43,7 +48,9 @@ public class Game {
                 Button button = createNumberButton(i);
                 int row = (63-i) / 8;
                 int col = i % 8;
-                button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                if (board.getBoardSquare(i) != null) {
+                    button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                }
                 grid.add(button, col, row);
             }
         }
@@ -53,7 +60,9 @@ public class Game {
                 Button button = createNumberButton(i);
                 int row = i / 8;
                 int col = (63-i) % 8;
-                button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                if (board.getBoardSquare(i) != null) {
+                    button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                }
                 grid.add(button, col, row);
             }
         }
@@ -62,7 +71,6 @@ public class Game {
 
         Button NewGame = new Button("New Game");
         NewGame.setOnAction(e -> {
-            Alert alert = new Alert(CONFIRMATION);
 
         });
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
