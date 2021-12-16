@@ -10,7 +10,7 @@ public class Piece {
     char name = Character.MIN_VALUE;
     char color = Character.MIN_VALUE;
     int[][] movePattern;//{Change in columns, change in rows}
-    int[] specialMoves = {}; //Castling, pawn captures, double pawn move
+    int[][] specialMoves; //Castling, pawn captures, double pawn move
     boolean moveRecursion;
     Image imgPiece;
     ImageView imgViewPiece;
@@ -154,7 +154,7 @@ public class Piece {
         name = 'K';
         color = 'W';
         movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
-        specialMoves = new int[]{-2,2};
+        specialMoves = new int[][]{{-2,0},{2,0}};
         moveRecursion = false;
         String str = new File("src\\main\\Images\\WK.gif").toURI().toString();
         String string = str.substring(6);
@@ -168,7 +168,7 @@ public class Piece {
         name = 'k';
         color = 'B';
         movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
-        specialMoves = new int[]{-2,2};
+        specialMoves = new int[][]{{-2,0},{2,0}};
         moveRecursion = false;
         String str = new File("src\\main\\Images\\BK.gif").toURI().toString();
         String string = str.substring(6);
@@ -182,7 +182,7 @@ public class Piece {
         name = 'P';
         color = 'W';
         movePattern = new int[][]{{0,1}};
-        specialMoves = new int[]{16,7,9};
+        specialMoves = new int[][]{{0,2},{1,1},{-1,1}};
         moveRecursion = false;
         String str = new File("src\\main\\Images\\WP.gif").toURI().toString();
         String string = str.substring(6);
@@ -194,9 +194,9 @@ public class Piece {
     }
     private void makeBPawn(){
         name = 'p';
-        color = 'W';
-        movePattern = new int[][]{{0,1}};
-        specialMoves = new int[]{16,7,9};
+        color = 'B';
+        movePattern = new int[][]{{0,-1}};
+        specialMoves = new int[][]{{0,-2},{1,-1},{-1,-1}};
         moveRecursion = false;
         String str = new File("src\\main\\Images\\BP.gif").toURI().toString();
         String string = str.substring(6);

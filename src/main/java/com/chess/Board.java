@@ -114,4 +114,45 @@ public class Board {
         }
         return validMoves;
     }
+
+    public ArrayList<ArrayList<Integer>> getAllMoves(char color){// Returns all legal moves a player can make.
+        // The first element in each list is the starting position of a piece, the other elements are where it can go.
+        ArrayList<ArrayList<Integer>> allValidMoves = new ArrayList<>();
+        int pieceNumber = 0;
+        for (Square square : Squares){
+            if (square.squarePiece.color == color && validMovesPosition(square.position).size() > 0){
+                ArrayList<Integer> validMoves = new ArrayList<>();
+                validMoves.add(square.position);
+                validMoves.addAll(validMovesPosition(square.position));
+                allValidMoves.add(new ArrayList<>());
+                allValidMoves.get(pieceNumber).addAll(validMoves);
+                pieceNumber++;
+            }
+        }
+        return allValidMoves;
+    }
+
+    public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
+        char targetPiece;
+        int targetSquare = -1;
+        boolean check = false;
+        if (checker == 'W') {
+            targetPiece = 'k';
+        }else {
+            targetPiece = 'K';
+        }
+        for (Square square : Squares){
+            if (square.squarePiece.name == targetPiece){
+                targetSquare = square.position;
+                break;
+            }
+        }
+        for (ArrayList<Integer> move : getAllMoves(checker)){
+            if (move.contains(targetSquare)){
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
 }
