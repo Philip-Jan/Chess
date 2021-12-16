@@ -16,12 +16,14 @@ import javafx.stage.Stage;
 
 public class Game {
 
-    Game(Stage stage, boolean isWhite) {
+    Game(Stage stage, boolean isWhite, int fieldColor) {
         this.isWhite = isWhite;
+        this.fieldColor = fieldColor;
         startGame(stage);
     }
 
     private final boolean isWhite;
+    private final int fieldColor;
     Board board = new Board();
     private int BoardSquare;
     private Piece ChessPiece;
@@ -103,8 +105,11 @@ public class Game {
             button.setOnAction(e -> {
                 this.BoardSquare = board.getPosition(number);
                 this.ChessPiece = board.getBoardSquare(number);
+                for (int move : board.validMovesPosition(number)) {
+                    button.setStyle();
+                }
             });
-            board.validMovesPosition(number);
+
         }
         return button;
     }
