@@ -14,6 +14,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class Game {
 
     Game(Stage stage, boolean isWhite, int fieldColor) {
@@ -24,6 +26,7 @@ public class Game {
 
     private final boolean isWhite;
     private final int fieldColor;
+    private ArrayList<Integer> validMoves;
     Board board = new Board();
     private int BoardSquare;
     private Piece ChessPiece;
@@ -95,33 +98,22 @@ public class Game {
     }
 
     private Button createNumberButton(int number) {
-        Button button = createButton(number);
-        if (this.ChessPiece != null) {
-            button.setOnAction(new ButtonHandler(number, this.BoardSquare, this.ChessPiece, board));
-            button.setGraphic(this.ChessPiece.imgViewPiece);
-            this.ChessPiece = null;
+        Button button = createButton();
+        buttonAction(button, number);
+        if (validMoves.contains(number)) {
+            button.setStyle("Yellow");
         }
-        else {
-            button.setOnAction(e -> {
-                this.BoardSquare = board.getPosition(number);
-                this.ChessPiece = board.getBoardSquare(number);
-                for (int move : board.validMovesPosition(number)) {
-                    button.setStyle();
-                }
-            });
-
-        }
-        return button;
-    }
-
-    private Button createButton(int number) {
-        Button button = new Button();
-        if ((number + number/8) % 2 == 1) {
+        else if ((number + number/8) % 2 == 1) {
             button.setStyle("-fx-background-color: #ffe9c5");
         }
         else {
             button.setStyle("-fx-background-color: #d08c47");
         }
+        return button;
+    }
+
+    private Button createButton() {
+        Button button = new Button();
         setButtonData(button);
         return button;
     }
@@ -142,6 +134,24 @@ public class Game {
         grid.setVgap(0);
         grid.setPadding(new Insets(10));
         return grid;
+    }
+
+    private void buttonAction(Button button, int number) {
+        if (this.ChessPiece != null) {
+            button.setOnAction(new ButtonHandler(number, this.BoardSquare, this.ChessPiece, board));
+            button.setGraphic(this.ChessPiece.imgViewPiece);
+            this.BoardSquare = 0;
+            this.ChessPiece = null;
+            this.validMoves = null;
+        }
+        else {
+            button.setOnAction(e -> {
+                this.BoardSquare = board.getPosition(number);
+                this.ChessPiece = board.getBoardSquare(number);
+                this.validMoves = board.validMovesPosition(number);
+            });
+
+        }
     }
 
 }
