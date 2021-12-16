@@ -99,34 +99,32 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         boolean debugMode = true;
-        if (debugMode){
+        if (debugMode) {
             Board board = new Board();
             board.setBeginPosition();
             board.printSquareBoard();
-            System.out.println("Blacks possible moves:" + board.getAllMoves('B'));
-            board.makeMove(3,53);
+            System.out.println("White's possible moves:" + board.getAllMoves('W'));
+            System.out.println("Black's possible moves:" + board.getAllMoves('B'));
+            board.makeMove(3, 53);
             board.printSquareBoard();
             System.out.println("Qf7+");
             System.out.println("White checks: " + board.isCheck('W'));
             System.out.println("Black checks: " + board.isCheck('B'));
             System.out.println("White is mating: " + board.isMate('W'));
             System.out.println("Black is mating: " + board.isMate('B'));
-            board.makeMove(5,44);
+            board.makeMove(5, 44);
             board.printSquareBoard();
             System.out.println("Be6#");
             System.out.println("White is mating: " + board.isMate('W'));
             System.out.println("Black is mating: " + board.isMate('B'));
-            board.makeMove(56,3);
-            board.makeMove(57,18);
+            board.makeMove(56, 3);
+            board.makeMove(57, 18);
             board.printSquareBoard();
             System.out.println("Nc3,Rd1#");
             System.out.println("White is mating: " + board.isMate('W'));
             System.out.println("Black is mating: " + board.isMate('B'));
-
-
-
-        }else {
-            launch(args);
         }
+        launch(args);
+
     }
 }
