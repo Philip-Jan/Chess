@@ -98,6 +98,14 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        boolean debugMode = true;
+        if (debugMode){
+            Board board = new Board();
+            board.setBeginPosition();
+            board.printSquareBoard();
+            System.out.println(board.getAllMoves('B'));
+        }else {
+            launch(args);
+        }
     }
 }
