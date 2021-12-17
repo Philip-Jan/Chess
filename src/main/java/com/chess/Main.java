@@ -16,6 +16,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public void restart(Stage stage) {
+        ChoosePlayer(stage);
+    }
+
     @Override
     public void start(Stage stage) {
         ChoosePlayer(stage);

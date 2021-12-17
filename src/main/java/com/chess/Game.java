@@ -74,7 +74,18 @@ public class Game {
 
         Button NewGame = new Button("New Game");
         NewGame.setOnAction(e -> {
-
+            Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
+                    ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent()) {
+                if (result.get() == ButtonType.YES) {
+                    startGame(stage);
+                } else if (result.get() == ButtonType.NO) {
+                    Platform.exit();
+                    Stage newStage = new Stage();
+                    Main.restart(newStage);
+                }
+            }
         });
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setButtonData(NewGame);
