@@ -24,7 +24,7 @@ public class Game {
 
     private final boolean isWhite;
     private final int fieldColor;
-    private int pieceImg;
+    private final int pieceImg;
 
     Game(Stage stage, boolean isWhite, int fieldColor, int pieceImg) {
         this.isWhite = isWhite;
