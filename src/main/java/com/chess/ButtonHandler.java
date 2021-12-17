@@ -2,6 +2,7 @@ package com.chess;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
     private final int number;
@@ -22,7 +23,7 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
             board.makeMove(BoardSquare, number);
         }
         else {
-
+            new Alert(Alert.AlertType.INFORMATION, "That is not a legal move.");
         }
     }
 

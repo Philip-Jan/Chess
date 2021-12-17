@@ -26,11 +26,10 @@ public class Board {
             Squares[i].position = i;
             if ((i/8 + i)%2 == 1) {
                 Squares[i].colour = 'W';
-            }else {
+            }
+            else {
                 Squares[i].colour = 'B';
-        }
-
-            
+            }
         }
     }
 
@@ -98,36 +97,48 @@ public class Board {
         Piece piece = Squares[position].squarePiece;
         if (!piece.moveRecursion) {//short range pieces Knight, King and pawn.
             if (piece.name == 'P') {//white pawn
-                if (Squares[position + 8].squarePiece.name == Character.MIN_VALUE && Squares[position].getRow() < 7) {
+                if (Squares[position + 8].squarePiece == null && Squares[position].getRow() < 7) {
                     //empty square in front of pawn
                     validMoves.add(position + 8);
                     if (Squares[position].getRow() == 1) {//start position
-                        if (Squares[position + 16].squarePiece.name == Character.MIN_VALUE) {//empty square 2 in front of pawn
+                        if (Squares[position + 16].squarePiece == null) {//empty square 2 in front of pawn
                             validMoves.add(position + 16);
                         }
                     }
                 }
-                if (Squares[position + 7].squarePiece.color == 'B' && Squares[position].getColumn() > 0) {//enemy piece diagonally in front of pawn
-                    validMoves.add(position + 7);
+                if (Squares[position + 7].squarePiece != null) {
+                    if (Squares[position + 7].squarePiece.color == 'B' && Squares[position].getColumn() > 0) {
+                        //enemy piece diagonally in front of pawn
+                        validMoves.add(position + 7);
+                    }
                 }
-                if (Squares[position + 9].squarePiece.color == 'B' && Squares[position].getColumn() < 7) {//enemy piece diagonally in front of pawn
-                    validMoves.add(position + 9);
+                if (Squares[position + 9].squarePiece != null) {
+                    if (Squares[position + 9].squarePiece.color == 'B' && Squares[position].getColumn() < 7) {
+                        //enemy piece diagonally in front of pawn
+                        validMoves.add(position + 9);
+                    }
                 }
             } else if (piece.name == 'p') {//black pawn
-                if (Squares[position - 8].squarePiece.name == Character.MIN_VALUE && Squares[position].getRow() > 0) {
+                if (Squares[position - 8].squarePiece == null && Squares[position].getRow() > 0) {
                     //empty square in front of pawn
                     validMoves.add(position - 8);
                     if (Squares[position].getRow() == 6) {//start position
-                        if (Squares[position - 16].squarePiece.name == Character.MIN_VALUE) {//empty square 2 in front of pawn
+                        if (Squares[position - 16].squarePiece == null) {//empty square 2 in front of pawn
                             validMoves.add(position - 16);
                         }
                     }
                 }
-                if (Squares[position - 9].squarePiece.color == 'W' && Squares[position].getColumn() > 0) {//enemy piece diagonally in front of pawn
-                    validMoves.add(position - 9);
+                if (Squares[position - 9].squarePiece != null) {
+                    if (Squares[position - 9].squarePiece.color == 'W' && Squares[position].getColumn() > 0) {
+                        //enemy piece diagonally in front of pawn
+                        validMoves.add(position - 9);
+                    }
                 }
-                if (Squares[position - 7].squarePiece.color == 'W' && Squares[position].getColumn() < 7) {//enemy piece diagonally in front of pawn
-                    validMoves.add(position - 7);
+                if (Squares[position - 7].squarePiece != null) {
+                    if (Squares[position - 7].squarePiece.color == 'W' && Squares[position].getColumn() < 7) {
+                        //enemy piece diagonally in front of pawn
+                        validMoves.add(position - 7);
+                    }
                 }
             } else {//other pieces
                 for (int[] move : piece.movePattern) {

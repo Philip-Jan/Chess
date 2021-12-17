@@ -161,7 +161,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        boolean debugMode = true;
+        boolean debugMode = false;
         if (debugMode){
             Board board = new Board();
             board.setBeginPosition();

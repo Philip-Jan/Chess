@@ -25,6 +25,7 @@ public class Game {
     private final boolean isWhite;
     private final int fieldColor;
     private final int pieceImg;
+    private final Button[] buttons = new Button[64];
 
     Game(Stage stage, boolean isWhite, int fieldColor, int pieceImg) {
         this.isWhite = isWhite;
@@ -47,13 +48,13 @@ public class Game {
         if (isWhite) {
 
             for (int i = 0; i < 64; i++) {
-                Button button = createNumberButton(i);
+                buttons[i] = createNumberButton(i);
                 int row = (63-i) / 8;
                 int col = i % 8;
                 if (board.getBoardSquare(i) != null) {
-                    button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                    buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
-                grid.add(button, col, row);
+                grid.add(buttons[i], col, row);
             }
         }
         else {
@@ -134,33 +135,7 @@ public class Game {
     private Button createNumberButton(int number) {
         Button button = createButton();
         buttonAction(button, number);
-        if (validMoves != null && validMoves.contains(number)) {
-            button.setStyle("Yellow");
-        }
-        else if ((number + number/8) % 2 == 1) {
-            switch (fieldColor) {
-                case 0 -> button.setStyle("-fx-background-color: #ffe9c5");
-                case 1 -> button.setStyle("-fx-background-color: #6f8f72");
-                case 2 -> button.setStyle("-fx-background-color: #6f73d2");
-                case 3 -> button.setStyle("-fx-background-color: #706677");
-                case 4 -> button.setStyle("-fx-background-color: #70a2a3");
-                case 5 -> button.setStyle("-fx-background-color: #03357c");
-                case 6 -> button.setStyle("-fx-background-color: #b3b3b3");
-                case 7 -> button.setStyle("-fx-background-color: #1e1e1e");
-            }
-        }
-        else {
-            switch (fieldColor) {
-                case 0 -> button.setStyle("-fx-background-color: #d08c47");
-                case 1 -> button.setStyle("-fx-background-color: #adbd8f");
-                case 2 -> button.setStyle("-fx-background-color: #9dacff");
-                case 3 -> button.setStyle("-fx-background-color: #ccb7ae");
-                case 4 -> button.setStyle("-fx-background-color: #b1e4b8");
-                case 5 -> button.setStyle("-fx-background-color: #bee4f9");
-                case 6 -> button.setStyle("-fx-background-color: #e6e6e6");
-                case 7 -> button.setStyle("-fx-background-color: #e9e0db");
-            }
-        }
+        setStyle(button, number);
         return button;
     }
 
@@ -202,9 +177,45 @@ public class Game {
                     this.BoardSquare = board.getPosition(number);
                     this.ChessPiece = board.getBoardSquare(number);
                     this.validMoves = board.validMovesPosition(number);
+                    for (int i=0; i < 64; i++) {
+                        if (validMoves.contains(i)) {
+                            buttons[i].setStyle("Yellow");
+                        }
+                        else {
+                            setStyle(buttons[i], i);
+                        }
+                    }
+                    System.out.println(ChessPiece.name);
                 }
             });
 
+        }
+    }
+
+    private void setStyle(Button button, int number) {
+        if ((number + number/8) % 2 == 1) {
+            switch (fieldColor) {
+                case 0 -> button.setStyle("-fx-background-color: #ffe9c5");
+                case 1 -> button.setStyle("-fx-background-color: #6f8f72");
+                case 2 -> button.setStyle("-fx-background-color: #6f73d2");
+                case 3 -> button.setStyle("-fx-background-color: #706677");
+                case 4 -> button.setStyle("-fx-background-color: #70a2a3");
+                case 5 -> button.setStyle("-fx-background-color: #03357c");
+                case 6 -> button.setStyle("-fx-background-color: #b3b3b3");
+                case 7 -> button.setStyle("-fx-background-color: #1e1e1e");
+            }
+        }
+        else {
+            switch (fieldColor) {
+                case 0 -> button.setStyle("-fx-background-color: #d08c47");
+                case 1 -> button.setStyle("-fx-background-color: #adbd8f");
+                case 2 -> button.setStyle("-fx-background-color: #9dacff");
+                case 3 -> button.setStyle("-fx-background-color: #ccb7ae");
+                case 4 -> button.setStyle("-fx-background-color: #b1e4b8");
+                case 5 -> button.setStyle("-fx-background-color: #bee4f9");
+                case 6 -> button.setStyle("-fx-background-color: #e6e6e6");
+                case 7 -> button.setStyle("-fx-background-color: #e9e0db");
+            }
         }
     }
 
