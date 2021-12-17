@@ -41,11 +41,15 @@ public class Main extends Application {
 
         this.OptBackgroundColor = OptionsButton();
         this.OptPieceImages = ImageButton();
+        setChoiceBoxData(this.OptBackgroundColor);
+        setChoiceBoxData(this.OptPieceImages);
+        this.OptBackgroundColor.setStyle("-fx-font: 30px \"Verdana\"; font-weight: bold; ");
+        this.OptPieceImages.setStyle("-fx-font: 30px \"Verdana\"; font-weight: bold; ");
 
         grid.add(White, 0,0);
         grid.add(Black, 1,0);
-        grid.add(OptBackgroundColor,0,1);
-        grid.add(OptPieceImages,1,1);
+        grid.add(this.OptBackgroundColor,0,1);
+        grid.add(this.OptPieceImages,1,1);
         grid.add(Start,0,2);
         grid.add(Exit, 1,2);
 
@@ -74,6 +78,15 @@ public class Main extends Application {
         GridPane.setVgrow(button, Priority.ALWAYS);
     }
 
+    private void setChoiceBoxData(ChoiceBox<String> opt) {
+        opt.setMinSize(50,50);
+        opt.setMaxSize(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+        GridPane.setFillHeight(opt, true);
+        GridPane.setFillWidth(opt, true);
+        GridPane.setHgrow(opt, Priority.ALWAYS);
+        GridPane.setVgrow(opt, Priority.ALWAYS);
+    }
+
     private Button createStartButton(Stage primaryStage) {
         Button Start = new Button("Start");
         Start.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -97,26 +110,14 @@ public class Main extends Application {
     private ChoiceBox<String> OptionsButton() {
         ChoiceBox<String> Opt = new ChoiceBox<>();
         Opt.setValue("Default");
-        Opt.getItems().add("Default");
-        Opt.getItems().add("Green");
-        Opt.getItems().add("Purple");
-        Opt.getItems().add("Pink");
-        Opt.getItems().add("Turquoise");
-        Opt.getItems().add("Blue");
-        Opt.getItems().add("Grey");
-        Opt.getItems().add("Black");
+        Opt.getItems().addAll("Default", "Green", "Purple", "Pink", "Turquoise", "Blue", "Grey", "Black");
         return Opt;
     }
 
     private ChoiceBox<String> ImageButton() {
         ChoiceBox<String> Img = new ChoiceBox<>();
         Img.setValue("Cardinal");
-        Img.getItems().add("Cardinal");
-        Img.getItems().add("Chessnut");
-        Img.getItems().add("Dubrovny");
-        Img.getItems().add("Fresca");
-        Img.getItems().add("Horsey");
-        Img.getItems().add("Kosal");
+        Img.getItems().addAll("Cardinal", "Chessnut", "Dubrovny", "Fresca", "Horsey", "Kosal");
         return Img;
     }
 
