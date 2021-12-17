@@ -43,8 +43,10 @@ public class Main extends Application {
         this.OptPieceImages = ImageButton();
         setChoiceBoxData(this.OptBackgroundColor);
         setChoiceBoxData(this.OptPieceImages);
-        this.OptBackgroundColor.setStyle("-fx-font: 30px \"Verdana\"; font-weight: bold; ");
-        this.OptPieceImages.setStyle("-fx-font: 30px \"Verdana\"; font-weight: bold; ");
+        this.OptBackgroundColor.setStyle("-fx-font-size: 30; -fx-alignment:CENTER; " +
+                "-fx-font-weight: bold; -fx-padding: 10 10 10 10; ");
+        this.OptPieceImages.setStyle("-fx-font-size: 30; -fx-alignment:CENTER; " +
+                "-fx-font-weight: bold; -fx-padding: 10 10 10 10; ");
 
         grid.add(White, 0,0);
         grid.add(Black, 1,0);
