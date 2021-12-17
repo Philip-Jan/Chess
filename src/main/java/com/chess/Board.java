@@ -72,6 +72,7 @@ public class Board {
                 System.out.println(Squares[i].position + " " + Squares[i].squarePiece.name);
             }
     }
+
     public void printSquareBoard(){//Prints the entire board in an 8 by 8 square
         for (int i = 0; i<8;i++) {
             for (int j = 0; j < 8; j++) {
@@ -84,21 +85,57 @@ public class Board {
             System.out.print("\n");
         }
     }
+
     public void makeMove(int startSquare,int endSquare){//Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = new Piece(Character.MIN_VALUE, this.pieceImg);
     }
-    public ArrayList<Integer> validMovesPosition(int position){//Give the legal moves the piece on the specified position can make.
+
+    public ArrayList<Integer> validMovesPosition(int position) {//Give the legal moves the piece on the specified position can make.
         ArrayList<Integer> validMoves = new ArrayList<>();
         Piece piece = Squares[position].squarePiece;
         if (!piece.moveRecursion) {//short range pieces Knight, King and pawn.
-            for (int[] move : piece.movePattern) {
-                if (move[0] + Squares[position].getColumn() >= 0 && move[0] + Squares[position].getColumn() <= 7 &&
-                        move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) { //Is on the board
-                    int targetPosition = position + move[0] + move[1] * 8;
-                    if (piece.color != Squares[targetPosition].squarePiece.color) { // Is not a piece of the same color
-                        validMoves.add(targetPosition);
+            if (piece.name == 'P') {//white pawn
+                if (Squares[position + 8].squarePiece.name == Character.MIN_VALUE && Squares[position].getRow() < 7) {
+                    //empty square in front of pawn
+                    validMoves.add(position + 8);
+                    if (Squares[position].getRow() == 1) {//start position
+                        if (Squares[position + 16].squarePiece.name == Character.MIN_VALUE) {//empty square 2 in front of pawn
+                            validMoves.add(position + 16);
+                        }
+                    }
+                }
+                if (Squares[position + 7].squarePiece.color == 'B' && Squares[position].getColumn() > 0) {//enemy piece diagonally in front of pawn
+                    validMoves.add(position + 7);
+                }
+                if (Squares[position + 9].squarePiece.color == 'B' && Squares[position].getColumn() < 7) {//enemy piece diagonally in front of pawn
+                    validMoves.add(position + 9);
+                }
+            } else if (piece.name == 'p') {//black pawn
+                if (Squares[position - 8].squarePiece.name == Character.MIN_VALUE && Squares[position].getRow() > 0) {
+                    //empty square in front of pawn
+                    validMoves.add(position - 8);
+                    if (Squares[position].getRow() == 6) {//start position
+                        if (Squares[position - 16].squarePiece.name == Character.MIN_VALUE) {//empty square 2 in front of pawn
+                            validMoves.add(position - 16);
+                        }
+                    }
+                }
+                if (Squares[position - 9].squarePiece.color == 'W' && Squares[position].getColumn() > 0) {//enemy piece diagonally in front of pawn
+                    validMoves.add(position - 9);
+                }
+                if (Squares[position - 7].squarePiece.color == 'W' && Squares[position].getColumn() < 7) {//enemy piece diagonally in front of pawn
+                    validMoves.add(position - 7);
+                }
+            } else {//other pieces
+                for (int[] move : piece.movePattern) {
+                    if (move[0] + Squares[position].getColumn() >= 0 && move[0] + Squares[position].getColumn() <= 7 &&
+                            move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) {//Is on the board
+                        int targetPosition = position + move[0] + move[1] * 8;
+                        if (piece.color != Squares[targetPosition].squarePiece.color) { // Is not a piece of the same color
+                            validMoves.add(targetPosition);
+                        }
                     }
                 }
             }
@@ -162,5 +199,34 @@ public class Board {
             }
         }
         return check;
+    }
+
+    public boolean isMate(char mater){//Returns if the mater is mating the opponent.
+        if (!isCheck(mater)){//No check means no mate
+            return false;
+        }
+        char opponent;
+        if (mater == 'B'){
+            opponent = 'W';
+        }else {
+            opponent = 'B';
+        }
+        for (ArrayList<Integer> move : getAllMoves(opponent)){
+            for (int i = 1; i < move.size();i++){
+                if (!(Squares[move.get(i)].squarePiece.name == 'K' ||
+                        Squares[move.get(i)].squarePiece.name == 'k')) { //not a king
+                    Piece tempPiece = Squares[move.get(i)].squarePiece; //temporarily moves a piece from the end move position to safety
+                    makeMove(move.get(0), move.get(i)); //moves the piece
+                    if(!isCheck(mater)){
+                        makeMove(move.get(i),move.get(0));
+                        Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
+                        return false;
+                    }
+                    makeMove(move.get(i),move.get(0));
+                   Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
+                }
+            }
+        }
+        return true;
     }
 }

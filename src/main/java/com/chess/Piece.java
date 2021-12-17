@@ -52,7 +52,7 @@ public class Piece {
     private void makeWRook(){
         name = 'R';
         color = 'W';
-        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][] {{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         switch (pieceImg) {
             case 0 -> str = new File("src\\main\\Images\\Cardinal\\WR.png").toURI().toString();
@@ -72,7 +72,7 @@ public class Piece {
     private void makeBRook(){
         name = 'r';
         color = 'B';
-        movePattern = new int[][] {{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][] {{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         switch (pieceImg) {
             case 0 -> str = new File("src\\main\\Images\\Cardinal\\BR.png").toURI().toString();
@@ -172,7 +172,7 @@ public class Piece {
     private void makeWQueen(){
         name = 'Q';
         color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         switch (pieceImg) {
             case 0 -> str = new File("src\\main\\Images\\Cardinal\\WQ.png").toURI().toString();
@@ -192,7 +192,7 @@ public class Piece {
     private void makeBQueen(){
         name = 'q';
         color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         moveRecursion = true;
         switch (pieceImg) {
             case 0 -> str = new File("src\\main\\Images\\Cardinal\\BQ.png").toURI().toString();
@@ -212,7 +212,7 @@ public class Piece {
     private void makeWKing(){
         name = 'K';
         color = 'W';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         specialMoves = new int[][]{{-2,0},{2,0}};
         moveRecursion = false;
         switch (pieceImg) {
@@ -233,7 +233,7 @@ public class Piece {
     private void makeBKing(){
         name = 'k';
         color = 'B';
-        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{1,0},{0,-1}};
+        movePattern = new int[][]{{-1,1},{1,1},{1,-1},{-1,-1},{-1,0},{1,0},{0,1},{0,-1}};
         specialMoves = new int[][]{{-2,0},{2,0}};
         moveRecursion = false;
         switch (pieceImg) {
