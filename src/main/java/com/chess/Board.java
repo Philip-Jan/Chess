@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private int pieceImg;
+    private final int pieceImg;
     Square[] Squares = new Square[64];
 
     Board() {
+        this.pieceImg = 0;
         initBoard();
         setBeginPosition();
     }
@@ -60,7 +61,7 @@ public class Board {
         Squares[63].squarePiece = new Piece('r', this.pieceImg);
     }
 
-    public Piece getBoardSquare(int position) {//Returns the piece name that occupies the selected square
+    public Piece getBoardSquare(int position) {//Returns the piece that occupies the selected square
         return Squares[position].squarePiece;
     }
 

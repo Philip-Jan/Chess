@@ -80,7 +80,7 @@ public class Game {
 
         Button OfferDraw = new Button("Offer Draw");
         OfferDraw.setOnAction(e -> {
-            Alert alert = new Alert(INFORMATION, "A draw");
+            Alert alert = new Alert(INFORMATION, "The game has ended in a draw.");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isEmpty()) {
                 Platform.exit();
@@ -88,13 +88,13 @@ public class Game {
             else if (result.get() == ButtonType.OK) {
                 Platform.exit();
             }
-        });
+            });
         OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setButtonData(OfferDraw);
 
         Button OfferWin = new Button("Offer Win");
         OfferWin.setOnAction(e -> {
-            Alert alert = new Alert(INFORMATION, "You have lost.");
+            Alert alert = new Alert(INFORMATION, "You have lost this game.");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isEmpty()) {
                 Platform.exit();
@@ -198,9 +198,11 @@ public class Game {
         }
         else {
             button.setOnAction(e -> {
-                this.BoardSquare = board.getPosition(number);
-                this.ChessPiece = board.getBoardSquare(number);
-                this.validMoves = board.validMovesPosition(number);
+                if (board.getBoardSquare(number) != null) {
+                    this.BoardSquare = board.getPosition(number);
+                    this.ChessPiece = board.getBoardSquare(number);
+                    this.validMoves = board.validMovesPosition(number);
+                }
             });
 
         }

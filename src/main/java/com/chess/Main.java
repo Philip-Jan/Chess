@@ -44,9 +44,9 @@ public class Main extends Application {
         setChoiceBoxData(this.OptBackgroundColor);
         setChoiceBoxData(this.OptPieceImages);
         this.OptBackgroundColor.setStyle("-fx-font-size: 30; -fx-alignment:CENTER; " +
-                "-fx-font-weight: bold; -fx-padding: 10 10 10 10; ");
+                "-fx-font-weight: bold; -fx-padding: 40 40 40 100; ");
         this.OptPieceImages.setStyle("-fx-font-size: 30; -fx-alignment:CENTER; " +
-                "-fx-font-weight: bold; -fx-padding: 10 10 10 10; ");
+                "-fx-font-weight: bold; -fx-padding: 40 40 40 100; ");
 
         grid.add(White, 0,0);
         grid.add(Black, 1,0);
@@ -91,7 +91,7 @@ public class Main extends Application {
 
     private Button createStartButton(Stage primaryStage) {
         Button Start = new Button("Start");
-        Start.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        Start.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         Start.setOnAction(e -> {
             this.fieldColor = setFieldColor();
             this.pieceImg = setImages();
@@ -103,7 +103,7 @@ public class Main extends Application {
 
     private Button createExitButton() {
         Button Exit = new Button("Exit");
-        Exit.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        Exit.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
         Exit.setOnAction(e -> Platform.exit());
         setButtonData(Exit);
         return Exit;
@@ -161,7 +161,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        boolean debugMode = false;
+        boolean debugMode = true;
         if (debugMode){
             Board board = new Board();
             board.setBeginPosition();
