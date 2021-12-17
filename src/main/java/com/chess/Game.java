@@ -81,9 +81,9 @@ public class Game {
                 if (result.get() == ButtonType.YES) {
                     startGame(stage);
                 } else if (result.get() == ButtonType.NO) {
-                    Platform.exit();
-                    Stage newStage = new Stage();
-                    Main.restart(newStage);
+                    stage.close();
+                    Stage pStage = new Stage();
+                    new Menu(pStage);
                 }
             }
         });
