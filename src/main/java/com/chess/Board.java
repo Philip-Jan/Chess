@@ -89,7 +89,7 @@ public class Board {
     public void makeMove(int startSquare,int endSquare){//Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
-        Squares[startSquare].squarePiece = new Piece(Character.MIN_VALUE, this.pieceImg);
+        Squares[startSquare].squarePiece = null;
     }
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the legal moves the piece on the specified position can make.
@@ -118,7 +118,8 @@ public class Board {
                         validMoves.add(position + 9);
                     }
                 }
-            } else if (piece.name == 'p') {//black pawn
+            }
+            else if (piece.name == 'p') {//black pawn
                 if (Squares[position - 8].squarePiece == null && Squares[position].getRow() > 0) {
                     //empty square in front of pawn
                     validMoves.add(position - 8);
@@ -140,18 +141,25 @@ public class Board {
                         validMoves.add(position - 7);
                     }
                 }
-            } else {//other pieces
+            }
+            else {//other pieces
                 for (int[] move : piece.movePattern) {
                     if (move[0] + Squares[position].getColumn() >= 0 && move[0] + Squares[position].getColumn() <= 7 &&
                             move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) {//Is on the board
                         int targetPosition = position + move[0] + move[1] * 8;
-                        if (piece.color != Squares[targetPosition].squarePiece.color) { // Is not a piece of the same color
+                        if (Squares[targetPosition].squarePiece != null) {
+                            if (piece.color != Squares[targetPosition].squarePiece.color) { // Is not a piece of the same color
+                                validMoves.add(targetPosition);
+                            }
+                        }
+                        else {
                             validMoves.add(targetPosition);
                         }
                     }
                 }
             }
-        }else {//Long range pieces Queen, Rook and Bishop
+        }
+        else {//Long range pieces Queen, Rook and Bishop
             for (int[] move : piece.movePattern) {
                 int temp_position = position;
                 while (move[0] + Squares[temp_position].getColumn() >= 0 &&
@@ -159,12 +167,17 @@ public class Board {
                         move[1] + Squares[temp_position].getRow() >= 0 &&
                         move[1] + Squares[temp_position].getRow() <= 7){
                     temp_position = temp_position + move[0] + move[1] * 8;
-                    if (piece.color != Squares[temp_position].squarePiece.color) { // Is not a piece of the same color
+                    if (Squares[temp_position].squarePiece == null) {
                         validMoves.add(temp_position);
                     }
-                    if (Squares[temp_position].squarePiece.name != Character.MIN_VALUE){ //If there is a piece on the
-                        // position, you can't continue in that direction
-                        break;
+                    else if (Squares[temp_position].squarePiece != null) {
+                        if (piece.color != Squares[temp_position].squarePiece.color) { // Is not a piece of the same color
+                            validMoves.add(temp_position);
+                        }
+                        if (Squares[temp_position].squarePiece.name != Character.MIN_VALUE) { //If there is a piece on the
+                            // position, you can't continue in that direction
+                            break;
+                        }
                     }
                 }
             }

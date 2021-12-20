@@ -41,7 +41,7 @@ public class Game {
 
     public void startGame(Stage stage) {
 
-        board = new Board(this.pieceImg);
+        board = new Board(this.pieceImg); // Generate Board
 
         GridPane grid = createGrid();
 
@@ -56,7 +56,7 @@ public class Game {
                 }
                 grid.add(buttons[i], col, row);
             }
-        }
+        } // Generate pieces on the board if player 1 plays with the white pieces
         else {
 
             for (int i = 0; i < 64; i++) {
@@ -68,6 +68,42 @@ public class Game {
                 }
                 grid.add(buttons[i], col, row);
             }
+        } // Generate pieces on the board if player 1 plays with the black pieces
+
+        for (int i=0; i < 64; i++) {
+            final int number = i;
+            buttons[i].setOnAction(e -> {
+                if (this.ChessPiece != null) {
+                    if (board.validMovesPosition(BoardSquare).contains(number)) {
+                        board.makeMove(BoardSquare, number);
+                        buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
+                    } else {
+                        new Alert(INFORMATION, "That is not a legal move.");
+                    }
+                    this.BoardSquare = 0;
+                    this.ChessPiece = null;
+                    this.validMoves = null;
+                    for (int k = 0; k < 64; k++) {
+                        setStyle(buttons[k], k);
+                    }
+                }
+                else {
+                    if (board.getBoardSquare(number) != null) {
+                        this.BoardSquare = board.getPosition(number);
+                        this.ChessPiece = board.getBoardSquare(number);
+                        this.validMoves = board.validMovesPosition(number);
+                        for (int k = 0; k < 64; k++) {
+                            if (validMoves.contains(k)) {
+                                buttons[k].setStyle("-fx-background-color: Yellow");
+                            } else {
+                                setStyle(buttons[k], k);
+                            }
+                        }
+                    }
+                }
+
+            });
+
         }
 
         ButtonBar bar = new ButtonBar();
@@ -150,7 +186,6 @@ public class Game {
 
     private Button createNumberButton(int number) {
         Button button = createButton();
-        buttonAction(button, number);
         setStyle(button, number);
         return button;
     }
@@ -177,35 +212,6 @@ public class Game {
         grid.setVgap(0);
         grid.setPadding(new Insets(10));
         return grid;
-    }
-
-    private void buttonAction(Button button, int number) {
-        if (this.ChessPiece != null) {
-            button.setOnAction(new ButtonHandler(number, this.BoardSquare, this.ChessPiece, board));
-            button.setGraphic(this.ChessPiece.imgViewPiece);
-            this.BoardSquare = 0;
-            this.ChessPiece = null;
-            this.validMoves = null;
-        }
-        else {
-            button.setOnAction(e -> {
-                if (board.getBoardSquare(number) != null) {
-                    this.BoardSquare = board.getPosition(number);
-                    this.ChessPiece = board.getBoardSquare(number);
-                    this.validMoves = board.validMovesPosition(number);
-                    for (int i=0; i < 64; i++) {
-                        if (validMoves.contains(i)) {
-                            buttons[i].setStyle("-fx-background-color: Yellow");
-                        }
-                        else {
-                            setStyle(buttons[i], i);
-                        }
-                    }
-                    System.out.println(ChessPiece.name);
-                }
-            });
-
-        }
     }
 
     private void setStyle(Button button, int number) {
