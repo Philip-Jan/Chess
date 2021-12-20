@@ -106,6 +106,27 @@ public class Game {
 
         }
 
+        if (board.isMate('W')) {
+            Alert alert = new Alert(INFORMATION, "White wins the game.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
+        }
+        else {
+            Alert alert = new Alert(INFORMATION, "Black wins the game.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
+        }
+
         ButtonBar bar = new ButtonBar();
 
         Button NewGame = new Button("New Game");
