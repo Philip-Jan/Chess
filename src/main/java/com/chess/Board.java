@@ -6,6 +6,7 @@ public class Board {
 
     private final int pieceImg;
     Square[] Squares = new Square[64];
+    char activePlayer;
 
     Board() {
         this.pieceImg = 0;
@@ -58,6 +59,9 @@ public class Board {
         Squares[61].squarePiece = new Piece('b', this.pieceImg);
         Squares[62].squarePiece = new Piece('n', this.pieceImg);
         Squares[63].squarePiece = new Piece('r', this.pieceImg);
+
+        //White begins
+        activePlayer = 'W';
     }
 
     public Piece getBoardSquare(int position) {//Returns the piece that occupies the selected square
@@ -90,6 +94,11 @@ public class Board {
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = null;
+        if (activePlayer == 'W'){ //switches active player
+            activePlayer = 'B';
+        }else {
+            activePlayer = 'W';
+        }
     }
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the legal moves the piece on the specified position can make.
