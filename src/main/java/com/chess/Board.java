@@ -6,6 +6,7 @@ public class Board {
 
     private final int pieceImg;
     Square[] Squares = new Square[64];
+    char activePlayer;
 
     Board() {
         this.pieceImg = 0;
@@ -58,6 +59,9 @@ public class Board {
         Squares[61].squarePiece = new Piece('b', this.pieceImg);
         Squares[62].squarePiece = new Piece('n', this.pieceImg);
         Squares[63].squarePiece = new Piece('r', this.pieceImg);
+
+        //White begins
+        activePlayer = 'W';
     }
 
     public Piece getBoardSquare(int position) {//Returns the piece that occupies the selected square
@@ -76,7 +80,7 @@ public class Board {
     public void printSquareBoard(){//Prints the entire board in an 8 by 8 square
         for (int i = 0; i<8;i++) {
             for (int j = 0; j < 8; j++) {
-                if (Squares[(7 - i) * 8 + j].squarePiece.name == Character.MIN_VALUE) {
+                if (Squares[(7 - i) * 8 + j].squarePiece == null) {
                     System.out.print("~\t");
                 } else {
                     System.out.print(Squares[(7 - i) * 8 + j].squarePiece.name + "\t");
@@ -90,6 +94,11 @@ public class Board {
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = null;
+        if (activePlayer == 'W'){ //switches active player
+            activePlayer = 'B';
+        }else {
+            activePlayer = 'W';
+        }
     }
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the legal moves the piece on the specified position can make.
@@ -190,7 +199,7 @@ public class Board {
         ArrayList<ArrayList<Integer>> allValidMoves = new ArrayList<>();
         int pieceNumber = 0;
         for (Square square : Squares){
-            if (square.squarePiece.color == color && validMovesPosition(square.position).size() > 0){
+            if (square.squarePiece != null && square.squarePiece.color == color && validMovesPosition(square.position).size() > 0){
                 ArrayList<Integer> validMoves = new ArrayList<>();
                 validMoves.add(square.position);
                 validMoves.addAll(validMovesPosition(square.position));
@@ -212,7 +221,7 @@ public class Board {
             enemyKing.name = 'K';
         }
         for (Square square : Squares){
-            if (square.squarePiece.name == enemyKing.name){
+            if (square.squarePiece != null && square.squarePiece.name == enemyKing.name){
                 targetSquare = square.position;
                 break;
             }
