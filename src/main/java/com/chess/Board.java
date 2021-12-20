@@ -211,17 +211,17 @@ public class Board {
         return allValidMoves;
     }
 
-    public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
-        Piece enemyKing = new Piece(' ', this.pieceImg);
+    public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player
+        char enemyKingName;
         int targetSquare = -1;
         boolean check = false;
         if (checker == 'W') {
-            enemyKing.name = 'k';
+            enemyKingName = 'k';
         }else {
-            enemyKing.name = 'K';
+            enemyKingName = 'K';
         }
         for (Square square : Squares){
-            if (square.squarePiece != null && square.squarePiece.name == enemyKing.name){
+            if (square.squarePiece != null && square.squarePiece.name == enemyKingName){
                 targetSquare = square.position;
                 break;
             }
