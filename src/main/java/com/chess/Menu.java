@@ -20,7 +20,7 @@ public class Menu{
         ChoosePlayer(stage);
     }
 
-    private boolean isWhite;
+    private boolean isWhite = true;
     private int fieldColor;
     private int pieceImg;
     private ChoiceBox<String> OptBackgroundColor;

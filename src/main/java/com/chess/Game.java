@@ -46,11 +46,11 @@ public class Game {
 
         GridPane grid = createGrid();
 
-        if (isWhite) {
+        if (!isWhite) {
             for (int i = 0; i < 64; i++) {
                 buttons[i] = createNumberButton(i);
-                int row = (63-i) / 8;
-                int col = i % 8;
+                int row = i / 8;
+                int col = (63-i) % 8;
                 if (board.getBoardSquare(i) != null) {
                     buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
@@ -58,11 +58,10 @@ public class Game {
             }
         } // Generate pieces on the board if player 1 plays with the white pieces
         else {
-
             for (int i = 0; i < 64; i++) {
                 buttons[i] = createNumberButton(i);
-                int row = i / 8;
-                int col = (63-i) % 8;
+                int row = (63-i) / 8;
+                int col = i % 8;
                 if (board.getBoardSquare(i) != null) {
                     buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
@@ -77,10 +76,12 @@ public class Game {
                     if (board.validMovesPosition(BoardSquare).contains(number)) {
                         board.makeMove(BoardSquare, number);
                         buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
+
                         if (board.isMate(activePlayer)) {
                             Mate(activePlayer);
                             stage.close();
                         }
+
                         if (activePlayer == 'W'){ //switches active player
                             activePlayer = 'B';
                         }
