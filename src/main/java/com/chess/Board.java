@@ -211,6 +211,7 @@ public class Board {
 
     public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
 
+        boolean check = false;
         char enemyKing;
 
         if (checker == 'W') {
@@ -260,6 +261,13 @@ public class Board {
                         makeMove(move.get(i), move.get(0));
                         Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
                     }
+                }else{
+                    makeMove(move.get(0), move.get(i)); //moves the piece
+                    if (!isCheck(mater)) {
+                        makeMove(move.get(i), move.get(0));//Undoes the move
+                        return false;
+                    }
+                    makeMove(move.get(i), move.get(0));//Undoes the move
                 }
             }
         }
