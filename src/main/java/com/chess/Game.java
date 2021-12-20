@@ -4,9 +4,10 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -14,42 +15,118 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static javafx.scene.control.Alert.AlertType.INFORMATION;
+
 public class Game {
 
-    Game(Stage stage) {
+    private final boolean isWhite;
+    private final int fieldColor;
+    private final int pieceImg;
+    private final Button[] buttons = new Button[64];
+
+    Game(Stage stage, boolean isWhite, int fieldColor, int pieceImg) {
+        this.isWhite = isWhite;
+        this.fieldColor = fieldColor;
+        this.pieceImg = pieceImg;
         startGame(stage);
     }
+
+    private ArrayList<Integer> validMoves;
+    private int BoardSquare;
+    Board board;
+    private Piece ChessPiece;
+
     public void startGame(Stage stage) {
+
+        board = new Board(this.pieceImg);
 
         GridPane grid = createGrid();
 
-        for (int i=0; i<64; i++) {
-            Button button = createNumberButton(i);
-            int row = i / 8;
-            int col = i % 8;
-            grid.add(button, col, row);
+        if (isWhite) {
+
+            for (int i = 0; i < 64; i++) {
+                buttons[i] = createNumberButton(i);
+                int row = (63-i) / 8;
+                int col = i % 8;
+                if (board.getBoardSquare(i) != null) {
+                    buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
+                }
+                grid.add(buttons[i], col, row);
+            }
+        }
+        else {
+
+            for (int i = 0; i < 64; i++) {
+                buttons[i] = createNumberButton(i);
+                int row = i / 8;
+                int col = (63-i) % 8;
+                if (board.getBoardSquare(i) != null) {
+                    buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
+                }
+                grid.add(buttons[i], col, row);
+            }
         }
 
         ButtonBar bar = new ButtonBar();
 
-        Button NewGame1 = new Button("New Game");
-        NewGame1.setTooltip(new Tooltip("Behoudt niet de huidige instellingen"));
-        NewGame1.setOnAction(e -> {
-
+        Button NewGame = new Button("New Game");
+        NewGame.setOnAction(e -> {
+            Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
+                    ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent()) {
+                if (result.get() == ButtonType.YES) {
+                    stage.close();
+                    Stage pStage = new Stage();
+                    new Game(pStage, isWhite, fieldColor, pieceImg);
+                }
+                else if (result.get() == ButtonType.NO) {
+                    stage.close();
+                    Stage pStage = new Stage();
+                    new Menu(pStage);
+                }
+            }
         });
-        NewGame1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(NewGame1);
-        Button NewGame2 = new Button("New Game");
-        NewGame2.setTooltip(new Tooltip("Behoudt de huidige instellingen"));
-        NewGame2.setOnAction(e -> {
+        NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setButtonData(NewGame);
 
+        Button OfferDraw = new Button("Offer Draw");
+        OfferDraw.setOnAction(e -> {
+            Alert alert = new Alert(INFORMATION, "The game has ended in a draw.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
+            });
+        OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setButtonData(OfferDraw);
+
+        Button OfferWin = new Button("Offer Win");
+        OfferWin.setOnAction(e -> {
+            Alert alert = new Alert(INFORMATION, "You have lost this game.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.OK) {
+                Platform.exit();
+            }
         });
-        NewGame2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(NewGame2);
+        OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setButtonData(OfferWin);
+
         Button Exit = createExitButton();
-        bar.getButtons().addAll(NewGame1, NewGame2, Exit);
-        ButtonBar.setButtonData(NewGame1, ButtonBar.ButtonData.LEFT);
-        ButtonBar.setButtonData(NewGame2, ButtonBar.ButtonData.LEFT);
+
+        bar.getButtons().addAll(NewGame, OfferDraw, OfferWin, Exit);
+        ButtonBar.setButtonData(NewGame, ButtonBar.ButtonData.LEFT);
+        ButtonBar.setButtonData(OfferDraw, ButtonBar.ButtonData.LEFT);
+        ButtonBar.setButtonData(OfferWin, ButtonBar.ButtonData.LEFT);
 
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
@@ -72,19 +149,14 @@ public class Game {
     }
 
     private Button createNumberButton(int number) {
-        Button button = createButton(number);
-        button.setOnAction(new ButtonHandler(number, button));
+        Button button = createButton();
+        buttonAction(button, number);
+        setStyle(button, number);
         return button;
     }
 
-    private Button createButton(int number) {
+    private Button createButton() {
         Button button = new Button();
-        if ((number + number/8) % 2 == 0) {
-            button.setStyle("-fx-background-color: #ffe9c5");
-        }
-        else if ((number + number/8) % 2 == 1) {
-            button.setStyle("-fx-background-color: #d08c47");
-        }
         setButtonData(button);
         return button;
     }
@@ -106,4 +178,61 @@ public class Game {
         grid.setPadding(new Insets(10));
         return grid;
     }
+
+    private void buttonAction(Button button, int number) {
+        if (this.ChessPiece != null) {
+            button.setOnAction(new ButtonHandler(number, this.BoardSquare, this.ChessPiece, board));
+            button.setGraphic(this.ChessPiece.imgViewPiece);
+            this.BoardSquare = 0;
+            this.ChessPiece = null;
+            this.validMoves = null;
+        }
+        else {
+            button.setOnAction(e -> {
+                if (board.getBoardSquare(number) != null) {
+                    this.BoardSquare = board.getPosition(number);
+                    this.ChessPiece = board.getBoardSquare(number);
+                    this.validMoves = board.validMovesPosition(number);
+                    for (int i=0; i < 64; i++) {
+                        if (validMoves.contains(i)) {
+                            buttons[i].setStyle("-fx-background-color: Yellow");
+                        }
+                        else {
+                            setStyle(buttons[i], i);
+                        }
+                    }
+                    System.out.println(ChessPiece.name);
+                }
+            });
+
+        }
+    }
+
+    private void setStyle(Button button, int number) {
+        if ((number + number/8) % 2 == 1) {
+            switch (fieldColor) {
+                case 0 -> button.setStyle("-fx-background-color: #ffe9c5");
+                case 1 -> button.setStyle("-fx-background-color: #6f8f72");
+                case 2 -> button.setStyle("-fx-background-color: #6f73d2");
+                case 3 -> button.setStyle("-fx-background-color: #706677");
+                case 4 -> button.setStyle("-fx-background-color: #70a2a3");
+                case 5 -> button.setStyle("-fx-background-color: #03357c");
+                case 6 -> button.setStyle("-fx-background-color: #b3b3b3");
+                case 7 -> button.setStyle("-fx-background-color: #1e1e1e");
+            }
+        }
+        else {
+            switch (fieldColor) {
+                case 0 -> button.setStyle("-fx-background-color: #d08c47");
+                case 1 -> button.setStyle("-fx-background-color: #adbd8f");
+                case 2 -> button.setStyle("-fx-background-color: #9dacff");
+                case 3 -> button.setStyle("-fx-background-color: #ccb7ae");
+                case 4 -> button.setStyle("-fx-background-color: #b1e4b8");
+                case 5 -> button.setStyle("-fx-background-color: #bee4f9");
+                case 6 -> button.setStyle("-fx-background-color: #e6e6e6");
+                case 7 -> button.setStyle("-fx-background-color: #e9e0db");
+            }
+        }
+    }
+
 }

@@ -2,46 +2,28 @@ package com.chess;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
     private final int number;
-    private final Button button;
-    private String ChessPiece;
-    ButtonHandler(int number, Button button) {
+    private final Board board;
+    private final Piece ChessPiece;
+    private final int BoardSquare;
+
+    ButtonHandler(int number, int BoardSquare, Piece ChessPiece, Board board) {
         this.number = number;
-        this.button = button;
-        this.ChessPiece = "";
+        this.board = board;
+        this.ChessPiece = ChessPiece;
+        this.BoardSquare = BoardSquare;
     }
 
     @Override
     public void handle(ActionEvent event) {
-        switch (ChessPiece) {
-            case "WK":
-                break;
-            case "WD":
-                break;
-            case "WT":
-                break;
-            case "WP": //Paard
-                break;
-            case "WL":
-                break;
-            case "Wp": //pion
-                break;
-            case "ZK":
-                break;
-            case "ZD":
-                break;
-            case "ZT":
-                break;
-            case "ZP":
-                break;
-            case "ZL":
-                break;
-            case "Zp":
-                break;
-            default:
+        if (board.validMovesPosition(BoardSquare).contains(number)) {
+            board.makeMove(BoardSquare, number);
+        }
+        else {
+            new Alert(Alert.AlertType.INFORMATION, "That is not a legal move.");
         }
     }
 
