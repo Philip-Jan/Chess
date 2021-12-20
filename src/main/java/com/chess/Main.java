@@ -10,7 +10,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        boolean debugMode = false;
+        boolean debugMode = true;
         if (debugMode){
             Board board = new Board();
             board.setBeginPosition();
