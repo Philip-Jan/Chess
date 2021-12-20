@@ -17,17 +17,23 @@ public class Main extends Application {
             board.printSquareBoard();
             System.out.println(board.activePlayer);
             System.out.println(board.getAllMoves('B'));
-            System.out.println(board.isCheck('W'));
-            System.out.println(board.isCheck('B'));
-            board.makeMove(3,51);
+            System.out.println("White checks: " + board.isCheck('W'));
+            System.out.println("Black checks:" +  board.isCheck('B'));
+            System.out.println("White mates: " + board.isMate('W'));
+            System.out.println("Black mates:" +  board.isMate('B'));
+            board.makeMove(3,53);
             System.out.println(board.activePlayer);
             board.printSquareBoard();
-            System.out.println(board.isCheck('W'));
-            System.out.println(board.isCheck('B'));
-            board.makeMove(60,5);
+            System.out.println("White checks: " + board.isCheck('W'));
+            System.out.println("Black checks:" +  board.isCheck('B'));
+            System.out.println("White mates: " + board.isMate('W'));
+            System.out.println("Black mates:" +  board.isMate('B'));
+            board.makeMove(5,44);
             board.printSquareBoard();
-            System.out.println(board.isCheck('W'));
-            System.out.println(board.isCheck('B'));
+            System.out.println("White checks: " + board.isCheck('W'));
+            System.out.println("Black checks:" +  board.isCheck('B'));
+            System.out.println("White mates: " + board.isMate('W'));
+            System.out.println("Black mates:" +  board.isMate('B'));
         }else {
             launch(args);
         }
