@@ -107,22 +107,31 @@ public class Game {
         }
 
         if (board.isMate('W')) {
-            Alert alert = new Alert(INFORMATION, "White wins the game.");
+            Alert alert = new Alert(INFORMATION, "White wins. \n Do you wish to play a new game?",
+                    ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isEmpty()) {
                 Platform.exit();
             }
-            else if (result.get() == ButtonType.OK) {
+            else if (result.get() == ButtonType.YES) {
+                NewGameAction();
+            }
+            else if (result.get() == ButtonType.NO) {
                 Platform.exit();
             }
         }
-        else {
-            Alert alert = new Alert(INFORMATION, "Black wins the game.");
+        else if (board.isMate('B')) {
+            Alert alert = new Alert(INFORMATION, "Black wins. \n Do you wish to play a new game?",
+                    ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isEmpty()) {
                 Platform.exit();
             }
-            else if (result.get() == ButtonType.OK) {
+            else if (result.get() == ButtonType.YES) {
+                NewGameAction();
+                stage.close();
+            }
+            else if (result.get() == ButtonType.NO) {
                 Platform.exit();
             }
         }
@@ -131,21 +140,8 @@ public class Game {
 
         Button NewGame = new Button("New Game");
         NewGame.setOnAction(e -> {
-            Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
-                    ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent()) {
-                if (result.get() == ButtonType.YES) {
-                    stage.close();
-                    Stage pStage = new Stage();
-                    new Game(pStage, isWhite, fieldColor, pieceImg);
-                }
-                else if (result.get() == ButtonType.NO) {
-                    stage.close();
-                    Stage pStage = new Stage();
-                    new Menu(pStage);
-                }
-            }
+            NewGameAction();
+            stage.close();
         });
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setButtonData(NewGame);
@@ -203,6 +199,22 @@ public class Game {
         Exit.setOnAction(e -> Platform.exit());
         setButtonData(Exit);
         return Exit;
+    }
+
+    private void NewGameAction() {
+            Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
+                    ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent()) {
+                if (result.get() == ButtonType.YES) {
+                    Stage pStage = new Stage();
+                    new Game(pStage, isWhite, fieldColor, pieceImg);
+                }
+                else if (result.get() == ButtonType.NO) {
+                    Stage pStage = new Stage();
+                    new Menu(pStage);
+                }
+            }
     }
 
     private Button createNumberButton(int number) {
