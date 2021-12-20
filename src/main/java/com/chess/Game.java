@@ -60,13 +60,13 @@ public class Game {
         else {
 
             for (int i = 0; i < 64; i++) {
-                Button button = createNumberButton(i);
+                buttons[i] = createNumberButton(i);
                 int row = i / 8;
                 int col = (63-i) % 8;
                 if (board.getBoardSquare(i) != null) {
-                    button.setGraphic(board.getBoardSquare(i).imgViewPiece);
+                    buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
-                grid.add(button, col, row);
+                grid.add(buttons[i], col, row);
             }
         }
 
@@ -79,8 +79,11 @@ public class Game {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent()) {
                 if (result.get() == ButtonType.YES) {
-                    startGame(stage);
-                } else if (result.get() == ButtonType.NO) {
+                    stage.close();
+                    Stage pStage = new Stage();
+                    new Game(pStage, isWhite, fieldColor, pieceImg);
+                }
+                else if (result.get() == ButtonType.NO) {
                     stage.close();
                     Stage pStage = new Stage();
                     new Menu(pStage);
@@ -117,7 +120,9 @@ public class Game {
         });
         OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setButtonData(OfferWin);
+
         Button Exit = createExitButton();
+
         bar.getButtons().addAll(NewGame, OfferDraw, OfferWin, Exit);
         ButtonBar.setButtonData(NewGame, ButtonBar.ButtonData.LEFT);
         ButtonBar.setButtonData(OfferDraw, ButtonBar.ButtonData.LEFT);
@@ -190,7 +195,7 @@ public class Game {
                     this.validMoves = board.validMovesPosition(number);
                     for (int i=0; i < 64; i++) {
                         if (validMoves.contains(i)) {
-                            buttons[i].setStyle("Yellow");
+                            buttons[i].setStyle("-fx-background-color: Yellow");
                         }
                         else {
                             setStyle(buttons[i], i);
