@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Board {
 
     private final int pieceImg;
+    int targetSquare = -1;
+    boolean check = false;
     Square[] Squares = new Square[64];
     char activePlayer;
 
@@ -14,7 +16,8 @@ public class Board {
         setBeginPosition();
     }
 
-    Board(int pieceImg) {
+    Board(char activePlayer, int pieceImg) {
+        this.activePlayer = activePlayer;
         this.pieceImg = pieceImg;
         initBoard();
         setBeginPosition();
@@ -94,11 +97,6 @@ public class Board {
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = null;
-        if (activePlayer == 'W'){ //switches active player
-            activePlayer = 'B';
-        }else {
-            activePlayer = 'W';
-        }
     }
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the legal moves the piece on the specified position can make.
@@ -211,23 +209,25 @@ public class Board {
         return allValidMoves;
     }
 
-    public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player
-        char enemyKingName;
-        int targetSquare = -1;
-        boolean check = false;
+    public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.
+
+        char enemyKing;
+
         if (checker == 'W') {
-            enemyKingName = 'k';
-        }else {
-            enemyKingName = 'K';
+            enemyKing = 'k';
         }
-        for (Square square : Squares){
-            if (square.squarePiece != null && square.squarePiece.name == enemyKingName){
+        else {
+            enemyKing = 'K';
+        }
+
+        for (Square square : Squares) {
+            if (square.squarePiece != null && square.squarePiece.name == enemyKing) {
                 targetSquare = square.position;
-                break;
             }
         }
-        for (ArrayList<Integer> move : getAllMoves(checker)){
-            if (move.contains(targetSquare)){
+
+        for (ArrayList<Integer> move : getAllMoves(checker)) {
+            if (move.contains(targetSquare)) {
                 check = true;
                 break;
             }
@@ -236,7 +236,7 @@ public class Board {
     }
 
     public boolean isMate(char mater){//Returns if the mater is mating the opponent.
-        if (!isCheck(mater)){//No check means no mate
+        if (!isCheck(mater)){ //No check means no mate
             return false;
         }
         char opponent;
@@ -246,18 +246,20 @@ public class Board {
             opponent = 'B';
         }
         for (ArrayList<Integer> move : getAllMoves(opponent)){
-            for (int i = 1; i < move.size();i++){
-                if (!(Squares[move.get(i)].squarePiece.name == 'K' ||
-                        Squares[move.get(i)].squarePiece.name == 'k')) { //not a king
-                    Piece tempPiece = Squares[move.get(i)].squarePiece; //temporarily moves a piece from the end move position to safety
-                    makeMove(move.get(0), move.get(i)); //moves the piece
-                    if(!isCheck(mater)){
-                        makeMove(move.get(i),move.get(0));
+            for (int i = 1; i < move.size();i++) {
+                if (Squares[move.get(i)].squarePiece != null){
+                    if (!(Squares[move.get(i)].squarePiece.name == 'K' ||
+                            Squares[move.get(i)].squarePiece.name == 'k')) { //not a king
+                        Piece tempPiece = Squares[move.get(i)].squarePiece; //temporarily moves a piece from the end move position to safety
+                        makeMove(move.get(0), move.get(i)); //moves the piece
+                        if (!isCheck(mater)) {
+                            makeMove(move.get(i), move.get(0));
+                            Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
+                            return false;
+                        }
+                        makeMove(move.get(i), move.get(0));
                         Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
-                        return false;
                     }
-                    makeMove(move.get(i),move.get(0));
-                   Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
                 }
             }
         }

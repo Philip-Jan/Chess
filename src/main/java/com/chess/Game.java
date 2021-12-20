@@ -38,15 +38,15 @@ public class Game {
     private int BoardSquare;
     Board board;
     private Piece ChessPiece;
+    private char activePlayer = 'W';
 
     public void startGame(Stage stage) {
 
-        board = new Board(this.pieceImg); // Generate Board
+        board = new Board(this.activePlayer, this.pieceImg); // Generate Board
 
         GridPane grid = createGrid();
 
         if (isWhite) {
-
             for (int i = 0; i < 64; i++) {
                 buttons[i] = createNumberButton(i);
                 int row = (63-i) / 8;
@@ -77,8 +77,20 @@ public class Game {
                     if (board.validMovesPosition(BoardSquare).contains(number)) {
                         board.makeMove(BoardSquare, number);
                         buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
-                    } else {
-                        new Alert(INFORMATION, "That is not a legal move.");
+                        if (board.isMate(activePlayer)) {
+                            Mate(activePlayer);
+                            stage.close();
+                        }
+                        if (activePlayer == 'W'){ //switches active player
+                            activePlayer = 'B';
+                        }
+                        else {
+                            activePlayer = 'W';
+                        }
+                    }
+                    else {
+                        Alert alert = new Alert(INFORMATION, "That is not a legal move.");
+                        alert.show();
                     }
                     this.BoardSquare = 0;
                     this.ChessPiece = null;
@@ -86,9 +98,13 @@ public class Game {
                     for (int k = 0; k < 64; k++) {
                         setStyle(buttons[k], k);
                     }
+                    if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
+                        Alert alert = new Alert(INFORMATION, "Check");
+                        alert.show();
+                    }
                 }
                 else {
-                    if (board.getBoardSquare(number) != null) {
+                    if (board.getBoardSquare(number) != null && board.getBoardSquare(number).color == activePlayer) {
                         this.BoardSquare = board.getPosition(number);
                         this.ChessPiece = board.getBoardSquare(number);
                         this.validMoves = board.validMovesPosition(number);
@@ -104,36 +120,6 @@ public class Game {
 
             });
 
-        }
-
-        if (board.isMate('W')) {
-            Alert alert = new Alert(INFORMATION, "White wins. \n Do you wish to play a new game?",
-                    ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isEmpty()) {
-                Platform.exit();
-            }
-            else if (result.get() == ButtonType.YES) {
-                NewGameAction();
-            }
-            else if (result.get() == ButtonType.NO) {
-                Platform.exit();
-            }
-        }
-        else if (board.isMate('B')) {
-            Alert alert = new Alert(INFORMATION, "Black wins. \n Do you wish to play a new game?",
-                    ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isEmpty()) {
-                Platform.exit();
-            }
-            else if (result.get() == ButtonType.YES) {
-                NewGameAction();
-                stage.close();
-            }
-            else if (result.get() == ButtonType.NO) {
-                Platform.exit();
-            }
         }
 
         ButtonBar bar = new ButtonBar();
@@ -274,4 +260,25 @@ public class Game {
         }
     }
 
+    private void Mate(char player) {
+        String colors = "";
+        if (player == 'W') {
+            colors = "White";
+        }
+        else if (player == 'B') {
+            colors = "Black";
+        }
+            Alert alert = new Alert(INFORMATION, colors + " wins. \n Do you wish to play a new game?",
+                    ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.YES) {
+                NewGameAction();
+            }
+            else if (result.get() == ButtonType.NO) {
+                Platform.exit();
+            }
+    }
 }
