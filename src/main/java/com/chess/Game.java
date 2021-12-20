@@ -77,6 +77,11 @@ public class Game {
                         board.makeMove(BoardSquare, number);
                         buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
 
+                        if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
+                            Alert alert = new Alert(INFORMATION, "Check");
+                            alert.show();
+                        }
+
                         if (board.isMate(activePlayer)) {
                             Mate(activePlayer);
                             stage.close();
@@ -98,10 +103,6 @@ public class Game {
                     this.validMoves = null;
                     for (int k = 0; k < 64; k++) {
                         setStyle(buttons[k], k);
-                    }
-                    if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
-                        Alert alert = new Alert(INFORMATION, "Check");
-                        alert.show();
                     }
                 }
                 else {
