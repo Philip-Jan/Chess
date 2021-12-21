@@ -105,8 +105,7 @@ public class Game {
                         setStyle(buttons[k], k);
                     }
                 }
-                else {
-                    if (board.getBoardSquare(number) != null && board.getBoardSquare(number).color == activePlayer) {
+                else if (board.getBoardSquare(number) != null && board.getBoardSquare(number).color == activePlayer) {
                         this.BoardSquare = board.getPosition(number);
                         this.ChessPiece = board.getBoardSquare(number);
                         this.validMoves = board.validMovesPosition(number);
@@ -118,10 +117,7 @@ public class Game {
                             }
                         }
                     }
-                }
-
             });
-
         }
 
         ButtonBar bar = new ButtonBar();
