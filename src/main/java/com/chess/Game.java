@@ -78,7 +78,7 @@ public class Game {
                     if (board.legalMovesPosition(BoardSquare).contains(number)) {
                         board.makeMove(BoardSquare, number);
                         buttons[BoardSquare].setGraphic(null);
-                        buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
+                        buttons[number].setGraphic(board.getBoardSquare(number).imgViewPiece);
 
                         if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
                             Alert alert = new Alert(INFORMATION, "Check");
