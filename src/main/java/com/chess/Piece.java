@@ -16,6 +16,7 @@ public class Piece {
     private String str;
     Image imgPiece;
     ImageView imgViewPiece;
+    boolean hasMoved = false;
 
     Piece(char maybePieceType, int pieceImg){
 

@@ -93,10 +93,11 @@ public class Board {
         }
     }
 
-    public void makeMove(int startSquare,int endSquare){//Moves a piece from the starting location to the end location.
+    public void makeMove(int startSquare,int endSquare) {//Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = null;
+        Squares[endSquare].squarePiece.hasMoved = true;
         //Promotion
         if (Squares[endSquare].squarePiece.name == 'P' && Squares[endSquare].getRow() == 7){
             Squares[endSquare].squarePiece = new Piece('Q', this.pieceImg);
@@ -105,6 +106,13 @@ public class Board {
             Squares[endSquare].squarePiece = new Piece('q', this.pieceImg);
         }
     }
+
+    public void makeTempMove(int startSquare,int endSquare){//Makes a temporary move, useful for checking whether moves
+        // can be made, without promoting pawns or giving up castling rights.
+        Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
+        Squares[startSquare].squarePiece = null;
+    }
+
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the valid moves the piece on the specified
         // position can make. This method allows the player to keep/put themselves in check.
@@ -213,18 +221,18 @@ public class Board {
         for (Integer move : moves) {
             if (Squares[move].squarePiece != null) { // if the move would capture a piece
                 Piece tempPiece = Squares[move].squarePiece; //temporarily stores the would-be-captured piece
-                makeMove(position, move);
+                makeTempMove(position, move);
                 if (!isCheck(checker)) {
                     legalMoves.add(move);
                 }
-                makeMove(move, position);
+                makeTempMove(move, position);
                 Squares[move].squarePiece = tempPiece;
             } else {
-                makeMove(position, move);
+                makeTempMove(position, move);
                 if (!isCheck(checker)) {
                     legalMoves.add(move);
                 }
-                makeMove(move, position);
+                makeTempMove(move, position);
             }
         }
         return  legalMoves;
@@ -290,22 +298,22 @@ public class Board {
                     if (!(Squares[move.get(i)].squarePiece.name == 'K' ||
                             Squares[move.get(i)].squarePiece.name == 'k')) { //not a king
                         Piece tempPiece = Squares[move.get(i)].squarePiece; //temporarily moves a piece from the end move position to safety
-                        makeMove(move.get(0), move.get(i)); //moves the piece
+                        makeTempMove(move.get(0), move.get(i)); //moves the piece
                         if (!isCheck(mater)) {
-                            makeMove(move.get(i), move.get(0));
+                            makeTempMove(move.get(i), move.get(0));
                             Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
                             return false;
                         }
-                        makeMove(move.get(i), move.get(0));
+                        makeTempMove(move.get(i), move.get(0));
                         Squares[move.get(i)].squarePiece = tempPiece; //Undoes the moves
                     }
                 }else{
-                    makeMove(move.get(0), move.get(i)); //moves the piece
+                    makeTempMove(move.get(0), move.get(i)); //moves the piece
                     if (!isCheck(mater)) {
-                        makeMove(move.get(i), move.get(0));//Undoes the move
+                        makeTempMove(move.get(i), move.get(0));//Undoes the move
                         return false;
                     }
-                    makeMove(move.get(i), move.get(0));//Undoes the move
+                    makeTempMove(move.get(i), move.get(0));//Undoes the move
                 }
             }
         }
