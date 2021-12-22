@@ -313,22 +313,22 @@ public class Game {
         setGridLabel(label7);
         setGridLabel(label8);
 
-        grid.add(labelA, pos,1);
-        grid.add(labelB, pos,2);
-        grid.add(labelC, pos,3);
-        grid.add(labelD, pos,4);
-        grid.add(labelE, pos,5);
-        grid.add(labelF, pos,6);
-        grid.add(labelG, pos,7);
-        grid.add(labelH, pos,8);
-        grid.add(label1, 1,pos);
-        grid.add(label2, 2,pos);
-        grid.add(label3, 3,pos);
-        grid.add(label4, 4,pos);
-        grid.add(label5, 5,pos);
-        grid.add(label6, 6,pos);
-        grid.add(label7, 7,pos);
-        grid.add(label8, 8,pos);
+        grid.add(label1, pos,1);
+        grid.add(label2, pos,2);
+        grid.add(label3, pos,3);
+        grid.add(label4, pos,4);
+        grid.add(label5, pos,5);
+        grid.add(label6, pos,6);
+        grid.add(label7, pos,7);
+        grid.add(label8, pos,8);
+        grid.add(labelA, 1,pos);
+        grid.add(labelB, 2,pos);
+        grid.add(labelC, 3,pos);
+        grid.add(labelD, 4,pos);
+        grid.add(labelE, 5,pos);
+        grid.add(labelF, 6,pos);
+        grid.add(labelG, 7,pos);
+        grid.add(labelH, 8,pos);
     }
 
     private void setGridLabel(Label label) {
