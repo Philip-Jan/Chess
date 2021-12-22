@@ -332,6 +332,7 @@ public class Game {
     }
 
     private void setGridLabel(Label label) {
+        label.setPrefSize(9, 9);
         GridPane.setFillWidth(label, true);
         GridPane.setFillHeight(label, true);
         GridPane.setHalignment(label, HPos.CENTER);
