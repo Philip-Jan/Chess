@@ -96,7 +96,6 @@ public class Board {
     public void makeMove(int startSquare,int endSquare) {//Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
-        Squares[startSquare].squarePiece = null;
         Squares[endSquare].squarePiece.hasMoved = true;
         //Promotion
         if (Squares[endSquare].squarePiece.name == 'P' && Squares[endSquare].getRow() == 7){
@@ -105,14 +104,124 @@ public class Board {
         if (Squares[endSquare].squarePiece.name == 'p' && Squares[endSquare].getRow() == 0){
             Squares[endSquare].squarePiece = new Piece('q', this.pieceImg);
         }
+        //Castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) { //white kingside castling
+            makeMove(7,5);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) { //white queenside castling
+            makeMove(0,3);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 62) { //black kingside castling
+            makeMove(63,61);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 58) { //black queenside castling
+            makeMove(56,59);
+        }
+        Squares[startSquare].squarePiece = null;
     }
 
     public void makeTempMove(int startSquare,int endSquare){//Makes a temporary move, useful for checking whether moves
         // can be made, without promoting pawns or giving up castling rights.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
+        //Castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) { //white kingside castling
+            makeTempMove(7,5);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 6 && endSquare == 4) { //undoing white kingside castling
+            makeTempMove(5,7);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) { //white queenside castling
+            makeTempMove(0,3);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 2 && endSquare == 4) { //undoing white queenside castling
+            makeTempMove(3,0);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 62) { //black kingside castling
+            makeTempMove(63,61);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 62 && endSquare == 60) { //undoing black kingside castling
+            makeTempMove(61,63);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 58) { //black queenside castling
+            makeTempMove(56,59);
+        }
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 62 && endSquare == 58) { //undoing black queenside castling
+            makeTempMove(59,56);
+        }
         Squares[startSquare].squarePiece = null;
     }
 
+    public ArrayList<Integer> castleOptions (Piece piece){
+        ArrayList<Integer> castleMoves = new ArrayList<>();
+        if (!piece.hasMoved) { // King must not have moved
+            if (piece.name == 'K' && !isCheck('B')) {//white, not in check
+                if (Squares[7].squarePiece != null) {
+                    if (!Squares[7].squarePiece.hasMoved && Squares[5].squarePiece == null && Squares[6].squarePiece == null) {
+                        //Rook for kingside castling has not moved and there is nothing between the king and rook
+                        makeTempMove(4, 5);
+                        if (!isCheck('B')) { //no check on square the King moves over
+                            makeTempMove(5, 6);
+                            if (!isCheck('B')) {
+                                castleMoves.add(6);
+                            }
+                            makeTempMove(6, 5); // Moves the king back. This in-between move is because if there is a check
+                            // on the first square, it would not get in this loop.
+                        }
+                        makeTempMove(5, 4);
+                    }
+                }
+                if (Squares[0].squarePiece != null) {
+                    if (!Squares[0].squarePiece.hasMoved && Squares[1].squarePiece == null &&
+                            Squares[2].squarePiece == null && Squares[3].squarePiece == null) {
+                        //Rook for queenside castling has not moved and there is nothing between the king and rook
+                        makeTempMove(4, 3);
+                        if (!isCheck('B')) { //no check on square the King moves over
+                            makeTempMove(3, 2);
+                            if (!isCheck('B')) {
+                                castleMoves.add(2);
+                            }
+                            makeTempMove(2, 3); // Moves the king back. This in-between move is because if there is a check
+                            // on the first square, it would not get in this loop.
+                        }
+                        makeTempMove(3, 4);
+                    }
+                }
+            }
+        }else if (piece.name == 'k' && !isCheck('W')) {//Black, not in check
+            if (Squares[63].squarePiece != null) {
+                if (!Squares[63].squarePiece.hasMoved && Squares[61].squarePiece == null && Squares[62].squarePiece == null) {
+                    //Rook for kingside castling has not moved and there is nothing between the king and rook
+                    makeTempMove(60, 61);
+                    if (!isCheck('W')) { //no check on square the King moves over
+                        makeTempMove(61, 62);
+                        if (!isCheck('W')) {
+                            castleMoves.add(62);
+                        }
+                        makeTempMove(62, 61); // Moves the king back. This in-between move is because if there is a check
+                        // on the first square, it would not get in this loop.
+                    }
+                    makeTempMove(61, 60);
+                }
+            }
+            if (Squares[56].squarePiece != null) {
+                if (!Squares[56].squarePiece.hasMoved && Squares[57].squarePiece == null &&
+                        Squares[58].squarePiece == null && Squares[59].squarePiece == null) {
+                    //Rook for queenside castling has not moved and there is nothing between the king and rook
+                    makeTempMove(60, 59);
+                    if (!isCheck('W')) { //no check on square the King moves over
+                        makeTempMove(59, 58);
+                        if (!isCheck('W')) {
+                            castleMoves.add(58);
+                        }
+                        makeTempMove(58, 59); // Moves the king back. This in-between move is because if there is a check
+                        // on the first square, it would not get in this loop.
+                    }
+                    makeTempMove(59, 60);
+                }
+            }
+        }
+        return castleMoves;
+    }
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the valid moves the piece on the specified
         // position can make. This method allows the player to keep/put themselves in check.
@@ -180,6 +289,7 @@ public class Board {
                         }
                     }
                 }
+
             }
         }
         else {//Long range pieces Queen, Rook and Bishop
@@ -235,6 +345,10 @@ public class Board {
                 makeTempMove(move, position);
             }
         }
+        Piece piece = Squares[position].squarePiece;
+        if (!piece.hasMoved && (piece.name == 'k' || piece.name == 'K')){
+            legalMoves.addAll(castleOptions(piece));
+        }
         return  legalMoves;
     }
 
@@ -272,6 +386,7 @@ public class Board {
                 targetSquare = square.position;
             }
         }
+        System.out.println("Checker: "+ checker + " target square: " + targetSquare);
 
         for (ArrayList<Integer> move : getAllMoves(checker)) {
             if (move.contains(targetSquare)) {

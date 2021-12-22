@@ -17,6 +17,7 @@ public class Main extends Application {
             board.printSquareBoard();
             System.out.println(board.activePlayer);
             System.out.println(board.getAllMoves('B'));
+            //System.out.println("White castle options"+ );
             System.out.println("White checks: " + board.isCheck('W'));
             System.out.println("Black checks:" +  board.isCheck('B'));
             System.out.println("White mates: " + board.isMate('W'));
