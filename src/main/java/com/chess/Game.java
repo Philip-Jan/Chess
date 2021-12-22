@@ -127,7 +127,7 @@ public class Game {
             stage.close();
         });
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(NewGame);
+        setMenuButtonData(NewGame);
 
         Button OfferDraw = new Button("Offer Draw");
         OfferDraw.setOnAction(e -> {
@@ -141,7 +141,7 @@ public class Game {
             }
             });
         OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(OfferDraw);
+        setMenuButtonData(OfferDraw);
 
         Button OfferWin = new Button("Offer Win");
         OfferWin.setOnAction(e -> {
@@ -155,9 +155,10 @@ public class Game {
             }
         });
         OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setButtonData(OfferWin);
+        setMenuButtonData(OfferWin);
 
         Button Exit = createExitButton();
+        setMenuButtonData(Exit);
 
         bar.getButtons().addAll(NewGame, OfferDraw, OfferWin, Exit);
         ButtonBar.setButtonData(NewGame, ButtonBar.ButtonData.LEFT);
@@ -213,8 +214,15 @@ public class Game {
     }
 
     private void setButtonData(Button button) {
-        button.setMinSize(50,50);
-        button.setMaxSize(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+        button.setPrefSize(110,100);
+        GridPane.setFillHeight(button, true);
+        GridPane.setFillWidth(button, true);
+        GridPane.setHgrow(button, Priority.ALWAYS);
+        GridPane.setVgrow(button, Priority.ALWAYS);
+    }
+
+    private void setMenuButtonData(Button button) {
+        button.setPrefSize(200,30);
         GridPane.setFillHeight(button, true);
         GridPane.setFillWidth(button, true);
         GridPane.setHgrow(button, Priority.ALWAYS);
