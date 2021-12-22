@@ -1,13 +1,11 @@
 package com.chess;
 
 import javafx.application.Platform;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -46,6 +44,9 @@ public class Game {
 
         GridPane grid = createGrid();
 
+        addLabels(grid, 0);
+        addLabels(grid, 9);
+
         if (!isWhite) {
             for (int i = 0; i < 64; i++) {
                 buttons[i] = createNumberButton(i);
@@ -54,7 +55,7 @@ public class Game {
                 if (board.getBoardSquare(i) != null) {
                     buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
-                grid.add(buttons[i], col, row);
+                grid.add(buttons[i], col + 1, row + 1);
             }
         } // Generate pieces on the board if player 1 plays with the black pieces
         else {
@@ -65,7 +66,7 @@ public class Game {
                 if (board.getBoardSquare(i) != null) {
                     buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
-                grid.add(buttons[i], col, row);
+                grid.add(buttons[i], col + 1, row + 1);
             }
         } // Generate pieces on the board if player 1 plays with the white pieces or default settings.
 
@@ -94,10 +95,6 @@ public class Game {
                         else {
                             activePlayer = 'W';
                         }
-                    }
-                    else {
-                        Alert alert = new Alert(INFORMATION, "That is not a legal move.");
-                        alert.show();
                     }
                     this.BoardSquare = 0;
                     this.ChessPiece = null;
@@ -171,7 +168,7 @@ public class Game {
         root.setTop(bar);
         root.setCenter(grid);
 
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 900, 800);
         stage.setTitle("Chess");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -279,5 +276,64 @@ public class Game {
             else if (result.get() == ButtonType.NO) {
                 Platform.exit();
             }
+    }
+
+    private void addLabels(GridPane grid, int pos) {
+        Label labelA = new Label("A");
+        Label labelB = new Label("B");
+        Label labelC = new Label("C");
+        Label labelD = new Label("D");
+        Label labelE = new Label("E");
+        Label labelF = new Label("F");
+        Label labelG = new Label("G");
+        Label labelH = new Label("H");
+        Label label1 = new Label("1");
+        Label label2 = new Label("2");
+        Label label3 = new Label("3");
+        Label label4 = new Label("4");
+        Label label5 = new Label("5");
+        Label label6 = new Label("6");
+        Label label7 = new Label("7");
+        Label label8 = new Label("8");
+
+        setGridLabel(labelA);
+        setGridLabel(labelB);
+        setGridLabel(labelC);
+        setGridLabel(labelD);
+        setGridLabel(labelE);
+        setGridLabel(labelF);
+        setGridLabel(labelG);
+        setGridLabel(labelH);
+        setGridLabel(label1);
+        setGridLabel(label2);
+        setGridLabel(label3);
+        setGridLabel(label4);
+        setGridLabel(label5);
+        setGridLabel(label6);
+        setGridLabel(label7);
+        setGridLabel(label8);
+
+        grid.add(labelA, pos,1);
+        grid.add(labelB, pos,2);
+        grid.add(labelC, pos,3);
+        grid.add(labelD, pos,4);
+        grid.add(labelE, pos,5);
+        grid.add(labelF, pos,6);
+        grid.add(labelG, pos,7);
+        grid.add(labelH, pos,8);
+        grid.add(label1, 1,pos);
+        grid.add(label2, 2,pos);
+        grid.add(label3, 3,pos);
+        grid.add(label4, 4,pos);
+        grid.add(label5, 5,pos);
+        grid.add(label6, 6,pos);
+        grid.add(label7, 7,pos);
+        grid.add(label8, 8,pos);
+    }
+
+    private void setGridLabel(Label label) {
+        GridPane.setFillWidth(label, true);
+        GridPane.setFillHeight(label, true);
+        GridPane.setHalignment(label, HPos.CENTER);
     }
 }
