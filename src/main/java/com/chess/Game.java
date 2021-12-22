@@ -32,7 +32,7 @@ public class Game {
         startGame(stage);
     }
 
-    private ArrayList<Integer> validMoves;
+    private ArrayList<Integer> legalMoves;
     private int BoardSquare;
     Board board;
     private Piece ChessPiece;
@@ -74,7 +74,7 @@ public class Game {
             final int number = i;
             buttons[i].setOnAction(e -> {
                 if (this.ChessPiece != null) {
-                    if (board.validMovesPosition(BoardSquare).contains(number)) {
+                    if (board.legalMovesPosition(BoardSquare).contains(number)) {
                         board.makeMove(BoardSquare, number);
                         buttons[BoardSquare].setGraphic(null);
                         buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
@@ -98,7 +98,7 @@ public class Game {
                     }
                     this.BoardSquare = 0;
                     this.ChessPiece = null;
-                    this.validMoves = null;
+                    this.legalMoves = null;
                     for (int k = 0; k < 64; k++) {
                         setStyle(buttons[k], k);
                     }
@@ -106,9 +106,9 @@ public class Game {
                 else if (board.getBoardSquare(number) != null && board.getBoardSquare(number).color == activePlayer) {
                         this.BoardSquare = board.getPosition(number);
                         this.ChessPiece = board.getBoardSquare(number);
-                        this.validMoves = board.validMovesPosition(number);
+                        this.legalMoves = board.legalMovesPosition(number);
                         for (int k = 0; k < 64; k++) {
-                            if (validMoves.contains(k)) {
+                            if (legalMoves.contains(k)) {
                                 buttons[k].setStyle("-fx-background-color: Yellow");
                             } else {
                                 setStyle(buttons[k], k);
