@@ -44,9 +44,6 @@ public class Game {
 
         GridPane grid = createGrid();
 
-        addLabels(grid, 0);
-        addLabels(grid, 9);
-
         if (!isWhite) {
             for (int i = 0; i < 64; i++) {
                 buttons[i] = createNumberButton(i);
@@ -56,6 +53,8 @@ public class Game {
                     buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
                 grid.add(buttons[i], col + 1, row + 1);
+                addLabels(grid, 0);
+                addLabels(grid, 9);
             }
         } // Generate pieces on the board if player 1 plays with the black pieces
         else {
@@ -67,6 +66,8 @@ public class Game {
                     buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
                 }
                 grid.add(buttons[i], col + 1, row + 1);
+                addLabels(grid, 0);
+                addLabels(grid, 9);
             }
         } // Generate pieces on the board if player 1 plays with the white pieces or default settings.
 
@@ -279,6 +280,21 @@ public class Game {
     }
 
     private void addLabels(GridPane grid, int pos) {
+
+        int colorW = 1;
+        int beginPosW = 0;
+        int colorB = 1;
+        int beginPosB = 0;
+
+        if (isWhite) {
+            colorW = -1;
+            beginPosW = 9;
+        }
+        else {
+            colorB = -1;
+            beginPosB = 9;
+        }
+
         Label labelA = new Label("A");
         Label labelB = new Label("B");
         Label labelC = new Label("C");
@@ -313,22 +329,22 @@ public class Game {
         setGridLabel(label7);
         setGridLabel(label8);
 
-        grid.add(label1, pos,1);
-        grid.add(label2, pos,2);
-        grid.add(label3, pos,3);
-        grid.add(label4, pos,4);
-        grid.add(label5, pos,5);
-        grid.add(label6, pos,6);
-        grid.add(label7, pos,7);
-        grid.add(label8, pos,8);
-        grid.add(labelA, 1,pos);
-        grid.add(labelB, 2,pos);
-        grid.add(labelC, 3,pos);
-        grid.add(labelD, 4,pos);
-        grid.add(labelE, 5,pos);
-        grid.add(labelF, 6,pos);
-        grid.add(labelG, 7,pos);
-        grid.add(labelH, 8,pos);
+        grid.add(label1, pos, beginPosW + colorW);
+        grid.add(label2, pos, beginPosW + 2 * colorW);
+        grid.add(label3, pos, beginPosW + 3 * colorW);
+        grid.add(label4, pos, beginPosW + 4 * colorW);
+        grid.add(label5, pos, beginPosW + 5 * colorW);
+        grid.add(label6, pos, beginPosW + 6 * colorW);
+        grid.add(label7, pos, beginPosW + 7 * colorW);
+        grid.add(label8, pos, beginPosW + 8 * colorW);
+        grid.add(labelA, beginPosB + colorB,pos);
+        grid.add(labelB, beginPosB + 2 * colorB,pos);
+        grid.add(labelC, beginPosB + 3 * colorB,pos);
+        grid.add(labelD, beginPosB + 4 * colorB,pos);
+        grid.add(labelE, beginPosB + 5 * colorB,pos);
+        grid.add(labelF, beginPosB + 6 * colorB,pos);
+        grid.add(labelG, beginPosB + 7 * colorB,pos);
+        grid.add(labelH, beginPosB + 8 * colorB,pos);
     }
 
     private void setGridLabel(Label label) {
