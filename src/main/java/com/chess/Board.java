@@ -259,16 +259,20 @@ public class Board {
                         }
                     }
                 }
-                if (Squares[position + 7].squarePiece != null) {
-                    if (Squares[position + 7].squarePiece.color == 'B' && Squares[position].getColumn() > 0) {
-                        //enemy piece diagonally in front of pawn
-                        validMoves.add(position + 7);
+                if (Squares[position].getColumn() > 0) {
+                    if (Squares[position + 7].squarePiece != null) {
+                        if (Squares[position + 7].squarePiece.color == 'B') {
+                            //enemy piece diagonally in front of pawn
+                            validMoves.add(position + 7);
+                        }
                     }
                 }
-                if (Squares[position + 9].squarePiece != null) {
-                    if (Squares[position + 9].squarePiece.color == 'B' && Squares[position].getColumn() < 7) {
-                        //enemy piece diagonally in front of pawn
-                        validMoves.add(position + 9);
+                if (Squares[position].getColumn() < 7) {
+                    if (Squares[position + 9].squarePiece != null) {
+                        if (Squares[position + 9].squarePiece.color == 'B') {
+                            //enemy piece diagonally in front of pawn
+                            validMoves.add(position + 9);
+                        }
                     }
                 }
             }
@@ -282,16 +286,20 @@ public class Board {
                         }
                     }
                 }
-                if (Squares[position - 9].squarePiece != null) {
-                    if (Squares[position - 9].squarePiece.color == 'W' && Squares[position].getColumn() > 0) {
-                        //enemy piece diagonally in front of pawn
-                        validMoves.add(position - 9);
+                if (Squares[position].getColumn() > 0) {
+                    if (Squares[position - 9].squarePiece != null) {
+                        if (Squares[position - 9].squarePiece.color == 'W') {
+                            //enemy piece diagonally in front of pawn
+                            validMoves.add(position - 9);
+                        }
                     }
                 }
-                if (Squares[position - 7].squarePiece != null) {
-                    if (Squares[position - 7].squarePiece.color == 'W' && Squares[position].getColumn() < 7) {
-                        //enemy piece diagonally in front of pawn
-                        validMoves.add(position - 7);
+                if (Squares[position].getColumn() < 7) {
+                    if (Squares[position - 7].squarePiece != null) {
+                        if (Squares[position - 7].squarePiece.color == 'W') {
+                            //enemy piece diagonally in front of pawn
+                            validMoves.add(position - 7);
+                        }
                     }
                 }
             }
@@ -398,7 +406,7 @@ public class Board {
             if (square.squarePiece != null && square.squarePiece.color == color && legalMovesPosition(square.position).size() > 0){
                 ArrayList<Integer> legalMoves = new ArrayList<>();
                 legalMoves.add(square.position);
-                legalMoves.addAll(validMovesPosition(square.position));
+                legalMoves.addAll(legalMovesPosition(square.position));
                 allLegalMoves.add(new ArrayList<>());
                 allLegalMoves.get(pieceNumber).addAll(legalMoves);
                 pieceNumber++;

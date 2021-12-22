@@ -133,17 +133,18 @@ public class Game {
                     }
                 }
                 else if (board.getBoardSquare(number) != null && board.getBoardSquare(number).color == activePlayer) {
-                        this.BoardSquare = board.getPosition(number);
-                        this.ChessPiece = board.getBoardSquare(number);
-                        this.legalMoves = board.legalMovesPosition(number);
-                        for (int k = 0; k < 64; k++) {
-                            if (legalMoves.contains(k)) {
-                                buttons[k].setStyle("-fx-background-color: Yellow");
-                            } else {
-                                setStyle(buttons[k], k);
-                            }
+                    this.BoardSquare = board.getPosition(number);
+                    this.ChessPiece = board.getBoardSquare(number);
+                    this.legalMoves = board.legalMovesPosition(number);
+                    for (int k = 0; k < 64; k++) {
+                        if (legalMoves.contains(k)) {
+                            buttons[k].setStyle("-fx-background-color: Yellow");
+                        }
+                        else {
+                            setStyle(buttons[k], k);
                         }
                     }
+                }
             });
         }
 
