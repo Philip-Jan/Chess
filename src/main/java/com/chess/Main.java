@@ -34,6 +34,14 @@ public class Main extends Application {
             System.out.println("Black checks:" +  board.isCheck('B'));
             System.out.println("White mates: " + board.isMate('W'));
             System.out.println("Black mates:" +  board.isMate('B'));
+            System.out.println("Black king valid moves:" + board.validMovesPosition(60));
+            System.out.println("Black king legal moves:" + board.legalMovesPosition(60));
+            System.out.println("Black b-knight valid moves:" + board.validMovesPosition(57));
+            System.out.println("Black b-knight legal moves:" + board.legalMovesPosition(57));
+            board.makeMove(60,36);
+            board.printSquareBoard();
+            System.out.println("Black king valid moves:" + board.validMovesPosition(36));
+            System.out.println("Black king legal moves:" + board.legalMovesPosition(36));
         }else {
             launch(args);
         }

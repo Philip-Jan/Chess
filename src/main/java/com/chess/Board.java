@@ -99,7 +99,8 @@ public class Board {
         Squares[startSquare].squarePiece = null;
     }
 
-    public ArrayList<Integer> validMovesPosition(int position) {//Give the legal moves the piece on the specified position can make.
+    public ArrayList<Integer> validMovesPosition(int position) {//Give the valid moves the piece on the specified
+        // position can make. This method allows the player to keep/put themselves in check.
         ArrayList<Integer> validMoves = new ArrayList<>();
         Piece piece = Squares[position].squarePiece;
         if (!piece.moveRecursion) {//short range pieces Knight, King and pawn.
@@ -190,6 +191,36 @@ public class Board {
             }
         }
         return validMoves;
+    }
+
+    public ArrayList<Integer> legalMovesPosition(int position){//Gives the legal moves of the piece on the selected
+        // position. This method only returns moves where the player is not in check at the end.
+        char checker;
+        if (Squares[position].squarePiece.color == 'W'){
+            checker = 'B';
+        }else {
+            checker = 'W';
+        }
+        ArrayList<Integer> moves = validMovesPosition(position);
+        ArrayList<Integer> legalMoves = new ArrayList<>();
+        for (Integer move : moves) {
+            if (Squares[move].squarePiece != null) { // if the move would capture a piece
+                Piece tempPiece = Squares[move].squarePiece; //temporarily stores the would-be-captured piece
+                makeMove(position, move);
+                if (!isCheck(checker)) {
+                    legalMoves.add(move);
+                }
+                makeMove(move, position);
+                Squares[move].squarePiece = tempPiece;
+            } else {
+                makeMove(position, move);
+                if (!isCheck(checker)) {
+                    legalMoves.add(move);
+                }
+                makeMove(move, position);
+            }
+        }
+        return  legalMoves;
     }
 
     public ArrayList<ArrayList<Integer>> getAllMoves(char color){// Returns all legal moves a player can make.
