@@ -81,10 +81,6 @@ public class Game {
                 if (this.ChessPiece != null) {
                     if (board.legalMovesPosition(BoardSquare).contains(number)) {
 
-                        if (!board.isCheck(activePlayer) && board.getAllLegalMoves(activePlayer) == null) {
-                            GameDrawn();
-                        }
-
                         if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 1) {
                             PromotionChoicesB.setContentText("Promote Your Pawn");
                             PromotionChoicesB.showAndWait();
