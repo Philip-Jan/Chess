@@ -56,7 +56,7 @@ public class Game {
                 }
                 grid.add(buttons[i], col, row);
             }
-        } // Generate pieces on the board if player 1 plays with the white pieces
+        } // Generate pieces on the board if player 1 plays with the black pieces
         else {
             for (int i = 0; i < 64; i++) {
                 buttons[i] = createNumberButton(i);
@@ -67,7 +67,7 @@ public class Game {
                 }
                 grid.add(buttons[i], col, row);
             }
-        } // Generate pieces on the board if player 1 plays with the black pieces
+        } // Generate pieces on the board if player 1 plays with the white pieces or default settings.
 
         for (int i=0; i < 64; i++) {
             final int number = i;
@@ -75,6 +75,7 @@ public class Game {
                 if (this.ChessPiece != null) {
                     if (board.validMovesPosition(BoardSquare).contains(number)) {
                         board.makeMove(BoardSquare, number);
+                        buttons[BoardSquare].setGraphic(null);
                         buttons[number].setGraphic(this.ChessPiece.imgViewPiece);
 
                         if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
