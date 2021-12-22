@@ -97,6 +97,13 @@ public class Board {
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[startSquare].squarePiece = null;
+        //Promotion
+        if (Squares[endSquare].squarePiece.name == 'P' && Squares[endSquare].getRow() == 7){
+            Squares[endSquare].squarePiece = new Piece('Q', this.pieceImg);
+        }
+        if (Squares[endSquare].squarePiece.name == 'p' && Squares[endSquare].getRow() == 0){
+            Squares[endSquare].squarePiece = new Piece('q', this.pieceImg);
+        }
     }
 
     public ArrayList<Integer> validMovesPosition(int position) {//Give the valid moves the piece on the specified
