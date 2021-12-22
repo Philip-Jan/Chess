@@ -6,7 +6,6 @@ public class Board {
 
     private final int pieceImg;
     int targetSquare = -1;
-    boolean check = false;
     Square[] Squares = new Square[64];
     char activePlayer;
 
@@ -93,29 +92,34 @@ public class Board {
         }
     }
 
-    public void makeMove(int startSquare,int endSquare) {//Moves a piece from the starting location to the end location.
+    public void makeMove(int startSquare,int endSquare, char pieceName) {
+        //Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[endSquare].squarePiece.hasMoved = true;
         //Promotion
         if (Squares[endSquare].squarePiece.name == 'P' && Squares[endSquare].getRow() == 7){
-            Squares[endSquare].squarePiece = new Piece('Q', this.pieceImg);
+            Squares[endSquare].squarePiece = new Piece(pieceName, this.pieceImg);
         }
         if (Squares[endSquare].squarePiece.name == 'p' && Squares[endSquare].getRow() == 0){
-            Squares[endSquare].squarePiece = new Piece('q', this.pieceImg);
+            Squares[endSquare].squarePiece = new Piece(pieceName, this.pieceImg);
         }
         //Castling
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) { //white kingside castling
-            makeMove(7,5);
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) {
+            //white kingside castling
+            makeMove(7,5, 'R');
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) { //white queenside castling
-            makeMove(0,3);
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) {
+            //white queenside castling
+            makeMove(0,3, 'R');
         }
-        if (Squares[startSquare].squarePiece.name == 'k' && startSquare == 60 && endSquare == 62) { //black kingside castling
-            makeMove(63,61);
+        if (Squares[startSquare].squarePiece.name == 'k' && startSquare == 60 && endSquare == 62) {
+            //black kingside castling
+            makeMove(63,61, 'r' );
         }
-        if (Squares[startSquare].squarePiece.name == 'k' && startSquare == 60 && endSquare == 58) { //black queenside castling
-            makeMove(56,59);
+        if (Squares[startSquare].squarePiece.name == 'k' && startSquare == 60 && endSquare == 58) {
+            //black queenside castling
+            makeMove(56,59, 'r');
         }
         Squares[startSquare].squarePiece = null;
     }
@@ -124,28 +128,36 @@ public class Board {
         // can be made, without promoting pawns or giving up castling rights.
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         //Castling
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) { //white kingside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) {
+            //white kingside castling
             makeTempMove(7,5);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 6 && endSquare == 4) { //undoing white kingside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 6 && endSquare == 4) {
+            //undoing white kingside castling
             makeTempMove(5,7);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) { //white queenside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) {
+            //white queenside castling
             makeTempMove(0,3);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 2 && endSquare == 4) { //undoing white queenside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 2 && endSquare == 4) {
+            //undoing white queenside castling
             makeTempMove(3,0);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 62) { //black kingside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 62) {
+            //black kingside castling
             makeTempMove(63,61);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 62 && endSquare == 60) { //undoing black kingside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 62 && endSquare == 60) {
+            //undoing black kingside castling
             makeTempMove(61,63);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 58) { //black queenside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 58) {
+            //black queenside castling
             makeTempMove(56,59);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 62 && endSquare == 58) { //undoing black queenside castling
+        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 62 && endSquare == 58) {
+            //undoing black queenside castling
             makeTempMove(59,56);
         }
         Squares[startSquare].squarePiece = null;
@@ -153,8 +165,10 @@ public class Board {
 
     public ArrayList<Integer> castleOptions (Piece piece){
         ArrayList<Integer> castleMoves = new ArrayList<>();
-        if (!piece.hasMoved) { // King must not have moved
-            if (piece.name == 'K' && !isCheck('B')) {//white, not in check
+        if (!piece.hasMoved) {
+            // King must not have moved
+            if (piece.name == 'K' && !isCheck('B')) {
+                //white, not in check
                 if (Squares[7].squarePiece != null) {
                     if (!Squares[7].squarePiece.hasMoved && Squares[5].squarePiece == null && Squares[6].squarePiece == null) {
                         //Rook for kingside castling has not moved and there is nothing between the king and rook
@@ -164,7 +178,8 @@ public class Board {
                             if (!isCheck('B')) {
                                 castleMoves.add(6);
                             }
-                            makeTempMove(6, 5); // Moves the king back. This in-between move is because if there is a check
+                            makeTempMove(6, 5);
+                            // Moves the king back. This in-between move is because if there is a check
                             // on the first square, it would not get in this loop.
                         }
                         makeTempMove(5, 4);
@@ -175,12 +190,14 @@ public class Board {
                             Squares[2].squarePiece == null && Squares[3].squarePiece == null) {
                         //Rook for queenside castling has not moved and there is nothing between the king and rook
                         makeTempMove(4, 3);
-                        if (!isCheck('B')) { //no check on square the King moves over
+                        if (!isCheck('B')) {
+                            //no check on square the King moves over
                             makeTempMove(3, 2);
                             if (!isCheck('B')) {
                                 castleMoves.add(2);
                             }
-                            makeTempMove(2, 3); // Moves the king back. This in-between move is because if there is a check
+                            makeTempMove(2, 3);
+                            // Moves the king back. This in-between move is because if there is a check
                             // on the first square, it would not get in this loop.
                         }
                         makeTempMove(3, 4);
@@ -191,12 +208,14 @@ public class Board {
                     if (!Squares[63].squarePiece.hasMoved && Squares[61].squarePiece == null && Squares[62].squarePiece == null) {
                         //Rook for kingside castling has not moved and there is nothing between the king and rook
                         makeTempMove(60, 61);
-                        if (!isCheck('W')) { //no check on square the King moves over
+                        if (!isCheck('W')) {
+                            //no check on square the King moves over
                             makeTempMove(61, 62);
                             if (!isCheck('W')) {
                                 castleMoves.add(62);
                             }
-                            makeTempMove(62, 61); // Moves the king back. This in-between move is because if there is a check
+                            makeTempMove(62, 61);
+                            // Moves the king back. This in-between move is because if there is a check
                             // on the first square, it would not get in this loop.
                         }
                         makeTempMove(61, 60);
@@ -207,12 +226,14 @@ public class Board {
                             Squares[58].squarePiece == null && Squares[59].squarePiece == null) {
                         //Rook for queenside castling has not moved and there is nothing between the king and rook
                         makeTempMove(60, 59);
-                        if (!isCheck('W')) { //no check on square the King moves over
+                        if (!isCheck('W')) {
+                            //no check on square the King moves over
                             makeTempMove(59, 58);
                             if (!isCheck('W')) {
                                 castleMoves.add(58);
                             }
-                            makeTempMove(58, 59); // Moves the king back. This in-between move is because if there is a check
+                            makeTempMove(58, 59);
+                            // Moves the king back. This in-between move is because if there is a check
                             // on the first square, it would not get in this loop.
                         }
                         makeTempMove(59, 60);
@@ -367,6 +388,23 @@ public class Board {
             }
         }
         return allValidMoves;
+    }
+
+    public ArrayList<ArrayList<Integer>> getAllLegalMoves(char color){// Returns all legal moves a player can make.
+        // The first element in each list is the starting position of a piece, the other elements are where it can go.
+        ArrayList<ArrayList<Integer>> allLegalMoves = new ArrayList<>();
+        int pieceNumber = 0;
+        for (Square square : Squares){
+            if (square.squarePiece != null && square.squarePiece.color == color && legalMovesPosition(square.position).size() > 0){
+                ArrayList<Integer> legalMoves = new ArrayList<>();
+                legalMoves.add(square.position);
+                legalMoves.addAll(validMovesPosition(square.position));
+                allLegalMoves.add(new ArrayList<>());
+                allLegalMoves.get(pieceNumber).addAll(legalMoves);
+                pieceNumber++;
+            }
+        }
+        return allLegalMoves;
     }
 
     public boolean isCheck(char checker){ //Returns whether the checker is giving a check to the other player.

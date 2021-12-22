@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Optional;
-
 import static javafx.scene.control.Alert.AlertType.INFORMATION;
 
 public class Game {
@@ -23,7 +22,15 @@ public class Game {
     private final boolean isWhite;
     private final int fieldColor;
     private final int pieceImg;
+    private char pieceName;
+    private ChoiceDialog<Character> PromotionChoicesW;
+    private ChoiceDialog<Character> PromotionChoicesB;
     private final Button[] buttons = new Button[64];
+    private ArrayList<Integer> legalMoves;
+    private int BoardSquare;
+    Board board;
+    private Piece ChessPiece;
+    private char activePlayer = 'W';
 
     Game(Stage stage, boolean isWhite, int fieldColor, int pieceImg) {
         this.isWhite = isWhite;
@@ -32,13 +39,10 @@ public class Game {
         startGame(stage);
     }
 
-    private ArrayList<Integer> legalMoves;
-    private int BoardSquare;
-    Board board;
-    private Piece ChessPiece;
-    private char activePlayer = 'W';
-
     public void startGame(Stage stage) {
+
+        PromotionChoicesW = new ChoiceDialog<>(' ', 'R', 'B', 'N', 'Q');
+        PromotionChoicesB = new ChoiceDialog<>(' ', 'r', 'b', 'n', 'q');
 
         board = new Board(this.activePlayer, this.pieceImg); // Generate Board
 
@@ -76,8 +80,35 @@ public class Game {
             buttons[i].setOnAction(e -> {
                 if (this.ChessPiece != null) {
                     if (board.legalMovesPosition(BoardSquare).contains(number)) {
-                        board.makeMove(BoardSquare, number);
+
+                        if (!board.isCheck(activePlayer) && board.getAllLegalMoves(activePlayer) == null) {
+                            GameDrawn();
+                        }
+
+                        if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 1) {
+                            PromotionChoicesB.setContentText("Promote Your Pawn");
+                            PromotionChoicesB.showAndWait();
+                            pieceName = PromotionChoicesB.getSelectedItem();
+                        }
+                        else if ((this.ChessPiece.name == 'P' && BoardSquare / 8 == 6) ) {
+                            PromotionChoicesW.setContentText("Promote Your Pawn");
+                            PromotionChoicesW.showAndWait();
+                            pieceName = PromotionChoicesW.getSelectedItem();
+                        }
+                        board.makeMove(BoardSquare, number, pieceName);
                         buttons[BoardSquare].setGraphic(null);
+                        if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 62) {
+                            buttons[61].setGraphic(board.getBoardSquare(61).imgViewPiece);
+                        }
+                        else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 58) {
+                            buttons[61].setGraphic(board.getBoardSquare(59).imgViewPiece);
+                        }
+                        else if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 6) {
+                            buttons[5].setGraphic(board.getBoardSquare(5).imgViewPiece);
+                        }
+                        else if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 2) {
+                            buttons[3].setGraphic(board.getBoardSquare(3).imgViewPiece);
+                        }
                         buttons[number].setGraphic(board.getBoardSquare(number).imgViewPiece);
 
                         if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
@@ -97,6 +128,7 @@ public class Game {
                             activePlayer = 'W';
                         }
                     }
+                    this.pieceName = ' ';
                     this.BoardSquare = 0;
                     this.ChessPiece = null;
                     this.legalMoves = null;
@@ -130,27 +162,22 @@ public class Game {
         setMenuButtonData(NewGame);
 
         Button OfferDraw = new Button("Offer Draw");
-        OfferDraw.setOnAction(e -> {
-            Alert alert = new Alert(INFORMATION, "The game has ended in a draw.");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isEmpty()) {
-                Platform.exit();
-            }
-            else if (result.get() == ButtonType.OK) {
-                Platform.exit();
-            }
-            });
+        OfferDraw.setOnAction(e -> GameDrawn() );
         OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setMenuButtonData(OfferDraw);
 
         Button OfferWin = new Button("Offer Win");
         OfferWin.setOnAction(e -> {
-            Alert alert = new Alert(INFORMATION, "You have lost this game.");
+            Alert alert = new Alert(INFORMATION, "You have lost this game. \n Do you want to play a new game?",
+                    ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isEmpty()) {
                 Platform.exit();
             }
-            else if (result.get() == ButtonType.OK) {
+            else if (result.get() == ButtonType.YES) {
+                NewGameAction();
+            }
+            else if (result.get() == ButtonType.NO) {
                 Platform.exit();
             }
         });
@@ -360,5 +387,20 @@ public class Game {
         GridPane.setFillWidth(label, true);
         GridPane.setFillHeight(label, true);
         GridPane.setHalignment(label, HPos.CENTER);
+    }
+
+    private void GameDrawn() {
+            Alert alert = new Alert(INFORMATION, "The game has ended in a draw. \n Do you want to play a new game?",
+                    ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                Platform.exit();
+            }
+            else if (result.get() == ButtonType.YES) {
+                NewGameAction();
+            }
+            else if (result.get() == ButtonType.NO) {
+                Platform.exit();
+            }
     }
 }
