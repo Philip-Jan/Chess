@@ -111,10 +111,10 @@ public class Board {
         if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 2) { //white queenside castling
             makeMove(0,3);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 62) { //black kingside castling
+        if (Squares[startSquare].squarePiece.name == 'k' && startSquare == 60 && endSquare == 62) { //black kingside castling
             makeMove(63,61);
         }
-        if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 60 && endSquare == 58) { //black queenside castling
+        if (Squares[startSquare].squarePiece.name == 'k' && startSquare == 60 && endSquare == 58) { //black queenside castling
             makeMove(56,59);
         }
         Squares[startSquare].squarePiece = null;
@@ -186,37 +186,37 @@ public class Board {
                         makeTempMove(3, 4);
                     }
                 }
-            }
-        }else if (piece.name == 'k' && !isCheck('W')) {//Black, not in check
-            if (Squares[63].squarePiece != null) {
-                if (!Squares[63].squarePiece.hasMoved && Squares[61].squarePiece == null && Squares[62].squarePiece == null) {
-                    //Rook for kingside castling has not moved and there is nothing between the king and rook
-                    makeTempMove(60, 61);
-                    if (!isCheck('W')) { //no check on square the King moves over
-                        makeTempMove(61, 62);
-                        if (!isCheck('W')) {
-                            castleMoves.add(62);
+            } else if (piece.name == 'k' && !isCheck('W')) {//Black, not in check
+                if (Squares[63].squarePiece != null) {
+                    if (!Squares[63].squarePiece.hasMoved && Squares[61].squarePiece == null && Squares[62].squarePiece == null) {
+                        //Rook for kingside castling has not moved and there is nothing between the king and rook
+                        makeTempMove(60, 61);
+                        if (!isCheck('W')) { //no check on square the King moves over
+                            makeTempMove(61, 62);
+                            if (!isCheck('W')) {
+                                castleMoves.add(62);
+                            }
+                            makeTempMove(62, 61); // Moves the king back. This in-between move is because if there is a check
+                            // on the first square, it would not get in this loop.
                         }
-                        makeTempMove(62, 61); // Moves the king back. This in-between move is because if there is a check
-                        // on the first square, it would not get in this loop.
+                        makeTempMove(61, 60);
                     }
-                    makeTempMove(61, 60);
                 }
-            }
-            if (Squares[56].squarePiece != null) {
-                if (!Squares[56].squarePiece.hasMoved && Squares[57].squarePiece == null &&
-                        Squares[58].squarePiece == null && Squares[59].squarePiece == null) {
-                    //Rook for queenside castling has not moved and there is nothing between the king and rook
-                    makeTempMove(60, 59);
-                    if (!isCheck('W')) { //no check on square the King moves over
-                        makeTempMove(59, 58);
-                        if (!isCheck('W')) {
-                            castleMoves.add(58);
+                if (Squares[56].squarePiece != null) {
+                    if (!Squares[56].squarePiece.hasMoved && Squares[57].squarePiece == null &&
+                            Squares[58].squarePiece == null && Squares[59].squarePiece == null) {
+                        //Rook for queenside castling has not moved and there is nothing between the king and rook
+                        makeTempMove(60, 59);
+                        if (!isCheck('W')) { //no check on square the King moves over
+                            makeTempMove(59, 58);
+                            if (!isCheck('W')) {
+                                castleMoves.add(58);
+                            }
+                            makeTempMove(58, 59); // Moves the king back. This in-between move is because if there is a check
+                            // on the first square, it would not get in this loop.
                         }
-                        makeTempMove(58, 59); // Moves the king back. This in-between move is because if there is a check
-                        // on the first square, it would not get in this loop.
+                        makeTempMove(59, 60);
                     }
-                    makeTempMove(59, 60);
                 }
             }
         }
@@ -386,7 +386,6 @@ public class Board {
                 targetSquare = square.position;
             }
         }
-        System.out.println("Checker: "+ checker + " target square: " + targetSquare);
 
         for (ArrayList<Integer> move : getAllMoves(checker)) {
             if (move.contains(targetSquare)) {
