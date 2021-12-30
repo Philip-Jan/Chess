@@ -79,15 +79,8 @@ public class Game {
             final int number = i;
             buttons[i].setOnAction(e -> {
 
-                for (ArrayList<Integer> move : board.getAllLegalMoves(activePlayer) ) {
-                    if (move != null){
-                        System.out.println("Still has moves left");
-                        break;
-                    }
-                    else{
-                        System.out.println("No moves left");
-                        Draw();
-                    }
+                if(board.getAllLegalMoves(activePlayer).isEmpty()) {
+                    Draw();
                 }
 
                 if (this.ChessPiece != null) {
