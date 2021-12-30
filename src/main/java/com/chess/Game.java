@@ -22,6 +22,9 @@ public class Game {
     private final boolean isWhite;
     private final int fieldColor;
     private final int pieceImg;
+    private int CurrentTurn;
+    private int PreviousTurnW;
+    private int PreviousTurnB;
     private char pieceName;
     private ChoiceDialog<Character> PromotionChoicesW;
     private ChoiceDialog<Character> PromotionChoicesB;
@@ -84,6 +87,15 @@ public class Game {
                 }
 
                 if (this.ChessPiece != null) {
+
+                    if (this.ChessPiece.name == 'P') {
+                        PreviousTurnW = CurrentTurn;
+                    }
+
+                    if (this.ChessPiece.name == 'p') {
+                        PreviousTurnB = CurrentTurn;
+                    }
+
                     if (board.legalMovesPosition(BoardSquare).contains(number)) {
 
                         if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 1) {
@@ -98,18 +110,31 @@ public class Game {
                         }
                         board.makeMove(BoardSquare, number, pieceName);
                         buttons[BoardSquare].setGraphic(null);
-                        if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 62) {
-                            buttons[61].setGraphic(board.getBoardSquare(61).imgViewPiece);
-                        }
-                        else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 58) {
-                            buttons[61].setGraphic(board.getBoardSquare(59).imgViewPiece);
-                        }
-                        else if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 6) {
+                        if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 6) {
                             buttons[5].setGraphic(board.getBoardSquare(5).imgViewPiece);
                         }
                         else if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 2) {
                             buttons[3].setGraphic(board.getBoardSquare(3).imgViewPiece);
                         }
+                        else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 62) {
+                            buttons[61].setGraphic(board.getBoardSquare(61).imgViewPiece);
+                        }
+                        else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 58) {
+                            buttons[59].setGraphic(board.getBoardSquare(59).imgViewPiece);
+                        }
+                        if (this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 7) {
+                            buttons[BoardSquare - 1].setGraphic(null);
+                        }
+                        else if (this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 9) {
+                            buttons[BoardSquare + 1].setGraphic(null);
+                        }
+                        else if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 3 && number == BoardSquare - 9) {
+                            buttons[BoardSquare - 1].setGraphic(null);
+                        }
+                        else if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 3 && number == BoardSquare - 7) {
+                            buttons[BoardSquare + 1].setGraphic(null);
+                        }
+
                         buttons[number].setGraphic(board.getBoardSquare(number).imgViewPiece);
 
                         if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
@@ -129,10 +154,17 @@ public class Game {
                             activePlayer = 'W';
                         }
                     }
+                    if (CurrentTurn == PreviousTurnW + 1) {
+                        board.EnPassantAllowedW = false;
+                    }
+                    if (CurrentTurn == PreviousTurnB + 1) {
+                        board.EnPassantAllowedB = false;
+                    }
                     this.pieceName = ' ';
                     this.BoardSquare = 0;
                     this.ChessPiece = null;
                     this.legalMoves = null;
+                    CurrentTurn ++;
                     for (int k = 0; k < 64; k++) {
                         setStyle(buttons[k], k);
                     }

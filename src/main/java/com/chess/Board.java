@@ -8,6 +8,8 @@ public class Board {
     int targetSquare = -1;
     Square[] Squares = new Square[64];
     char activePlayer;
+    boolean EnPassantAllowedW = false;
+    boolean EnPassantAllowedB = false;
 
     Board() {
         this.pieceImg = 0;
@@ -103,6 +105,31 @@ public class Board {
         }
         if (Squares[endSquare].squarePiece.name == 'p' && Squares[endSquare].getRow() == 0){
             Squares[endSquare].squarePiece = new Piece(pieceName, this.pieceImg);
+        }
+        // En-Passant
+        if (Squares[endSquare].squarePiece.name == 'P' && Squares[startSquare].getRow() == 1
+        && Squares[endSquare].getRow() == 3) {
+            EnPassantAllowedW = true;
+        }
+        if (Squares[endSquare].squarePiece.name == 'p' && Squares[startSquare].getRow() == 6
+                && Squares[endSquare].getRow() == 4) {
+            EnPassantAllowedB = true;
+        }
+        if (Squares[startSquare].squarePiece.name == 'P' && Squares[startSquare].getRow() == 4) {
+            if (endSquare == startSquare + 7) {
+                Squares[startSquare - 1].squarePiece = null;
+            }
+            else if (endSquare == startSquare + 9) {
+                Squares[startSquare + 1].squarePiece = null;
+            }
+        }
+        if (Squares[startSquare].squarePiece.name == 'p' && Squares[startSquare].getRow() == 3) {
+            if (endSquare == startSquare - 9) {
+                Squares[startSquare - 1].squarePiece = null;
+            }
+            else if (endSquare == startSquare - 7) {
+                Squares[startSquare + 1].squarePiece = null;
+            }
         }
         //Castling
         if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) {
@@ -266,12 +293,26 @@ public class Board {
                             validMoves.add(position + 7);
                         }
                     }
+                    else if (Squares[position + 7].squarePiece == null && Squares[position - 1].squarePiece != null) {
+                        if (Squares[position].getRow() == 4 && Squares[position - 1].squarePiece.name == 'p') {
+                            if (EnPassantAllowedB) {
+                                validMoves.add(position + 7);
+                            }
+                        }
+                    }
                 }
                 if (Squares[position].getColumn() < 7) {
                     if (Squares[position + 9].squarePiece != null) {
                         if (Squares[position + 9].squarePiece.color == 'B') {
                             //enemy piece diagonally in front of pawn
                             validMoves.add(position + 9);
+                        }
+                    }
+                    else if (Squares[position + 9].squarePiece == null && Squares[position + 1].squarePiece != null) {
+                        if (Squares[position].getRow() == 4 && Squares[position + 1].squarePiece.name == 'p') {
+                            if (EnPassantAllowedB) {
+                                validMoves.add(position + 9);
+                            }
                         }
                     }
                 }
@@ -293,11 +334,25 @@ public class Board {
                             validMoves.add(position - 9);
                         }
                     }
+                    else if (Squares[position - 9].squarePiece == null && Squares[position - 1].squarePiece != null) {
+                        if (Squares[position].getRow() == 3 && Squares[position - 1].squarePiece.name == 'P') {
+                            if (EnPassantAllowedW) {
+                                validMoves.add(position - 9);
+                            }
+                        }
+                    }
                 }
                 if (Squares[position].getColumn() < 7) {
                     if (Squares[position - 7].squarePiece != null) {
                         if (Squares[position - 7].squarePiece.color == 'W') {
                             //enemy piece diagonally in front of pawn
+                            validMoves.add(position - 7);
+                        }
+                    }
+                }
+                else if (Squares[position - 7].squarePiece == null && Squares[position + 1].squarePiece != null) {
+                    if (Squares[position].getRow() == 3 && Squares[position + 1].squarePiece.name == 'P') {
+                        if (EnPassantAllowedW) {
                             validMoves.add(position - 7);
                         }
                     }
