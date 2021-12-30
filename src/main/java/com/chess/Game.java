@@ -78,6 +78,18 @@ public class Game {
         for (int i=0; i < 64; i++) {
             final int number = i;
             buttons[i].setOnAction(e -> {
+
+                for (ArrayList<Integer> move : board.getAllLegalMoves(activePlayer) ) {
+                    if (move != null){
+                        System.out.println("Still has moves left");
+                        break;
+                    }
+                    else{
+                        System.out.println("No moves left");
+                        Draw();
+                    }
+                }
+
                 if (this.ChessPiece != null) {
                     if (board.legalMovesPosition(BoardSquare).contains(number)) {
 
@@ -286,6 +298,22 @@ public class Game {
                 case 6 -> button.setStyle("-fx-background-color: #e6e6e6");
                 case 7 -> button.setStyle("-fx-background-color: #e9e0db");
             }
+        }
+    }
+
+    private void Draw() {
+
+        Alert alert = new Alert(INFORMATION, "This game has ended in a draw. \n Do you wish to play a new game?",
+                ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isEmpty()) {
+            Platform.exit();
+        }
+        else if (result.get() == ButtonType.YES) {
+            NewGameAction();
+        }
+        else if (result.get() == ButtonType.NO) {
+            Platform.exit();
         }
     }
 
