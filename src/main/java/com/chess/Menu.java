@@ -1,6 +1,5 @@
 package com.chess;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +19,7 @@ public class Menu{
         ChoosePlayer(stage);
     }
 
-    private boolean isWhite;
+    private boolean isWhite = true;
     private int fieldColor;
     private int pieceImg;
     private ChoiceBox<String> OptBackgroundColor;
