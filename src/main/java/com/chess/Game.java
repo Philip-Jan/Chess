@@ -29,6 +29,7 @@ public class Game {
     private ChoiceDialog<Character> PromotionChoicesW;
     private ChoiceDialog<Character> PromotionChoicesB;
     private final Button[] buttons = new Button[64];
+    private final Stage stage;
     private ArrayList<Integer> legalMoves;
     private int BoardSquare;
     Board board;
@@ -39,6 +40,7 @@ public class Game {
         this.isWhite = isWhite;
         this.fieldColor = fieldColor;
         this.pieceImg = pieceImg;
+        this.stage = stage;
         startGame(stage);
     }
 
@@ -80,11 +82,10 @@ public class Game {
 
         for (int i=0; i < 64; i++) {
             final int number = i;
+            if(board.getAllLegalMoves(activePlayer).isEmpty()) {
+                Draw();
+            }
             buttons[i].setOnAction(e -> {
-
-                if(board.getAllLegalMoves(activePlayer).isEmpty()) {
-                    Draw();
-                }
 
                 if (this.ChessPiece != null) {
 
@@ -192,10 +193,7 @@ public class Game {
         ButtonBar bar = new ButtonBar();
 
         Button NewGame = new Button("New Game");
-        NewGame.setOnAction(e -> {
-            NewGameAction();
-            stage.close();
-        });
+        NewGame.setOnAction(e -> NewGameAction());
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setMenuButtonData(NewGame);
 
@@ -258,10 +256,12 @@ public class Game {
                 if (result.get() == ButtonType.YES) {
                     Stage pStage = new Stage();
                     new Game(pStage, isWhite, fieldColor, pieceImg);
+                    stage.close();
                 }
                 else if (result.get() == ButtonType.NO) {
                     Stage pStage = new Stage();
                     new Menu(pStage);
+                    stage.close();
                 }
             }
     }
