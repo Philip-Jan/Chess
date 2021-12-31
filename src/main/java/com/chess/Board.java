@@ -8,11 +8,12 @@ public class Board {
     int targetSquare = -1;
     Square[] Squares = new Square[64];
     char activePlayer;
-    boolean EnPassantAllowedW = false;
-    boolean EnPassantAllowedB = false;
+    boolean[] EnPassantAllowedW = new boolean[8];
+    boolean[] EnPassantAllowedB = new boolean[8];
 
     Board() {
         this.pieceImg = 0;
+        setBooleans();
         initBoard();
         setBeginPosition();
     }
@@ -20,6 +21,7 @@ public class Board {
     Board(char activePlayer, int pieceImg) {
         this.activePlayer = activePlayer;
         this.pieceImg = pieceImg;
+        setBooleans();
         initBoard();
         setBeginPosition();
     }
@@ -68,9 +70,11 @@ public class Board {
         activePlayer = 'W';
     }
 
-    public Piece getBoardSquare(int position) {//Returns the piece that occupies the selected square
+    public Piece getPiece(int position) {//Returns the piece that occupies the selected square
         return Squares[position].squarePiece;
     }
+
+    public Square getBoardSquare(int position) { return Squares[position]; }
 
     public int getPosition(int position) { return position; }
 
@@ -109,11 +113,11 @@ public class Board {
         // En-Passant
         if (Squares[endSquare].squarePiece.name == 'P' && Squares[startSquare].getRow() == 1
         && Squares[endSquare].getRow() == 3) {
-            EnPassantAllowedW = true;
+            EnPassantAllowedW[Squares[endSquare].getColumn()] = true;
         }
         if (Squares[endSquare].squarePiece.name == 'p' && Squares[startSquare].getRow() == 6
                 && Squares[endSquare].getRow() == 4) {
-            EnPassantAllowedB = true;
+            EnPassantAllowedB[Squares[endSquare].getColumn()] = true;
         }
         if (Squares[startSquare].squarePiece.name == 'P' && Squares[startSquare].getRow() == 4) {
             if (endSquare == startSquare + 7) {
@@ -295,7 +299,7 @@ public class Board {
                     }
                     else if (Squares[position + 7].squarePiece == null && Squares[position - 1].squarePiece != null) {
                         if (Squares[position].getRow() == 4 && Squares[position - 1].squarePiece.name == 'p') {
-                            if (EnPassantAllowedB) {
+                            if (EnPassantAllowedB[Squares[position - 1].getColumn()]) {
                                 validMoves.add(position + 7);
                             }
                         }
@@ -310,7 +314,7 @@ public class Board {
                     }
                     else if (Squares[position + 9].squarePiece == null && Squares[position + 1].squarePiece != null) {
                         if (Squares[position].getRow() == 4 && Squares[position + 1].squarePiece.name == 'p') {
-                            if (EnPassantAllowedB) {
+                            if (EnPassantAllowedB[Squares[position + 1].getColumn()]) {
                                 validMoves.add(position + 9);
                             }
                         }
@@ -336,7 +340,7 @@ public class Board {
                     }
                     else if (Squares[position - 9].squarePiece == null && Squares[position - 1].squarePiece != null) {
                         if (Squares[position].getRow() == 3 && Squares[position - 1].squarePiece.name == 'P') {
-                            if (EnPassantAllowedW) {
+                            if (EnPassantAllowedW[Squares[position - 1].getColumn()]) {
                                 validMoves.add(position - 9);
                             }
                         }
@@ -348,12 +352,11 @@ public class Board {
                             //enemy piece diagonally in front of pawn
                             validMoves.add(position - 7);
                         }
-                    }
-                }
-                else if (Squares[position - 7].squarePiece == null && Squares[position + 1].squarePiece != null) {
-                    if (Squares[position].getRow() == 3 && Squares[position + 1].squarePiece.name == 'P') {
-                        if (EnPassantAllowedW) {
-                            validMoves.add(position - 7);
+                    } else if (Squares[position - 7].squarePiece == null && Squares[position + 1].squarePiece != null) {
+                        if (Squares[position].getRow() == 3 && Squares[position + 1].squarePiece.name == 'P') {
+                            if (EnPassantAllowedW[Squares[position + 1].getColumn()]) {
+                                validMoves.add(position - 7);
+                            }
                         }
                     }
                 }
@@ -533,5 +536,12 @@ public class Board {
             }
         }
         return true;
+    }
+
+    private void setBooleans() {
+        for (int i = 0; i < 8; i++) {
+            EnPassantAllowedW[i] = false;
+            EnPassantAllowedB[i] = false;
+        }
     }
 }

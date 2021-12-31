@@ -56,8 +56,8 @@ public class Game {
                 buttons[i] = createNumberButton(i);
                 int row = i / 8;
                 int col = (63-i) % 8;
-                if (board.getBoardSquare(i) != null) {
-                    buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
+                if (board.getPiece(i) != null) {
+                    buttons[i].setGraphic(board.getPiece(i).imgViewPiece);
                 }
                 grid.add(buttons[i], col + 1, row + 1);
                 addLabels(grid, 0);
@@ -69,8 +69,8 @@ public class Game {
                 buttons[i] = createNumberButton(i);
                 int row = (63-i) / 8;
                 int col = i % 8;
-                if (board.getBoardSquare(i) != null) {
-                    buttons[i].setGraphic(board.getBoardSquare(i).imgViewPiece);
+                if (board.getPiece(i) != null) {
+                    buttons[i].setGraphic(board.getPiece(i).imgViewPiece);
                 }
                 grid.add(buttons[i], col + 1, row + 1);
                 addLabels(grid, 0);
@@ -111,16 +111,16 @@ public class Game {
                         board.makeMove(BoardSquare, number, pieceName);
                         buttons[BoardSquare].setGraphic(null);
                         if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 6) {
-                            buttons[5].setGraphic(board.getBoardSquare(5).imgViewPiece);
+                            buttons[5].setGraphic(board.getPiece(5).imgViewPiece);
                         }
                         else if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 2) {
-                            buttons[3].setGraphic(board.getBoardSquare(3).imgViewPiece);
+                            buttons[3].setGraphic(board.getPiece(3).imgViewPiece);
                         }
                         else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 62) {
-                            buttons[61].setGraphic(board.getBoardSquare(61).imgViewPiece);
+                            buttons[61].setGraphic(board.getPiece(61).imgViewPiece);
                         }
                         else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 58) {
-                            buttons[59].setGraphic(board.getBoardSquare(59).imgViewPiece);
+                            buttons[59].setGraphic(board.getPiece(59).imgViewPiece);
                         }
                         if (this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 7) {
                             buttons[BoardSquare - 1].setGraphic(null);
@@ -135,7 +135,7 @@ public class Game {
                             buttons[BoardSquare + 1].setGraphic(null);
                         }
 
-                        buttons[number].setGraphic(board.getBoardSquare(number).imgViewPiece);
+                        buttons[number].setGraphic(board.getPiece(number).imgViewPiece);
 
                         if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
                             Alert alert = new Alert(INFORMATION, "Check");
@@ -155,10 +155,14 @@ public class Game {
                         }
                     }
                     if (CurrentTurn == PreviousTurnW + 1) {
-                        board.EnPassantAllowedW = false;
+                        for (int j = 0; j < 8; j++) {
+                            board.EnPassantAllowedW[j] = false;
+                        }
                     }
                     if (CurrentTurn == PreviousTurnB + 1) {
-                        board.EnPassantAllowedB = false;
+                        for (int j = 0; j < 8; j++) {
+                            board.EnPassantAllowedB[j] = false;
+                        }
                     }
                     this.pieceName = ' ';
                     this.BoardSquare = 0;
@@ -169,9 +173,9 @@ public class Game {
                         setStyle(buttons[k], k);
                     }
                 }
-                else if (board.getBoardSquare(number) != null && board.getBoardSquare(number).color == activePlayer) {
+                else if (board.getPiece(number) != null && board.getPiece(number).color == activePlayer) {
                     this.BoardSquare = board.getPosition(number);
-                    this.ChessPiece = board.getBoardSquare(number);
+                    this.ChessPiece = board.getPiece(number);
                     this.legalMoves = board.legalMovesPosition(number);
                     for (int k = 0; k < 64; k++) {
                         if (legalMoves.contains(k)) {
