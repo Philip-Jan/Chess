@@ -87,6 +87,8 @@ public class Game {
             }
             buttons[i].setOnAction(e -> {
 
+                // If a chess piece has been selected
+
                 if (this.ChessPiece != null) {
 
                     if (this.ChessPiece.name == 'P') {
@@ -99,6 +101,8 @@ public class Game {
 
                     if (board.legalMovesPosition(BoardSquare).contains(number)) {
 
+                        // Promotion
+
                         if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 1) {
                             PromotionChoicesB.setContentText("Promote Your Pawn");
                             PromotionChoicesB.showAndWait();
@@ -109,8 +113,14 @@ public class Game {
                             PromotionChoicesW.showAndWait();
                             pieceName = PromotionChoicesW.getSelectedItem();
                         }
+
+                        // Make the selected move
+
                         board.makeMove(BoardSquare, number, pieceName);
                         buttons[BoardSquare].setGraphic(null);
+
+                        // Ensuring images are properly displayed after Castling.
+
                         if (this.ChessPiece.name == 'K' && BoardSquare == 4 && number == 6) {
                             buttons[5].setGraphic(board.getPiece(5).imgViewPiece);
                         }
@@ -123,38 +133,49 @@ public class Game {
                         else if (this.ChessPiece.name == 'k' && BoardSquare == 60 && number == 58) {
                             buttons[59].setGraphic(board.getPiece(59).imgViewPiece);
                         }
-                        if (this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 7) {
+
+                        // Ensuring images are properly displayed after En-Passant
+
+                        if ((this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 7)
+                        || (this.ChessPiece.name == 'p' && BoardSquare / 8 == 3 && number == BoardSquare - 9)) {
                             buttons[BoardSquare - 1].setGraphic(null);
                         }
-                        else if (this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 9) {
-                            buttons[BoardSquare + 1].setGraphic(null);
-                        }
-                        else if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 3 && number == BoardSquare - 9) {
-                            buttons[BoardSquare - 1].setGraphic(null);
-                        }
-                        else if (this.ChessPiece.name == 'p' && BoardSquare / 8 == 3 && number == BoardSquare - 7) {
+                        else if ((this.ChessPiece.name == 'P' && BoardSquare / 8 == 4 && number == BoardSquare + 9)
+                        || (this.ChessPiece.name == 'p' && BoardSquare / 8 == 3 && number == BoardSquare - 7) ) {
                             buttons[BoardSquare + 1].setGraphic(null);
                         }
 
+                        // Set image on the new square after a move
+
                         buttons[number].setGraphic(board.getPiece(number).imgViewPiece);
+
+                        // Check if a player is in check
 
                         if (!board.isMate(activePlayer) && board.isCheck(activePlayer)) {
                             Alert alert = new Alert(INFORMATION, "Check");
                             alert.show();
                         }
 
+                        // Check for mate
+
                         if (board.isMate(activePlayer)) {
                             Mate(activePlayer);
                             stage.close();
                         }
 
-                        if (activePlayer == 'W'){ //switches active player
+                        //switches active player
+
+                        if (activePlayer == 'W'){
                             activePlayer = 'B';
                         }
                         else {
                             activePlayer = 'W';
                         }
                     }
+
+                    // Ensuring En-Passant works only for the one turn
+                    // after the other player moves one of their pawns two spaces from its starting position.
+
                     if (CurrentTurn == PreviousTurnW + 1) {
                         for (int j = 0; j < 8; j++) {
                             board.EnPassantAllowedW[j] = false;
@@ -165,15 +186,25 @@ public class Game {
                             board.EnPassantAllowedB[j] = false;
                         }
                     }
+
+                    // Keeping track of the Current turn.
+
+                    CurrentTurn ++;
+
+                    // Resetting variables.
+
                     this.pieceName = ' ';
                     this.BoardSquare = 0;
                     this.ChessPiece = null;
                     this.legalMoves = null;
-                    CurrentTurn ++;
                     for (int k = 0; k < 64; k++) {
                         setStyle(buttons[k], k);
                     }
                 }
+
+                // If no chess piece has been selected, ensure only the correct set of pieces can be selected.
+                // Set variables.
+
                 else if (board.getPiece(number) != null && board.getPiece(number).color == activePlayer) {
                     this.BoardSquare = board.getPosition(number);
                     this.ChessPiece = board.getPiece(number);
@@ -190,7 +221,7 @@ public class Game {
             });
         }
 
-        ButtonBar bar = new ButtonBar();
+        // Make buttons for New Game, Offer a draw, Offer a win and Exit
 
         Button NewGame = new Button("New Game");
         NewGame.setOnAction(e -> NewGameAction());
@@ -223,15 +254,23 @@ public class Game {
         Button Exit = createExitButton();
         setMenuButtonData(Exit);
 
+        // Add buttons to button bar
+
+        ButtonBar bar = new ButtonBar();
+
         bar.getButtons().addAll(NewGame, OfferDraw, OfferWin, Exit);
         ButtonBar.setButtonData(NewGame, ButtonBar.ButtonData.LEFT);
         ButtonBar.setButtonData(OfferDraw, ButtonBar.ButtonData.LEFT);
         ButtonBar.setButtonData(OfferWin, ButtonBar.ButtonData.LEFT);
 
+        // Set everything previously created into a borderpane.
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10));
         root.setTop(bar);
         root.setCenter(grid);
+
+        // Actually show the application.
 
         Scene scene = new Scene(root, 900, 800);
         stage.setTitle("Chess");
