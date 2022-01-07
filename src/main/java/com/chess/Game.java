@@ -89,7 +89,8 @@ public class Game {
 
                 // If a chess piece has been selected
 
-                if (this.ChessPiece != null) {
+                if (this.ChessPiece != null &&
+                   (board.getPiece(number) == null || board.getPiece(number).color != activePlayer)) {
 
                     if (this.ChessPiece.name == 'P') {
                         PreviousTurnW = CurrentTurn;
@@ -221,17 +222,21 @@ public class Game {
             });
         }
 
-        // Make buttons for New Game, Offer a draw, Offer a win and Exit
+        // Make button for New Game
 
         Button NewGame = new Button("New Game");
         NewGame.setOnAction(e -> NewGameAction());
         NewGame.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setMenuButtonData(NewGame);
 
+        // Make button for offering a draw
+
         Button OfferDraw = new Button("Offer Draw");
         OfferDraw.setOnAction(e -> GameDrawn() );
         OfferDraw.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setMenuButtonData(OfferDraw);
+
+        // Make button for offering a win
 
         Button OfferWin = new Button("Offer Win");
         OfferWin.setOnAction(e -> {
@@ -250,6 +255,8 @@ public class Game {
         });
         OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         setMenuButtonData(OfferWin);
+
+        // Make button for exit
 
         Button Exit = createExitButton();
         setMenuButtonData(Exit);
