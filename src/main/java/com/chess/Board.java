@@ -10,6 +10,7 @@ public class Board {
     char activePlayer;
     boolean[] EnPassantAllowedW = new boolean[8];
     boolean[] EnPassantAllowedB = new boolean[8];
+    int movesSinceLastCaptureOrPawn = 0;
 
     Board() {
         this.pieceImg = 0;
@@ -98,9 +99,20 @@ public class Board {
         }
     }
 
+    public void fiftyMoveRule(int startSquare, int endSquare){//
+        if (Squares[startSquare].squarePiece.name == 'p'  //moving a white pawn
+                || Squares[startSquare].squarePiece.name == 'P' //moving a black pawn
+                || Squares[endSquare].squarePiece != null) { //capturing a piece
+            movesSinceLastCaptureOrPawn = 0;
+        }else {
+            movesSinceLastCaptureOrPawn++;
+        }
+    }
+
     public void makeMove(int startSquare,int endSquare, char pieceName) {
         //Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
+        fiftyMoveRule(startSquare,endSquare);
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[endSquare].squarePiece.hasMoved = true;
         //Promotion
