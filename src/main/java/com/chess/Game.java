@@ -199,6 +199,13 @@ public class Game {
                             stage.close();
                         }
 
+                        // Check for 50 move rule
+
+                        if(board.movesSinceLastCaptureOrPawn==100){
+                            Draw();
+                            stage.close();
+                        }
+
                         //switches active player
 
                         if (activePlayer == 'W'){

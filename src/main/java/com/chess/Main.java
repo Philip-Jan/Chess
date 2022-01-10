@@ -10,7 +10,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        boolean debugMode = false;
+        boolean debugMode = false;  //set to true and write code in the 'if' statement for non-graphical testing of code
         if (debugMode){
             Board board = new Board();
             board.setBeginPosition();

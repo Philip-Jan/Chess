@@ -10,6 +10,7 @@ public class Board {
     char activePlayer;
     boolean[] EnPassantAllowedW = new boolean[8];
     boolean[] EnPassantAllowedB = new boolean[8];
+    int movesSinceLastCaptureOrPawn = 0;
 
     Board() {
         this.pieceImg = 0;
@@ -112,9 +113,20 @@ public class Board {
         return stateOfBoard;
     }
 
+    public void fiftyMoveRule(int startSquare, int endSquare){//
+        if (Squares[startSquare].squarePiece.name == 'p'  //moving a white pawn
+                || Squares[startSquare].squarePiece.name == 'P' //moving a black pawn
+                || Squares[endSquare].squarePiece != null) { //capturing a piece
+            movesSinceLastCaptureOrPawn = 0;
+        }else {
+            movesSinceLastCaptureOrPawn++;
+        }
+    }
+
     public void makeMove(int startSquare,int endSquare, char pieceName) {
         //Moves a piece from the starting location to the end location.
         // If there was a piece on the end location, it is removed.
+        fiftyMoveRule(startSquare,endSquare);
         Squares[endSquare].squarePiece = Squares[startSquare].squarePiece;
         Squares[endSquare].squarePiece.hasMoved = true;
         //Promotion
@@ -149,7 +161,6 @@ public class Board {
                 Squares[startSquare + 1].squarePiece = null;
             }
         }
-
         //Castling
         if (Squares[startSquare].squarePiece.name == 'K' && startSquare == 4 && endSquare == 6) {
             //white kingside castling
@@ -379,8 +390,7 @@ public class Board {
             else {//other pieces
                 for (int[] move : piece.movePattern) {
                     if (move[0] + Squares[position].getColumn() >= 0 && move[0] + Squares[position].getColumn() <= 7 &&
-                            move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) {
-                        //Is on the board
+                            move[1] + Squares[position].getRow() >= 0 && move[1] + Squares[position].getRow() <= 7) {//Is on the board
                         int targetPosition = position + move[0] + move[1] * 8;
                         if (Squares[targetPosition].squarePiece != null) {
                             if (piece.color != Squares[targetPosition].squarePiece.color) { // Is not a piece of the same color
