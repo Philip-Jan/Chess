@@ -27,8 +27,8 @@ public class Game {
     private int CurrentTurn;
     private int PreviousTurnW;
     private int PreviousTurnB;
-    private ArrayList<StringBuilder> RepetitionCheckW;
-    private ArrayList<StringBuilder> RepetitionCheckB;
+    private ArrayList<StringBuilder> RepetitionCheckW = new ArrayList<>();
+    private ArrayList<StringBuilder> RepetitionCheckB = new ArrayList<>();
     private char pieceName;
     private ChoiceDialog<Character> PromotionChoicesW;
     private ChoiceDialog<Character> PromotionChoicesB;
@@ -202,7 +202,7 @@ public class Game {
                         // Check for 50 move rule
 
                         if(board.movesSinceLastCaptureOrPawn==100){
-                            Draw();
+                            GameDrawn();
                             stage.close();
                         }
 
