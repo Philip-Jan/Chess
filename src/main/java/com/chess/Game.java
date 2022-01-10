@@ -14,6 +14,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import static javafx.scene.control.Alert.AlertType.INFORMATION;
 
@@ -25,6 +27,8 @@ public class Game {
     private int CurrentTurn;
     private int PreviousTurnW;
     private int PreviousTurnB;
+    private ArrayList<StringBuilder> RepetitionCheckW;
+    private ArrayList<StringBuilder> RepetitionCheckB;
     private char pieceName;
     private ChoiceDialog<Character> PromotionChoicesW;
     private ChoiceDialog<Character> PromotionChoicesB;
@@ -50,6 +54,8 @@ public class Game {
         PromotionChoicesB = new ChoiceDialog<>(' ', 'r', 'b', 'n', 'q');
 
         board = new Board(this.activePlayer, this.pieceImg); // Generate Board
+        RepetitionCheckW.add(board.BoardState());
+        RepetitionCheckB.add(board.BoardState());
 
         GridPane grid = createGrid();
 
@@ -83,8 +89,37 @@ public class Game {
         for (int i=0; i < 64; i++) {
             final int number = i;
             if(board.getAllLegalMoves(activePlayer).isEmpty()) {
-                Draw();
+                GameDrawn();
             }
+
+            for (StringBuilder stateOfBoard : RepetitionCheckW) {
+                if (Collections.frequency(RepetitionCheckW, stateOfBoard) == 5) {
+                    GameDrawn();
+                }
+                else if (Collections.frequency(RepetitionCheckW, stateOfBoard) >= 3) {
+                    Alert alert = new Alert(INFORMATION, "Do you wish to claim a draw?",
+                            ButtonType.YES, ButtonType.NO);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.YES) {
+                        GameDrawn();
+                    }
+                }
+            }
+
+            for (StringBuilder stateOfBoard : RepetitionCheckB) {
+                if (Collections.frequency(RepetitionCheckB, stateOfBoard) == 5) {
+                    GameDrawn();
+                }
+                else if (Collections.frequency(RepetitionCheckB, stateOfBoard) >= 3) {
+                    Alert alert = new Alert(INFORMATION, "Do you wish to claim a draw?",
+                            ButtonType.YES, ButtonType.NO);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.YES) {
+                        GameDrawn();
+                    }
+                }
+            }
+
             buttons[i].setOnAction(e -> {
 
                 // If a chess piece has been selected
@@ -174,6 +209,45 @@ public class Game {
                         }
                     }
 
+                    // Saving the current state of the board.
+
+                    if (activePlayer == 'W') {
+                        int KingPosition = 0;
+                        for (int k = 0; k < 64; k++) {
+                            if (board.getPiece(k) != null) {
+                                if (board.getPiece(k).name == 'K') {
+                                    KingPosition = k;
+                                }
+                            }
+                        }
+                        int amountOfCastleMoves = 0;
+                        for (Integer ignored : board.castleOptions(board.getPiece(KingPosition))) {
+                            amountOfCastleMoves ++;
+                        }
+                        StringBuilder stateOfBoard = board.BoardState();
+                        stateOfBoard.append(Arrays.toString(board.EnPassantAllowedW));
+                        stateOfBoard.append(amountOfCastleMoves);
+                        RepetitionCheckW.add(stateOfBoard);
+                    }
+                    else if (activePlayer == 'B') {
+                        int KingPosition = 0;
+                        for (int k = 0; k < 64; k++) {
+                            if (board.getPiece(k) != null) {
+                                if (board.getPiece(k).name == 'k') {
+                                    KingPosition = k;
+                                }
+                            }
+                        }
+                        int amountOfCastleMoves = 0;
+                        for (Integer ignored : board.castleOptions(board.getPiece(KingPosition))) {
+                            amountOfCastleMoves ++;
+                        }
+                        StringBuilder stateOfBoard = board.BoardState();
+                        stateOfBoard.append(Arrays.toString(board.EnPassantAllowedB));
+                        stateOfBoard.append(amountOfCastleMoves);
+                        RepetitionCheckB.add(stateOfBoard);
+                    }
+
                     // Ensuring En-Passant works only for the one turn
                     // after the other player moves one of their pawns two spaces from its starting position.
 
@@ -238,7 +312,7 @@ public class Game {
 
         // Make button for offering a win
 
-        Button OfferWin = new Button("Offer Win");
+        Button OfferWin = new Button("Resign");
         OfferWin.setOnAction(e -> {
             Alert alert = new Alert(INFORMATION, "You have lost this game. \n Do you want to play a new game?",
                     ButtonType.YES, ButtonType.NO);
@@ -373,22 +447,6 @@ public class Game {
                 case 6 -> button.setStyle("-fx-background-color: #e6e6e6");
                 case 7 -> button.setStyle("-fx-background-color: #e9e0db");
             }
-        }
-    }
-
-    private void Draw() {
-
-        Alert alert = new Alert(INFORMATION, "This game has ended in a draw. \n Do you wish to play a new game?",
-                ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isEmpty()) {
-            Platform.exit();
-        }
-        else if (result.get() == ButtonType.YES) {
-            NewGameAction();
-        }
-        else if (result.get() == ButtonType.NO) {
-            Platform.exit();
         }
     }
 
