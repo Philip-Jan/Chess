@@ -100,7 +100,10 @@ public class Game {
                     Alert alert = new Alert(INFORMATION, "Do you wish to claim a draw?",
                             ButtonType.YES, ButtonType.NO);
                     Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.YES) {
+                    if (result.isEmpty()) {
+                        break;
+                    }
+                    else if (result.get() == ButtonType.YES) {
                         GameDrawn();
                     }
                 }
@@ -114,7 +117,10 @@ public class Game {
                     Alert alert = new Alert(INFORMATION, "Do you wish to claim a draw?",
                             ButtonType.YES, ButtonType.NO);
                     Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.YES) {
+                    if (result.isEmpty()) {
+                        break;
+                    }
+                    else if (result.get() == ButtonType.YES) {
                         GameDrawn();
                     }
                 }
