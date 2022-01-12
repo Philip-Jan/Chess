@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class Menu{
 
     Menu(Stage stage) {
-        ChoosePlayer(stage);
+        ChooseSettings(stage);
     }
 
     private boolean isWhite = true;
@@ -25,7 +25,7 @@ public class Menu{
     private ChoiceBox<String> OptBackgroundColor;
     private ChoiceBox<String> OptPieceImages;
 
-    private void ChoosePlayer(Stage primaryStage) {
+    private void ChooseSettings(Stage primaryStage) {
 
         GridPane grid = createGrid();
 
