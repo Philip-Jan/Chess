@@ -86,11 +86,13 @@ public class Game {
             }
         } // Generate pieces on the board if player 1 plays with the white pieces or default settings.
 
+        if(board.getAllLegalMoves(activePlayer).isEmpty()) {
+            GameDrawn();
+        } // If a player has no moves to make but it's his turn
+        // then the game draws.
+
         for (int i=0; i < 64; i++) {
             final int number = i;
-            if(board.getAllLegalMoves(activePlayer).isEmpty()) {
-                GameDrawn();
-            }
 
             for (StringBuilder stateOfBoard : RepetitionCheckW) {
                 if (Collections.frequency(RepetitionCheckW, stateOfBoard) == 5) {
@@ -107,7 +109,9 @@ public class Game {
                         GameDrawn();
                     }
                 }
-            }
+            } // Check if same position on the board is reached
+            // after white's turn, after 3 or 4 times alert pops up asking if the player wants to claim a draw,
+            // by 5 times it forces a draw.
 
             for (StringBuilder stateOfBoard : RepetitionCheckB) {
                 if (Collections.frequency(RepetitionCheckB, stateOfBoard) == 5) {
@@ -124,7 +128,7 @@ public class Game {
                         GameDrawn();
                     }
                 }
-            }
+            } // Same but after black's turn.
 
             buttons[i].setOnAction(e -> {
 
