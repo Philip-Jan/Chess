@@ -99,7 +99,7 @@ public class Board {
         }
     }
 
-    public StringBuilder BoardState() {
+    public StringBuilder BoardState() { // Help function to check for three- and fivefold repetition rule.
         StringBuilder stateOfBoard = new StringBuilder();
         for (int i = 0; i<8;i++) {
             for (int j = 0; j < 8; j++) {
