@@ -325,8 +325,8 @@ public class Game {
 
         // Make button for offering a win
 
-        Button OfferWin = new Button("Resign");
-        OfferWin.setOnAction(e -> {
+        Button Resign = new Button("Resign");
+        Resign.setOnAction(e -> {
             Alert alert = new Alert(INFORMATION, "You have lost this game. \n Do you want to play a new game?",
                     ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = alert.showAndWait();
@@ -340,8 +340,8 @@ public class Game {
                 Platform.exit();
             }
         });
-        OfferWin.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-        setMenuButtonData(OfferWin);
+        Resign.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        setMenuButtonData(Resign);
 
         // Make button for exit
 
@@ -352,10 +352,10 @@ public class Game {
 
         ButtonBar bar = new ButtonBar();
 
-        bar.getButtons().addAll(NewGame, OfferDraw, OfferWin, Exit);
+        bar.getButtons().addAll(NewGame, OfferDraw, Resign, Exit);
         ButtonBar.setButtonData(NewGame, ButtonBar.ButtonData.LEFT);
         ButtonBar.setButtonData(OfferDraw, ButtonBar.ButtonData.LEFT);
-        ButtonBar.setButtonData(OfferWin, ButtonBar.ButtonData.LEFT);
+        ButtonBar.setButtonData(Resign, ButtonBar.ButtonData.LEFT);
 
         // Set everything previously created into a borderpane.
 
