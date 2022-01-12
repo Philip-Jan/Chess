@@ -381,24 +381,6 @@ public class Game {
         return Exit;
     } // Create Exit button
 
-    private void NewGameAction() {
-            Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
-                    ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent()) {
-                if (result.get() == ButtonType.YES) {
-                    Stage pStage = new Stage();
-                    new Game(pStage, isWhite, fieldColor, pieceImg);
-                    stage.close();
-                }
-                else if (result.get() == ButtonType.NO) {
-                    Stage pStage = new Stage();
-                    new Menu(pStage);
-                    stage.close();
-                }
-            }
-    } // Alert for starting a new game
-
     private Button createNumberButton(int number) {
         Button button = createButton();
         setStyle(button, number);
@@ -455,6 +437,24 @@ public class Game {
         }
     } // The colors of the chessboard buttons,
     // based on chosen fieldColor in Menu.
+
+    private void NewGameAction() {
+        Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
+                ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == ButtonType.YES) {
+                Stage pStage = new Stage();
+                new Game(pStage, isWhite, fieldColor, pieceImg);
+                stage.close();
+            }
+            else if (result.get() == ButtonType.NO) {
+                Stage pStage = new Stage();
+                new Menu(pStage);
+                stage.close();
+            }
+        }
+    } // Alert for starting a new game
 
     private void Mate(char player) {
         String colors = "";
