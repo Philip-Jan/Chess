@@ -379,7 +379,7 @@ public class Game {
         Exit.setOnAction(e -> Platform.exit());
         setButtonData(Exit);
         return Exit;
-    }
+    } // Create Exit button
 
     private void NewGameAction() {
             Alert alert = new Alert(INFORMATION, "Do you wish to keep the current settings?",
@@ -397,19 +397,20 @@ public class Game {
                     stage.close();
                 }
             }
-    }
+    } // Alert for starting a new game
 
     private Button createNumberButton(int number) {
         Button button = createButton();
         setStyle(button, number);
         return button;
-    }
+    } // Ensuring buttons conform to correct color
+    // and can be uniquely identified.
 
     private Button createButton() {
         Button button = new Button();
         setButtonData(button);
         return button;
-    }
+    } // Creating buttons and setting its settings.
 
     private void setButtonData(Button button) {
         button.setPrefSize(110,100);
@@ -417,7 +418,7 @@ public class Game {
         GridPane.setFillWidth(button, true);
         GridPane.setHgrow(button, Priority.ALWAYS);
         GridPane.setVgrow(button, Priority.ALWAYS);
-    }
+    } // The settings for the buttons that make up the chessboard.
 
     private void setMenuButtonData(Button button) {
         button.setPrefSize(200,30);
@@ -425,7 +426,7 @@ public class Game {
         GridPane.setFillWidth(button, true);
         GridPane.setHgrow(button, Priority.ALWAYS);
         GridPane.setVgrow(button, Priority.ALWAYS);
-    }
+    } // The settings for the buttons on the button bar.
 
     private GridPane createGrid() {
         GridPane grid = new GridPane();
@@ -434,7 +435,7 @@ public class Game {
         grid.setVgap(0);
         grid.setPadding(new Insets(10));
         return grid;
-    }
+    } // The grid.
 
     private void setStyle(Button button, int number) {
         if ((number + number/8) % 2 == 1) {
@@ -461,7 +462,8 @@ public class Game {
                 case 7 -> button.setStyle("-fx-background-color: #e9e0db");
             }
         }
-    }
+    } // The colors of the chessboard buttons,
+    // based on chosen fieldColor in Menu.
 
     private void Mate(char player) {
         String colors = "";
@@ -483,7 +485,7 @@ public class Game {
             else if (result.get() == ButtonType.NO) {
                 Platform.exit();
             }
-    }
+    } // Alert that pops up if one player checkmates the other player.
 
     private void addLabels(GridPane grid, int pos) {
 
@@ -551,14 +553,15 @@ public class Game {
         grid.add(labelF, beginPosB + 6 * colorB,pos);
         grid.add(labelG, beginPosB + 7 * colorB,pos);
         grid.add(labelH, beginPosB + 8 * colorB,pos);
-    }
+    } // Add labels to the grid,
+    // that is the numbers 1-8 on the sides and letters A-H on top and bottom.
 
     private void setGridLabel(Label label) {
         label.setPrefSize(9, 9);
         GridPane.setFillWidth(label, true);
         GridPane.setFillHeight(label, true);
         GridPane.setHalignment(label, HPos.CENTER);
-    }
+    } // Set size of labels.
 
     private void GameDrawn() {
             Alert alert = new Alert(INFORMATION, "The game has ended in a draw. \n Do you want to play a new game?",
@@ -573,5 +576,5 @@ public class Game {
             else if (result.get() == ButtonType.NO) {
                 Platform.exit();
             }
-    }
+    } // Alert for when the game is a draw.
 }
