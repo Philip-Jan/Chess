@@ -428,15 +428,6 @@ public class Game {
         GridPane.setVgrow(button, Priority.ALWAYS);
     } // The settings for the buttons on the button bar.
 
-    private GridPane createGrid() {
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(0);
-        grid.setVgap(0);
-        grid.setPadding(new Insets(10));
-        return grid;
-    } // The grid.
-
     private void setStyle(Button button, int number) {
         if ((number + number/8) % 2 == 1) {
             switch (fieldColor) {
@@ -486,6 +477,30 @@ public class Game {
                 Platform.exit();
             }
     } // Alert that pops up if one player checkmates the other player.
+
+    private void GameDrawn() {
+        Alert alert = new Alert(INFORMATION, "The game has ended in a draw. \n Do you want to play a new game?",
+                ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isEmpty()) {
+            Platform.exit();
+        }
+        else if (result.get() == ButtonType.YES) {
+            NewGameAction();
+        }
+        else if (result.get() == ButtonType.NO) {
+            Platform.exit();
+        }
+    } // Alert for when the game is a draw.
+
+    private GridPane createGrid() {
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(0);
+        grid.setVgap(0);
+        grid.setPadding(new Insets(10));
+        return grid;
+    } // The grid.
 
     private void addLabels(GridPane grid, int pos) {
 
@@ -562,19 +577,4 @@ public class Game {
         GridPane.setFillHeight(label, true);
         GridPane.setHalignment(label, HPos.CENTER);
     } // Set size of labels.
-
-    private void GameDrawn() {
-            Alert alert = new Alert(INFORMATION, "The game has ended in a draw. \n Do you want to play a new game?",
-                    ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isEmpty()) {
-                Platform.exit();
-            }
-            else if (result.get() == ButtonType.YES) {
-                NewGameAction();
-            }
-            else if (result.get() == ButtonType.NO) {
-                Platform.exit();
-            }
-    } // Alert for when the game is a draw.
 }
